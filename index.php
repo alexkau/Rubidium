@@ -1,36 +1,61 @@
 <?php
 
+global $settings;
+
+require('sources/core.php');
+$rubidium = new rubidium;
+
 require('config.php');
+$rubidium->config = $config;
+
 require('sources/db.php');
-require('sources/page.php');
-require('sources/exceptions.php');
+$DB = new classDB;
+$DB->connect($rubidium->config);
+
 require('sources/functions.php');
+$functions = new functions;
 
-//Set up classes
-$DB		= new classDB($config);
-$page		= new classPage();
-$functions	= new functions();
+$options = array(
+	"order_by" => "name",
+	"order_dir" => "ASC"
+);
+$settings = $functions->buildSettings($DB->select("settings","name, value","",$options));
 
-//If page id specified
-if ($_GET['page']) {
-	//Clean input for DB
-	$pageID = $functions->cleanDBInput($_GET['page']);
+$rubidium->settings = $settings;
 
+
+
+
+
+
+$functions->clean_array($_POST);
+$functions->clean_array($_GET);
+$functions->clean_array($_COOKIE);
+
+require('sources/page.php');
+$page	= new classPage;
+
+require('sources/exceptions.php');
+
+
+
+
+
+//If page id specified and is numeric
+//For now, pages must be specified by number
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+	$pageInfo = $DB->getPage($_GET['page']);
 	//If it returned a page...
-	if ($pageInfo = $DB->getPage($pageID)) {
-		echo "Default index page";
+	if (! isset($pageInfo)) {
+		$pageToPrint = $page->buildDefaultPage();
+	} else {
+		$pageToPrint = $pageInfo;
 	}
 }
 
+/*$title = "Title!";
+$content = "This is my page!";*/
 
-		
-		
-		
+echo $page->buildPage($config, $pageToPrint['title'], $pageToPrint['content'], $rubidium->settings['footer']['value']);
 
-$title = "Title!";
-$content = "This is my page!";
-$footer = "&copy; 2010";
-
-//echo $page->buildPage($config, $title, $content, $footer);
-echo $page->buildPage($config, $title, $content, $footer);
 ?>

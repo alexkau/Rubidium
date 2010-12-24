@@ -11,4 +11,28 @@ class functions {
 		}
 		return $output;
 	}
+	
+	//Cleans all values in an array for DB input
+	//$_GET, $_POST, etc.
+	function clean_array($array)
+	{
+		foreach($array as $k => $v)
+		{
+			if(is_array($array[$k]))
+			{
+				$this->clean_array($array[$k]);
+			}
+			else
+			{
+				$array[$k] = stripslashes($array[$k]);
+			}
+		}
+	}
+	function buildSettings($input) {
+		$array = array();
+		while ($row = $input->fetch_assoc()) {
+			$array[$row['name']] = $row;
+		}
+		return $array;
+	}
 }

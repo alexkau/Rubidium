@@ -1,15 +1,13 @@
 <?php
 class classDB {
-	public $config;
-	public $mysql;
-	function __construct($config) {
-		$this->config = $config; //Set DB config
-		$this->database = new mysqli($this->config['sql_server'],$this->config['sql_user'],$this->config['sql_password']);
+
+	function connect($config) {
+		$this->database = new mysqli($config['sql_server'],$config['sql_user'],$config['sql_password']);
 		if (mysqli_connect_errno()) {
 			die('Database connection failed. Please check back later or notify the administrator.');
 		}
 		//Connect to DB; die if connection failed
-		$this->database->select_db($this->config['sql_database']);	
+		$this->database->select_db($config['sql_database']);	
 	}
 
 	function getPage($pageID) {
@@ -23,4 +21,91 @@ class classDB {
 			return false;
 		}
 	}
+	/* 
+	* SelectByID
+	* Selects a single row (by ID) from a specified table
+	* Returns true if exactly one row is selected, otherwise false
+	* $table = table to select from
+	* $id = ID of row to select
+	*/
+	function selectByID($table, $id) {
+		$query = "select * from {$table} where `id` = {$id}";
+		$result = $this->database->query($query);
+		if (mysqli_num_rows($result) == 1) {
+			$array = $result->fetch_assoc();
+			return $array;
+		} else {
+			return false;
+		}
+	}
+
+	/* 
+	* SelectByName
+	* Selects a single row (by name) from a specified table
+	* Returns true if exactly one row is selected, otherwise false
+	* $table = table to select from
+	* $name = name of row to select
+	*/
+	function selectByName($table, $name) {
+		$query = "select * from {$table} where `name` = {$name}";
+		$result = $this->database->query($query);
+		if (mysqli_num_rows($result) == 1) {
+			$array = $result->fetch_assoc();
+			return $array;
+		} else {
+			return false;
+		}
+	}
+	/*
+	* Select
+	* Selects all results given certain criteria
+	*
+	* $options = array(
+	* 	"order_by"	=> "title",
+	* 	"order_dir"	=> "ASC"
+	* 	"limit"		=> "5"
+	* 	"limit_start"	=> "2"
+	* );
+	*
+	* $fields = "name, description, value";
+	*
+	* $conditions = "id > 5";
+	*/
+	function select($table, $fields="*", $conditions="", $options=array()) {
+		$query = "SELECT {$fields} FROM {$table}";
+
+		if($conditions != "")
+		{
+			$query .= " WHERE ".$conditions;
+		}
+		
+		if(isset($options['order_by']))
+		{
+			$query .= " ORDER BY ".$options['order_by'];
+			if(isset($options['order_dir']))
+			{
+				$query .= " ".strtoupper($options['order_dir']);
+			}
+		}
+		
+		if(isset($options['limit_start']) && isset($options['limit']))
+		{
+			$query .= " LIMIT ".$options['limit_start'].", ".$options['limit'];
+		}
+		else if(isset($options['limit']))
+		{
+			$query .= " LIMIT ".$options['limit'];
+		}
+
+		return $this->database->query($query);
+	}
+	function mysqlToArray($input) {
+		$array = array();
+		while ($row = $input->fetch_assoc()) {
+			$array[] = $row;
+		}
+		return $array;
+	}
+		
+		
 }
