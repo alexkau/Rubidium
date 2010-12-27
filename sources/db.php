@@ -1,20 +1,20 @@
 <?php
 class classDB {
 	static public $database = null;
-	public static function connect($config) {
-		self::$database = new mysqli($config['sql_server'],$config['sql_user'],$config['sql_password']);
+	public static function connect() {
+		self::$database = new mysqli(rubidium::$config['sql_server'],rubidium::$config['sql_user'],rubidium::$config['sql_password']);
 		if (mysqli_connect_errno()) {
-			die('Database connection failed. Please check back later or notify the administrator.');
+			die('<br />Database connection failed. Please check back later or notify the administrator.');
 		}
 		//Connect to DB; die if connection failed
-		self::$database->select_db($config['sql_database']);	
-		//$this->rubidium = rubidium::instance();
+		self::$database->select_db(rubidium::$config['sql_database']) or die('Unable to select database');
+		debug::addMessage("Connected to database ".rubidium::$config['sql_database']);
 	}
 
 	function getPage($pageID) {
 		//Get page info
 		$query = "select * from pages where `id` = {$pageID}";
-		$pageInfo = $this->database->query($query);	
+		$pageInfo = self::$database->query($query);	
 		if (mysqli_num_rows($pageInfo) == 1) {
 			$pageArray = $pageInfo->fetch_assoc();
 			return $pageArray;
@@ -31,7 +31,7 @@ class classDB {
 	*/
 	function selectByID($table, $id) {
 		$query = "select * from {$table} where `id` = {$id}";
-		$result = $this->database->query($query);
+		$result = self::$database->query($query);
 		if (mysqli_num_rows($result) == 1) {
 			$array = $result->fetch_assoc();
 			return $array;
@@ -39,7 +39,7 @@ class classDB {
 			return false;
 		}
 	}
-
+ 
 	/* 
 	* SelectByName
 	* Selects a single row (by name) from a specified table
@@ -49,7 +49,7 @@ class classDB {
 	*/
 	function selectByName($table, $name) {
 		$query = "select * from {$table} where `name` = {$name}";
-		$result = $this->database->query($query);
+		$result = self::$database->query($query);
 		if (mysqli_num_rows($result) == 1) {
 			$array = $result->fetch_assoc();
 			return $array;
@@ -97,7 +97,7 @@ class classDB {
 		{
 			$query .= " LIMIT ".$options['limit'];
 		}
-		echo ((DEBUG) ? "Running MySQL query: {$query}<br />" : "");
+		debug::addMessage("Running MySQL query: {$query}");
 		return self::$database->query($query);
 	}
 	function mysqlToArray($input) {

@@ -1,9 +1,19 @@
 <?php
-require('sources/core.php');
+require(ROOT_PATH . 'sources/debug.php');
+debug::addMessage("Loading file sources/debug.php");
+require(ROOT_PATH . 'sources/core.php');
+debug::addMessage("Loading file sources/core.php");
 
 $rubidium = new rubidium;
 $rubidium::setup();
-$rubidium::getRequest();
 $rubidium::loadSettings();
-$rubidium::determineMode();
-$rubidium::addDebugMessage("test");
+$rubidium::getRequest();
+
+require(ROOT_PATH . 'sources/output.php');
+debug::addMessage("Loading file sources/output.php");
+outputHandler::determineMode();
+outputHandler::loadContent(rubidium::$toLoad);
+
+debug::addMessage("Page rendered successfully");
+
+echo (DEBUG == 1 || DEBUG == 2) ? debug::compileOutput() : '';

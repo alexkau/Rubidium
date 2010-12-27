@@ -1,12 +1,9 @@
 <?php
+//Define the root path for all scripts
+define( 'ROOT_PATH', dirname( __FILE__ ) . '/');
 //Load the init file.. Here we go!
 require('sources/init.php');
-
-
-require('sources/page.php');
-$page	= new classPage;
-
-require('sources/exceptions.php');
+//require('sources/exceptions.php');
 
 
 
@@ -28,5 +25,4 @@ require('sources/exceptions.php');
 $content = "This is my page!";*/
 //print_r(rubidium::$settings);
 //echo $page->buildPage($config, $pageToPrint['title'], $pageToPrint['content'], rubidium::$settings['footer']['value']);
-echo ((DEBUG) ? "Page rendered successfully" : "");
-?>
+
