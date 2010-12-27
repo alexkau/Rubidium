@@ -1,5 +1,10 @@
 <?php
+//Deprecated 12.26
+//See output.php
 class classPage {
+	function construct() {
+		$this->rubidium = rubidium::instance();
+	}
 	function buildHead ($config, $title) {
 		$pageHead = "
 			<!DOCTYPE HTML>		
@@ -28,7 +33,7 @@ class classPage {
 	}
 	function buildPage($config, $title, $content, $footer) {
 		$page = $this->buildHead($config, $title) . $this->buildContent($config, $content) . $this->buildFooter($config, $footer);
-		echo $settings;
+
 		return $page;
 	}
 }

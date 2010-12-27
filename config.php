@@ -1,6 +1,7 @@
 <?php
-$config['sql_user']		= 'root';
-$config['sql_password']		= '';
-$config['sql_server']		= 'localhost';
-$config['sql_database']		= 'rubidium';
-$config['base_url']		= 'http://localhost/rubidium';
+$baseconfig['sql_user']		= 'root';
+$baseconfig['sql_password']		= '';
+$baseconfig['sql_server']		= 'localhost';
+$baseconfig['sql_database']		= 'rubidium';
+$baseconfig['base_url']		= 'http://localhost/rubidium';
+define("DEBUG",1);

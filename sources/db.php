@@ -1,13 +1,14 @@
 <?php
 class classDB {
-
-	function connect($config) {
-		$this->database = new mysqli($config['sql_server'],$config['sql_user'],$config['sql_password']);
+	static public $database = null;
+	public static function connect($config) {
+		self::$database = new mysqli($config['sql_server'],$config['sql_user'],$config['sql_password']);
 		if (mysqli_connect_errno()) {
 			die('Database connection failed. Please check back later or notify the administrator.');
 		}
 		//Connect to DB; die if connection failed
-		$this->database->select_db($config['sql_database']);	
+		self::$database->select_db($config['sql_database']);	
+		//$this->rubidium = rubidium::instance();
 	}
 
 	function getPage($pageID) {
@@ -96,8 +97,8 @@ class classDB {
 		{
 			$query .= " LIMIT ".$options['limit'];
 		}
-
-		return $this->database->query($query);
+		echo ((DEBUG) ? "Running MySQL query: {$query}<br />" : "");
+		return self::$database->query($query);
 	}
 	function mysqlToArray($input) {
 		$array = array();
