@@ -1,0 +1,25 @@
+#header {
+	padding: 5px;
+	border-bottom: 1px solid #002765;
+}
+	#header h1 {
+		font-size: 1.2em;
+		margin: 0;
+	}
+	#header ul {
+		margin: 0;
+		padding: 0 5px;
+		list-style: none;
+	}
+#wrapper {
+	width: 90%;
+	border: 1px solid #002765;
+	margin: 0 auto;
+	padding: 5px;
+}
+#content {
+	padding: 15px;
+}
+#footer {
+	text-align: right;
+}

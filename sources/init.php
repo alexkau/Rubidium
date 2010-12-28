@@ -13,6 +13,7 @@ require(ROOT_PATH . 'sources/output.php');
 debug::addMessage("Loading file sources/output.php");
 outputHandler::determineMode();
 outputHandler::loadContent(rubidium::$toLoad);
+echo outputHandler::buildPage();
 
 debug::addMessage("Page rendered successfully");
 

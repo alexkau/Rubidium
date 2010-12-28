@@ -8,7 +8,7 @@ class debug {
 				"message" => $message );
 	}
 	function compileOutput() {
-		$string = '----- DEBUG MESSAGES -----<br />';
+		$string = '<hr />----- DEBUG MESSAGES -----<br />';
 		foreach(self::$messages as $message) {
 			if (! empty($message['code']) && is_numeric($message['code'])) {
 				$string .= "Code {$message['code']}: ";

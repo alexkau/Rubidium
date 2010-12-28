@@ -1,6 +1,7 @@
 <?php
 //Define the root path for all scripts
 define( 'ROOT_PATH', dirname( __FILE__ ) . '/');
+define( 'TEMPLATES_DIR', dirname( __FILE__ ) . '/templates/');
 //Load the init file.. Here we go!
 require('sources/init.php');
 //require('sources/exceptions.php');
