@@ -2,6 +2,7 @@
 class outputHandler {
 	static public $toLoad = array();
 	static public $pageInfo = array();
+	static public $smarty = null;
 	//What mode are we in?
 	//Right now it's just an if->else, but eventually will be if->else if->....->else
 	function determineMode() {
@@ -25,27 +26,29 @@ class outputHandler {
 		require(ROOT_PATH . 'sources/content/'.self::$toLoad['mode'].'.php');
 		debug::addMessage('Loading file sources/content/'.self::$toLoad['mode'].'.php');
 	}
+	static public function setTemplateVars($smarty, $pageInfo) {
+		$smarty->assign('pageInfo',$pageInfo);
+		$smarty->assign('config',rubidium::$config);
+		$smarty->assign('settings',rubidium::$settings);
+	}
 	static public function buildPage() {
-		$outputClass	= "output_" . self::$toLoad['mode'];
-		$header		= $outputClass::buildHeader();
+		//Load the Smarty template engine
+		require(SMARTY_DIR . 'Smarty.class.php');
+		$smarty = new Smarty();
+		$smarty->setTemplateDir	(SMARTY_DIR . 'templates');
+		$smarty->setCompileDir	(SMARTY_DIR . 'compile');
+		$smarty->setCacheDir	(SMARTY_DIR . 'cache');
+		$smarty->setConfigDir	(SMARTY_DIR . 'config');
+		debug::addMessage("Template engine loaded");
+		self::$pageInfo = classDB::getPage(self::$toLoad['id']);
+		self::setTemplateVars($smarty, self::$pageInfo);
+		$smarty->display('wrapper.tpl');
+		//$outputClass	= "output_" . self::$toLoad['mode'];
+		/*$header		= $outputClass::buildHeader();
 		$content	= $outputClass::buildContent(self::$toLoad);
 		$footer		= $outputClass::buildFooter();
-		$output		= $header . $content . $footer;
-		self::$pageInfo = classDB::getPage(1);
+		$output		= $header . $content . $footer;*/
 		return $output;
 	}
-	//Putting default functions here, will overload them from other output modes
-	static public function buildHeader() {
-		$title = self::$pageInfo['title'];
-		require (TEMPLATES_DIR . 'header.php');
-		return $header;
-	}
-	static public function buildFooter() {
-		$footerText = rubidium::$settings['footer']['value'];
-		require (TEMPLATES_DIR . 'footer.php');
-		return $footer;
-	}
-	static public function buildContent($toLoad = null) {
-		return "<div id='content'>Fatal error: The output handler hasn't been correctly set up.</div>";
-	}
+	
 }
