@@ -28,15 +28,6 @@ class rubidium {
 		self::$DB->connect(rubidium::$config);
 
 	}
-	static public function instance()
-	{
-		if ( ! self::$instance )
-		{
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-	}
 	
 	//Gets the current request
 	function getRequest() {
