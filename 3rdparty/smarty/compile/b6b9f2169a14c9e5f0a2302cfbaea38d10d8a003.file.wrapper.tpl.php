@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.6, created on 2011-01-09 20:09:21
-         compiled from "/var/www/rubidium/3rdparty/smarty/templates/wrapper.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:16063111854d2a8671a03160-09165691%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.6, created on 2011-01-09 20:11:28
+         compiled from "/var/www/rubidium/admin/../3rdparty/smarty/templates/wrapper.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:6830319604d2a86f0b0cef3-14706879%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '06420ed166130bb0540e72b5c363360bfd6d1de7' => 
+    'b6b9f2169a14c9e5f0a2302cfbaea38d10d8a003' => 
     array (
-      0 => '/var/www/rubidium/3rdparty/smarty/templates/wrapper.tpl',
+      0 => '/var/www/rubidium/admin/../3rdparty/smarty/templates/wrapper.tpl',
       1 => 1294632540,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '16063111854d2a8671a03160-09165691',
+  'nocache_hash' => '6830319604d2a86f0b0cef3-14706879',
   'function' => 
   array (
   ),

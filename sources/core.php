@@ -6,8 +6,6 @@ class rubidium {
 	static public $toLoad = array();
 	static public $DB = null;
 	static public $debug = null;
-	function __construct() {
-	}
 	function setup() {
 		//Get config
 		//$baseconfig from file
@@ -28,6 +26,7 @@ class rubidium {
 		self::$DB->connect(rubidium::$config);
 
 	}
+	//Not used, will likely be deprecared
 	static public function instance()
 	{
 		if ( ! self::$instance )

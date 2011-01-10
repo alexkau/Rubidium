@@ -10,7 +10,13 @@ class classDB {
 		self::$database->select_db(rubidium::$config['sql_database']) or die('Unable to select database');
 		debug::addMessage("Connected to database ".rubidium::$config['sql_database']);
 	}
-
+	
+	/* 
+	* GetPage
+	* Gets page information from database
+	* Returns page info if it exists, otherwise returns false
+	* $pageID = ID of page to select
+	*/
 	function getPage($pageID) {
 		//Get page info
 		$query = "select * from pages where `id` = {$pageID}";
@@ -22,6 +28,7 @@ class classDB {
 			return false;
 		}
 	}
+	
 	/* 
 	* SelectByID
 	* Selects a single row (by ID) from a specified table
@@ -62,7 +69,7 @@ class classDB {
 	* Selects all results given certain criteria
 	*
 	* $options = array(
-	* 	"order_by"	=> "title",
+	* 	"order_by"	=> "name",
 	* 	"order_dir"	=> "ASC"
 	* 	"limit"		=> "5"
 	* 	"limit_start"	=> "2"
@@ -100,6 +107,12 @@ class classDB {
 		debug::addMessage("Running MySQL query: {$query}");
 		return self::$database->query($query);
 	}
+	
+	/*
+	 * mysqlToArray
+	 * Converts a MySQL object to an array
+	 * Currently not used, will likely be deprecated
+	 */
 	function mysqlToArray($input) {
 		$array = array();
 		while ($row = $input->fetch_assoc()) {
