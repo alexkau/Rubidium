@@ -11,22 +11,8 @@ class classDB {
 		debug::addMessage("Connected to database ".rubidium::$config['sql_database']);
 	}
 	
-	/* 
-	* GetPage
-	* Gets page information from database
-	* Returns page info if it exists, otherwise returns false
-	* $pageID = ID of page to select
-	*/
-	function getPage($pageID) {
-		//Get page info
-		$query = "select * from pages where `id` = {$pageID}";
-		$pageInfo = self::$database->query($query);	
-		if (mysqli_num_rows($pageInfo) == 1) {
-			$pageArray = $pageInfo->fetch_assoc();
-			return $pageArray;
-		} else {
-			return false;
-		}
+	public static function close() {
+		mysqli_close(self::$database);
 	}
 	
 	/* 
@@ -76,7 +62,6 @@ class classDB {
 	* );
 	*
 	* $fields = "name, description, value";
-	*
 	* $conditions = "id > 5";
 	*/
 	function select($table, $fields="*", $conditions="", $options=array()) {
@@ -105,21 +90,30 @@ class classDB {
 			$query .= " LIMIT ".$options['limit'];
 		}
 		debug::addMessage("Running MySQL query: {$query}");
-		return self::$database->query($query);
+		$result = self::$database->query($query);
+		if (mysqli_num_rows($result) > 0) {
+			return $result;
+		} else {
+			return false;
+		}
 	}
 	
 	/*
 	 * mysqlToArray
 	 * Converts a MySQL object to an array
-	 * Currently not used, will likely be deprecated
+	 * $key is the name of the array value to use as the key for the array
 	 */
-	function mysqlToArray($input) {
+	function mysqlToArray($input, $key) {
 		$array = array();
 		while ($row = $input->fetch_assoc()) {
-			$array[] = $row;
+			$array[$row[$key]] = $row;
 		}
 		return $array;
 	}
-		
-		
+	
+	function getTable($table, $key, $fields, $conditions, $options) {
+		$temp = self::select($table, $fields, $conditions, $options);
+		$output = self::mysqlToArray($temp, $key);
+		return $output;
+	}
 }

@@ -1,41 +1,62 @@
 <?php
 class outputHandler {
-	static public $toLoad = array();
-	static public $loadInfo = array();
-	static public $smarty = null;
+	static public $toLoad			= array();
+	static public $loadInfo			= array();
+	static public $smarty			= null;
+	static public $mode			= null;
+	static public $workingModuleName	= null;
+	
 	//What mode are we in?
 	//Right now it's just an if->else, but eventually will be if->else if->....->else
 	//If 3rd-party addons are ever enabled, this will have to become a foreach..
 	//Maybe do this for 1.x just in case, and for simplicity?
 	function determineMode() {
-		//If we're in the ACP, then load it...
-		if (IN_ACP) {
-			//This is just a placeholder for now
-		} else {
-			//If not in ACP, and if valid page load values are specified...
-			if (rubidium::$request['GET']['mode'] == 'page' && is_numeric(rubidium::$request['GET']['id'])) {
-				//...then we're loading that page!
-				self::$toLoad = array(
-						"mode" => "page",
-						"id" => rubidium::$request['GET']['id'] );
+		self::$mode = rubidium::$request['GET']['mode'];
+		require (ROOT_PATH . "sources/module_default.php");
+			
+		if (self::$mode != "") {
+			if (file_exists (ROOT_PATH . "modules/" . self::$mode . "/index.php")) {
+				require (ROOT_PATH . "modules/" . self::$mode . "/index.php");
+				self::$workingModuleName = "module_" . self::$mode;
+				$workingModule = new self::$workingModuleName();
+				if ($workingModule::validateLoad()) {
+					self::$toLoad['mode']	= self::$mode;
+					self::$toLoad['id']	= rubidium::$request['GET']['id'];
+					self::$loadInfo = $workingModule::generatePage();
+				} else {
+					self::load404();
+				}
 			} else {
-				//If none of the above, then we load the default page
-				debug::addMessage("No valid load values specified, loading default index");
-				$defaultID = "default_id_" . rubidium::$settings['default_mode']['value'];
-				self::$toLoad = array(
-						"mode" => "page",
-						"id" => rubidium::$settings['default_page_id']['value'] );
+				require (ROOT_PATH . "modules/page/index.php");
+				self::load404();
 			}
-			debug::addMessage('Content to load: '.print_r(self::$toLoad,true));
-
+		} else {
+			self::$toLoad['mode']	= rubidium::$settings['default_mode']['value'];
+			self::$toLoad['id']	= rubidium::$modules[rubidium::$settings['default_mode']['value']]['default_id'];
+			require (ROOT_PATH . "modules/" . rubidium::$settings['default_mode']['value'] . "/index.php");
+			self::$workingModuleName = "module_" . rubidium::$settings['default_mode']['value'];
+			$workingModule = new self::$workingModuleName();
+			debug::addMessage("Loading default content");
+			self::$loadInfo = $workingModule::generatePage(self::$toLoad['id']);
 		}
 	}
+	
+	//At this point, 404s are always handled by the page module
+	static public function load404() {
+		if (isset($workingModule)) {
+			$workingModule->__destruct();
+		}
+		$workingModule = new module_page();
+		self::$toLoad['id'] = rubidium::$settings['404_page']['value'];
+		self::$toLoad['mode'] = 'page';
+		debug::addMessage("Loading 404 error");
+		self::$loadInfo = $workingModule::generatePage(self::$toLoad['id']);
+	}
 	static public function setTemplateVars($smarty, $loadInfo, $toLoad) {
-
-		$smarty->assign('toLoad',$toLoad);
-		$smarty->assign('loadInfo',$loadInfo);
-		$smarty->assign('config',rubidium::$config);
-		$smarty->assign('settings',rubidium::$settings);
+		$smarty->assign('toLoad',	$toLoad);
+		$smarty->assign('loadInfo',	$loadInfo);
+		$smarty->assign('config',	rubidium::$config);
+		$smarty->assign('settings',	rubidium::$settings);
 	}
 	static public function buildPage() {
 		//Load the Smarty template engine
@@ -46,18 +67,7 @@ class outputHandler {
 		$smarty->setCacheDir	(SMARTY_DIR . 'cache');
 		$smarty->setConfigDir	(SMARTY_DIR . 'config');
 		debug::addMessage("Template engine loaded");
-		if (self::$toLoad['mode'] == "page") {
-			self::$loadInfo = classDB::getPage(self::$toLoad['id']);
-			debug::addMessage('Page info: '.print_r(self::$loadInfo,true));
-		}
 		self::setTemplateVars($smarty, self::$loadInfo, self::$toLoad);
 		$smarty->display('wrapper.tpl');
-		//$outputClass	= "output_" . self::$toLoad['mode'];
-		/*$header		= $outputClass::buildHeader();
-		$content	= $outputClass::buildContent(self::$toLoad);
-		$footer		= $outputClass::buildFooter();
-		$output		= $header . $content . $footer;*/
-		return $output;
 	}
-	
 }

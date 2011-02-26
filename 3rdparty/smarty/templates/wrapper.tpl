@@ -8,7 +8,7 @@
 <body>
 	<div id='wrapper'>
 		{include file='header.tpl'}
-		{include file="`$toLoad.mode`.tpl"}
+		{include file="`$toLoad.template`.tpl"}
 		{include file='footer.tpl'}
 	</div>
 </body>

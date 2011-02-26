@@ -1,12 +1,17 @@
 <?php
 class rubidium {
 	static public $settings = array();
+	static public $modules = array();
 	static public $config = array();
 	static public $request = array();
 	static public $toLoad = array();
 	static public $DB = null;
-	static public $debug = null;
-	function setup() {
+	function init() {
+		require(ROOT_PATH . 'sources/debug.php');
+		debug::addMessage("Loading file sources/debug.php");
+		debug::addMessage("Loading file sources/core.php");
+		debug::addMessage("Running init routine");
+		
 		//Get config
 		//$baseconfig from file
 		//goes to self::$config
@@ -18,28 +23,34 @@ class rubidium {
 				self::$config[$k] = $v;
 			}
 		}
-		//print_r(rubidium::$settings);
+
 		//Set up database and connect
 		require(ROOT_PATH . 'sources/db.php');
 		debug::addMessage("Loading file sources/db.php");
-		self::$DB = new classDB;
-		self::$DB->connect(rubidium::$config);
+		classDB::connect(rubidium::$config);
 
-	}
-	//Not used, will likely be deprecared
-	static public function instance()
-	{
-		if ( ! self::$instance )
-		{
-			self::$instance = new self();
-		}
-
-		return self::$instance;
+		//Load settings and request
+		self::$settings = classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
+		self::$modules = classDB::getTable('modules', 'id', 'id, name, default_id, enabled, protected', '', '' );
+		self::getRequest();
+		
+		//Load output handler and build page
+		require(ROOT_PATH . 'sources/output.php');
+		debug::addMessage("Loading file sources/output.php");
+		outputHandler::determineMode();
+		outputHandler::buildPage();
+		
+		//Close database connection
+		classDB::close();
+		
+		//Finalize debug output
+		debug::addMessage("Page rendered successfully");
+		echo (DEBUG == 1 || DEBUG == 2) ? debug::compileOutput() : '';
 	}
 	
-	//Gets the current request
+	//Gets the current request from URL
 	function getRequest() {
-		//GET array must be lowercase due to case sensitivity issues...
+		//GET array must be converted to lowercase so case sensitivity doesn't matter (index.php?mode=page versus index.php?MODE=PAGE)
 		self::$request['GET'] = ((! empty($_GET)) ? self::arrayToLower(self::cleanArray($_GET)) : null);
 		self::$request['POST'] = ((! empty($_POST)) ? self::cleanArray($_POST) : null);
 		self::$request['COOKIES'] = ((! empty($_COOKIES)) ? self::cleanArray($_COOKIES) : null);
@@ -66,15 +77,6 @@ class rubidium {
 			return false;
 		}
 	}
-	
-	//Gets the settings from the DB and outputs to self::$settings
-	function loadSettings() {
-		$settings_temp = classDB::select('settings','name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ) );
-		while ($row = $settings_temp->fetch_assoc()) {
-			self::$settings[$row['name']] = $row;
-		}
-		debug::addMessage("Settings loaded: ".print_r(self::$settings,true));
-	}	
 
 	//Converts an entire array's contents to lowercase, including keys
 	function arrayToLower($array,$round = 0){ 
