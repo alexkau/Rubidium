@@ -7,9 +7,6 @@ class outputHandler {
 	static public $workingModuleName	= null;
 	
 	//What mode are we in?
-	//Right now it's just an if->else, but eventually will be if->else if->....->else
-	//If 3rd-party addons are ever enabled, this will have to become a foreach..
-	//Maybe do this for 1.x just in case, and for simplicity?
 	function determineMode() {
 		self::$mode = rubidium::$request['GET']['mode'];
 		require (ROOT_PATH . "sources/module_default.php");
@@ -22,7 +19,7 @@ class outputHandler {
 				if ($workingModule::validateLoad()) {
 					self::$toLoad['mode']	= self::$mode;
 					self::$toLoad['id']	= rubidium::$request['GET']['id'];
-					self::$loadInfo = $workingModule::generatePage();
+					self::$loadInfo = $workingModule::returnPage(self::$toLoad);
 				} else {
 					self::load404();
 				}
@@ -37,7 +34,7 @@ class outputHandler {
 			self::$workingModuleName = "module_" . rubidium::$settings['default_mode']['value'];
 			$workingModule = new self::$workingModuleName();
 			debug::addMessage("Loading default content");
-			self::$loadInfo = $workingModule::generatePage(self::$toLoad['id']);
+			self::$loadInfo = $workingModule::returnPage(self::$toLoad);
 		}
 	}
 	
@@ -50,7 +47,7 @@ class outputHandler {
 		self::$toLoad['id'] = rubidium::$settings['404_page']['value'];
 		self::$toLoad['mode'] = 'page';
 		debug::addMessage("Loading 404 error");
-		self::$loadInfo = $workingModule::generatePage(self::$toLoad['id']);
+		self::$loadInfo = $workingModule::returnPage(self::$toLoad);
 	}
 	static public function setTemplateVars($smarty, $loadInfo, $toLoad) {
 		$smarty->assign('toLoad',	$toLoad);
@@ -62,12 +59,12 @@ class outputHandler {
 		//Load the Smarty template engine
 		require(SMARTY_DIR . 'Smarty.class.php');
 		$smarty = new Smarty();
-		$smarty->setTemplateDir	(SMARTY_DIR . 'templates');
+		$smarty->setTemplateDir	(ROOT_PATH . 'templates');
 		$smarty->setCompileDir	(SMARTY_DIR . 'compile');
 		$smarty->setCacheDir	(SMARTY_DIR . 'cache');
 		$smarty->setConfigDir	(SMARTY_DIR . 'config');
 		debug::addMessage("Template engine loaded");
 		self::setTemplateVars($smarty, self::$loadInfo, self::$toLoad);
-		$smarty->display('wrapper.tpl');
+		$smarty->display('core/wrapper.tpl');
 	}
 }
