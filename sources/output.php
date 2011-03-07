@@ -38,7 +38,7 @@ class outputHandler {
 		}
 	}
 	
-	//At this point, 404s are always handled by the page module
+	//At this point, generic 404s are always handled by the page module
 	static public function load404() {
 		if (isset($workingModule)) {
 			$workingModule->__destruct();
