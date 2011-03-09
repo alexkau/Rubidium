@@ -15,13 +15,13 @@ class classDB {
 		mysqli_close(self::$database);
 	}
 	
-	/* 
-	* SelectByID
-	* Selects a single row (by ID) from a specified table
-	* Returns true if exactly one row is selected, otherwise false
-	* $table = table to select from
-	* $id = ID of row to select
-	*/
+	/**
+	 * SelectByID
+	 * Selects a single row (by ID) from a specified table
+	 * Returns true if exactly one row is selected, otherwise false
+	 * $table = table to select from
+	 * $id = ID of row to select
+	 */
 	function selectByID($table, $id) {
 		$query = "select * from {$table} where `id` = {$id}";
 		$result = self::$database->query($query);
@@ -33,13 +33,13 @@ class classDB {
 		}
 	}
  
-	/* 
-	* SelectByName
-	* Selects a single row (by name) from a specified table
-	* Returns true if exactly one row is selected, otherwise false
-	* $table = table to select from
-	* $name = name of row to select
-	*/
+	/**
+	 * SelectByName
+	 * Selects a single row (by name) from a specified table
+	 * Returns true if exactly one row is selected, otherwise false
+	 * $table = table to select from
+	 * $name = name of row to select
+	 */
 	function selectByName($table, $name) {
 		$query = "select * from {$table} where `name` = {$name}";
 		$result = self::$database->query($query);
@@ -50,20 +50,21 @@ class classDB {
 			return false;
 		}
 	}
-	/*
-	* Select
-	* Selects all results given certain criteria
-	*
-	* $options = array(
-	* 	"order_by"	=> "name",
-	* 	"order_dir"	=> "ASC"
-	* 	"limit"		=> "5"
-	* 	"limit_start"	=> "2"
-	* );
-	*
-	* $fields = "name, description, value";
-	* $conditions = "id > 5";
-	*/
+	
+	/**
+	 * Select
+	 * Selects all results given certain criteria
+	 *
+	 * $options = array(
+	 * 	"order_by"	=> "name",
+	 * 	"order_dir"	=> "ASC"
+	 * 	"limit"		=> "5"
+	 * 	"limit_start"	=> "2"
+	 * );
+	 *
+	 * $fields = "name, description, value";
+	 * $conditions = "id > 5";
+	 */
 	function select($table, $fields="*", $conditions="", $options=array()) {
 		$query = "SELECT {$fields} FROM {$table}";
 
@@ -92,13 +93,14 @@ class classDB {
 		debug::addMessage("Running MySQL query: {$query}");
 		$result = self::$database->query($query);
 		if (mysqli_num_rows($result) > 0) {
+		//echo $query . "<br />";
 			return $result;
 		} else {
 			return false;
 		}
 	}
 	
-	/*
+	/**
 	 * mysqlToArray
 	 * Converts a MySQL object to an array
 	 * $key is the name of the array value to use as the key for the array
@@ -111,9 +113,29 @@ class classDB {
 		return $array;
 	}
 	
+	/**
+	 * getTable
+	 * Gets specified data from specified table and formats it as an array
+	 * $table: Table to pull data from
+	 * $key: Name of field to use for array key
+	 * $fields: Fields to pull from table
+	 * $options: Options to use (see self::select())
+	 */
 	function getTable($table, $key, $fields, $conditions, $options) {
 		$temp = self::select($table, $fields, $conditions, $options);
 		$output = self::mysqlToArray($temp, $key);
+		return $output;
+	}
+	
+	/**
+	 * getSimpleTable
+	 * Same as getTable, except only pulls a single field and formats it as a non-nested array
+	 */
+	function getSimpleTable($table, $field, $conditions, $options) {
+		$temp = self::select($table, $field, $conditions, $options);
+		while ($row = $temp->fetch_assoc()) {
+			$output[] = $row['id'];
+		}
 		return $output;
 	}
 }

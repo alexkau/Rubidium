@@ -55,9 +55,10 @@ class module_page extends module_default {
 		}
 		//And if we didn't load anything earlier and aren't being told to load anything...
 		if ($loadInfo['id'] == '') {
-			self::$pageContent = self::loadPage(rubidium::$modules['page']['default_id']);
+			self::$pageContent = self::loadPage(rubidium::$modules['page']['default_action_value']);
 			debug::addMessage("Loading default page");
 		}
+		print_r(self::$pageContent);
 		return self::$pageContent;
 	}
 }

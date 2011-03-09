@@ -1,10 +1,11 @@
 <?php
 class outputHandler {
-	static public $toLoad			= array();
-	static public $loadInfo			= array();
-	static public $smarty			= null;
-	static public $mode			= null;
+	static public $toLoad				= array();
+	static public $loadInfo				= array();
+	static public $smarty				= null;
+	static public $mode					= null;
 	static public $workingModuleName	= null;
+	static public $loadedModules		= array();
 	
 	//What mode are we in?
 	function determineMode() {
@@ -13,7 +14,10 @@ class outputHandler {
 			
 		if (self::$mode != "") {
 			if (file_exists (ROOT_PATH . "modules/" . self::$mode . "/index.php")) {
-				require (ROOT_PATH . "modules/" . self::$mode . "/index.php");
+				if(!in_array(self::$mode, self::$loadedModules)) {
+					require (ROOT_PATH . "modules/" . self::$mode . "/index.php");
+					self::$loadedModules[] = self::$mode;
+				}
 				self::$workingModuleName = "module_" . self::$mode;
 				$workingModule = new self::$workingModuleName();
 				if ($workingModule::validateLoad()) {
@@ -24,13 +28,15 @@ class outputHandler {
 					self::load404();
 				}
 			} else {
-				require (ROOT_PATH . "modules/page/index.php");
 				self::load404();
 			}
 		} else {
 			self::$toLoad['mode']	= rubidium::$settings['default_mode']['value'];
 			self::$toLoad['id']	= rubidium::$modules[rubidium::$settings['default_mode']['value']]['default_id'];
-			require (ROOT_PATH . "modules/" . rubidium::$settings['default_mode']['value'] . "/index.php");
+			if(!in_array(rubidium::$settings['default_mode']['value'], self::$loadedModules)) {
+				require (ROOT_PATH . "modules/" . rubidium::$settings['default_mode']['value'] . "/index.php");
+				self::$loadedModules[] = rubidium::$settings['default_mode']['value'];
+			}
 			self::$workingModuleName = "module_" . rubidium::$settings['default_mode']['value'];
 			$workingModule = new self::$workingModuleName();
 			debug::addMessage("Loading default content");
@@ -40,13 +46,17 @@ class outputHandler {
 	
 	//At this point, generic 404s are always handled by the page module
 	static public function load404() {
+		if(!in_array('page', self::$loadedModules)) {
+			require (ROOT_PATH . "modules/page/index.php");
+			self::$loadedModules[] = 'page';
+		}
 		if (isset($workingModule)) {
 			$workingModule->__destruct();
 		}
 		$workingModule = new module_page();
 		self::$toLoad['id'] = rubidium::$settings['404_page']['value'];
 		self::$toLoad['mode'] = 'page';
-		debug::addMessage("Loading 404 error");
+		debug::addMessage("Page not found, loading 404 error");
 		self::$loadInfo = $workingModule::returnPage(self::$toLoad);
 	}
 	static public function setTemplateVars($smarty, $loadInfo, $toLoad) {

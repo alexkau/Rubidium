@@ -31,7 +31,7 @@ class rubidium {
 
 		//Load settings and request
 		self::$settings = classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
-		self::$modules = classDB::getTable('modules', 'id', 'id, name, default_id, enabled, protected', '', '' );
+		self::$modules = classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected', '', '' );
 		self::getRequest();
 		
 		//Load output handler and build page
