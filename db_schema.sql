@@ -1,19 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9
+-- version 3.3.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 09, 2011 at 03:30 PM
--- Server version: 5.1.44
--- PHP Version: 5.3.2
+-- Generation Time: Mar 09, 2011 at 08:20 PM
+-- Server version: 5.1.49
+-- PHP Version: 5.3.3-1ubuntu9.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `rubidium`
@@ -21,6 +15,26 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 DROP DATABASE `rubidium`;
 CREATE DATABASE `rubidium` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `rubidium`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `module_admin_sections`
+--
+
+CREATE TABLE IF NOT EXISTS `module_admin_sections` (
+  `name` varchar(32) NOT NULL,
+  `templateCategory` varchar(128) NOT NULL,
+  `templateName` varchar(128) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `module_admin_sections`
+--
+
+INSERT INTO `module_admin_sections` (`name`, `templateCategory`, `templateName`) VALUES
+('login', '0', '0'),
+('login', 'modules/admin', 'login');
 
 -- --------------------------------------------------------
 
@@ -90,3 +104,4 @@ INSERT INTO `settings` (`id`, `name`, `description`, `value`) VALUES
 (2, 'footer', 'Global site footer', '&copy; 2011 The Rubidium Project'),
 (5, '404_page', 'ID of page to display on 404 error', '3'),
 (4, 'default_mode', 'Default mode to load if not specified', 'page');
+
