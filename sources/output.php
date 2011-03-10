@@ -25,6 +25,7 @@ class outputHandler {
 					self::$toLoad['id']	= rubidium::$request['GET']['id'];
 					self::$loadInfo = $workingModule::returnPage(self::$toLoad);*/
 					self::$loadInfo = $workingModule::returnPage();
+					debug::addmessage('Loaded specified page');
 				} else {
 					self::load404();
 				}
@@ -76,6 +77,10 @@ class outputHandler {
 		$smarty->setConfigDir	(SMARTY_DIR . 'config');
 		debug::addMessage("Template engine loaded");
 		self::setTemplateVars($smarty, self::$loadInfo, self::$toLoad);
-		$smarty->display('core/wrapper.tpl');
+		if (self::$mode = 'admin') {
+			$smarty->display('core/adminwrapper.tpl');
+		} else {
+			$smarty->display('core/wrapper.tpl');
+		}
 	}
 }

@@ -13,10 +13,6 @@ class module_admin extends module_default {
 		self::$availableModules = classDB::getSimpleTable('modules','id','enabled = 1','');
 		self::$moduleToLoad = (rubidium::$request['GET']['module'] != '') ? rubidium::$request['GET']['module'] : null;
 		self::$onLoginPage = (rubidium::$request['GET']['module'] == 'admin' && rubidium::$request['GET']['section'] == 'login') ? true : false;
-		
-		
-		//If module is not specified, set to null; if module specified is admin, set to null; otherwise, set to specified module
-		//self::$moduleToLoad = (rubidium::$request['GET']['module'] != '') ? (rubidium::$request['GET']['module'] != 'admin') ? rubidium::$request['GET']['module'] : null : null;
 	}
 	/*	?mode=admin&module=page&section=list
 		Load is valid if either:
@@ -34,20 +30,15 @@ class module_admin extends module_default {
 				require (ROOT_PATH . "modules/" . self::$moduleToLoad . "/admin.php");
 				self::$moduleAdminName = "module_" . self::$moduleToLoad . "_admin";
 				$moduleAdmin = new self::$moduleAdminName();
-				if ($moduleAdmin::validateLoad()) {
-					unset($moduleAdmin);
-					return true;
-				} else {
-					unset($moduleAdmin);
+				if (!$moduleAdmin::validateLoad()) {
 					self::load404();
 				}
-				return true;
+				unset($moduleAdmin);
 			} else {
-				return false;
+				self::load404();
 			}
-		} else {
-			return true;
 		}
+		return true;
 	}
 	
 	function load404() {

@@ -1,20 +1,40 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.5
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 09, 2011 at 08:20 PM
--- Server version: 5.1.49
--- PHP Version: 5.3.3-1ubuntu9.3
+-- Generation Time: Mar 10, 2011 at 02:54 PM
+-- Server version: 5.1.44
+-- PHP Version: 5.3.2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
 -- Database: `rubidium`
 --
-DROP DATABASE `rubidium`;
 CREATE DATABASE `rubidium` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `rubidium`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_info`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_info` (
+  `name` text NOT NULL,
+  `value` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin_info`
+--
+
+INSERT INTO `admin_info` (`name`, `value`) VALUES
+('login_key', ''),
+('password_salt', 'fqrpprx5rfcg8wc5'),
+('password_hash', '422ffac138fb207c8d48da89d4d7f446e17c6442930b8611ef5a1c9139a24a20905b2a7787826aa0e0d97402d308abebcdc442823caea8acd4748ba05937a83d'),
+('timeout_time', '');
 
 -- --------------------------------------------------------
 
@@ -25,16 +45,17 @@ USE `rubidium`;
 CREATE TABLE IF NOT EXISTS `module_admin_sections` (
   `name` varchar(32) NOT NULL,
   `templateCategory` varchar(128) NOT NULL,
-  `templateName` varchar(128) NOT NULL
+  `templateName` varchar(128) NOT NULL,
+  `pageInfo` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `module_admin_sections`
 --
 
-INSERT INTO `module_admin_sections` (`name`, `templateCategory`, `templateName`) VALUES
-('login', '0', '0'),
-('login', 'modules/admin', 'login');
+INSERT INTO `module_admin_sections` (`name`, `templateCategory`, `templateName`, `pageInfo`) VALUES
+('index', 'modules/admin', 'dashboard', 'title=Admin+CP+Dashboard&templateCategory=modules%2Fadmin&templateToLoad=dashboard'),
+('login', 'modules/admin', 'login', 'title=Admin+CP+Login&templateCategory=modules%2Fadmin&templateToLoad=login');
 
 -- --------------------------------------------------------
 
@@ -94,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `description` varchar(256) NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `settings`
@@ -104,4 +125,3 @@ INSERT INTO `settings` (`id`, `name`, `description`, `value`) VALUES
 (2, 'footer', 'Global site footer', '&copy; 2011 The Rubidium Project'),
 (5, '404_page', 'ID of page to display on 404 error', '3'),
 (4, 'default_mode', 'Default mode to load if not specified', 'page');
-

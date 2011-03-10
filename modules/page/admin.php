@@ -12,7 +12,7 @@ class module_page_admin {
 	function returnPage() {
 		if (self::$section) {
 				self::$pageContent['title'] = 'admin dashboard';
-				self::$pageContent['content'] = 'loading section ' . self::$section;
+				self::$pageContent['content'] = 'loading section ' . self::$section;
 				self::$pageContent['templateCategory'] = 'modules/admin';
 				self::$pageContent['templateToLoad'] = 'generic';
 			return self::$pageContent;

@@ -76,10 +76,7 @@ class classDB {
 		if(isset($options['order_by']))
 		{
 			$query .= " ORDER BY ".$options['order_by'];
-			if(isset($options['order_dir']))
-			{
-				$query .= " ".strtoupper($options['order_dir']);
-			}
+			$query .= (isset($options['order_dir'])) ? " ".strtoupper($options['order_dir']) : '';
 		}
 		
 		if(isset($options['limit_start']) && isset($options['limit']))
@@ -114,6 +111,15 @@ class classDB {
 	}
 	
 	/**
+	 * mysqlToSimpleArray
+	 * Same as mysqlToArray, except only processes a single field and formats it as a string
+	 */
+	function mysqlToString($input) {
+		$array = array();
+		return reset($input->fetch_assoc());
+	}
+	
+	/**
 	 * getTable
 	 * Gets specified data from specified table and formats it as an array
 	 * $table: Table to pull data from
@@ -137,5 +143,16 @@ class classDB {
 			$output[] = $row['id'];
 		}
 		return $output;
+	}
+	
+	/**
+	 * store
+	 * Stores $data in $table.$field where $conditions
+	 * DO NOT LEAVE $conditions BLANK unless you're absolutely certain you want to overwrite everything.
+	 */
+	function store($table, $field, $data, $conditions) {
+		$query = "update {$table} set {$field} = '{$data}'";
+		$query .= ($conditions != '') ? ' WHERE ' . $conditions : '';
+		return (self::$database->query($query)) ? true : false;
 	}
 }

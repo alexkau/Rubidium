@@ -58,6 +58,7 @@ class rubidium {
 		$mtime = $mtime[1] + $mtime[0]; 
 		self::$startTime = $mtime;
 	}
+	
 	function endTimer() {
 		$mtime = microtime(); 
 		$mtime = explode(" ",$mtime); 
@@ -67,7 +68,24 @@ class rubidium {
 		return $totalTime;
 	}
 	
-	//Gets the current request from URL
+	/**
+	 * arrayToString
+	 * Input array, out comes string (for DB storage)
+	 */
+	function arrayToString($array) {
+		return http_build_query($array);
+	}
+	
+	/**
+	 * stringToArray
+	 * Input string (from DB), out comes array
+	 */
+	function stringToArray($string) {
+		parse_str($string, $array);
+		return $array;
+	}
+	
+	//Gets the current request info
 	function getRequest() {
 		//GET array must be converted to lowercase so case sensitivity doesn't matter (index.php?mode=page versus index.php?MODE=PAGE)
 		self::$request['GET'] = ((! empty($_GET)) ? self::arrayToLower(self::cleanArray($_GET)) : null);
@@ -104,6 +122,55 @@ class rubidium {
 			unset($array[$key]);
 			$array[strtolower($key)] = ((is_array($value)) ? self::arraytolower($value,$round+1) : strtolower($value));
 		}
-        	return $array;
+        return $array;
+	}
+	
+	/**
+	 * generateHash
+	 * Returns a random 16-character string to be used as a password hash
+	 */
+	function generateSalt() {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+		$string = '';
+		for ($p = 0; $p < 16; $p++) {
+			$string .= substr($characters, mt_rand(0, 35), 1);
+		}
+		return $string;
+	}
+	
+	/**
+	 * generateLoginKey
+	 * Returns a random 128-character string to be used as a password hash
+	 */
+	function generateLoginKey() {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+		$string = '';
+		for ($p = 0; $p < 127; $p++) {
+			$string .= substr($characters, mt_rand(0, 35), 1);
+		}
+		return $string;
+	}
+	
+	/**
+	 * setPassword
+	 * Generates a password salt, SHA-512 hashes it against the password, and sets the admin password and salt
+	 */
+	function setPassword($password) {
+		$salt = self::generateSalt();
+		$hash = hash("sha512", $password.$salt);
+		//echo "Password: {$password} - Salt: {$salt} - Hash: {$hash}";
+		classDB::store('admin_info', 'value', $salt, "`name` = 'password_salt'");
+		classDB::store('admin_info', 'value', $hash, "`name` = 'password_hash'");
+	}
+	
+	/**
+	 * checkPassword
+	 * Checks specified admin password against database, returns true or false
+	 */
+	function checkPassword($password) {
+		$adminInfo = classDB::getTable('admin_info', 'name', 'name, value');
+		$hash = hash("sha512", $password.$adminInfo['password_salt']['value']);
+		//echo $hash."<br/>".$adminInfo['password_hash']['value'];
+		return ($hash == $adminInfo['password_hash']['value']) ? true : false;
 	}
 }
