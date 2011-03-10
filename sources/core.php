@@ -1,12 +1,15 @@
 <?php
 class rubidium {
+	static public $startTime = null;
 	static public $settings = array();
 	static public $modules = array();
 	static public $config = array();
 	static public $request = array();
 	static public $toLoad = array();
 	static public $DB = null;
+	
 	function init() {
+		self::startTimer();
 		require(ROOT_PATH . 'sources/debug.php');
 		debug::addMessage("Loading file sources/debug.php");
 		debug::addMessage("Loading file sources/core.php");
@@ -44,8 +47,24 @@ class rubidium {
 		classDB::close();
 		
 		//Finalize debug output
-		debug::addMessage("Page rendered successfully");
+		debug::addMessage("Page rendered successfully in ". self::endTimer() ." seconds");
 		echo (DEBUG == 1 || DEBUG == 2) ? debug::compileOutput() : '';
+
+	}
+	
+	function startTimer() {
+		$mtime = microtime(); 
+		$mtime = explode(" ",$mtime); 
+		$mtime = $mtime[1] + $mtime[0]; 
+		self::$startTime = $mtime;
+	}
+	function endTimer() {
+		$mtime = microtime(); 
+		$mtime = explode(" ",$mtime); 
+		$mtime = $mtime[1] + $mtime[0]; 
+		$endTime = $mtime; 
+		$totalTime = round(($endTime - self::$startTime), 4, PHP_ROUND_HALF_UP);
+		return $totalTime;
 	}
 	
 	//Gets the current request from URL

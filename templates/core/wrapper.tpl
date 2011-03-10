@@ -18,5 +18,6 @@ Break here because of Chrome's autocomplete URL bar T__T
 		{include file="`$smarty.const.ROOT_PATH`templates/`$loadInfo.templateCategory`/`$loadInfo.templateToLoad`.tpl"}
 		{include file="`$smarty.const.ROOT_PATH`templates/core/footer.tpl"}
 	</div>
+	
 </body>
 </html>

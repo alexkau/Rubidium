@@ -1,4 +1,5 @@
 <?php
+
 //Define the root path for all scripts
 define('ROOT_PATH', dirname( __FILE__ ) . '/');
 

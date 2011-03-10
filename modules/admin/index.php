@@ -1,16 +1,22 @@
 <?php
 class module_admin extends module_default {
 	
-	static public $available_modules	= array();
+	static public $availableModules	= array();
 	static public $pageContent			= null;
 	static public $pageContentLoaded	= false;
 	static public $moduleToLoad			= null;
 	static public $moduleAdminName		= null;
+	static public $authorized		= false;
+	static public $onLoginPage		= false;
 	
 	function __construct() {
-		self::$available_modules = classDB::getSimpleTable('modules','id','enabled = 1','');
+		self::$availableModules = classDB::getSimpleTable('modules','id','enabled = 1','');
+		self::$moduleToLoad = (rubidium::$request['GET']['module'] != '') ? rubidium::$request['GET']['module'] : null;
+		self::$onLoginPage = (rubidium::$request['GET']['module'] == 'admin' && rubidium::$request['GET']['section'] == 'login') ? true : false;
+		
+		
 		//If module is not specified, set to null; if module specified is admin, set to null; otherwise, set to specified module
-		self::$moduleToLoad = (rubidium::$request['GET']['module'] != '') ? (rubidium::$request['GET']['module'] != 'admin') ? rubidium::$request['GET']['module'] : null : null;
+		//self::$moduleToLoad = (rubidium::$request['GET']['module'] != '') ? (rubidium::$request['GET']['module'] != 'admin') ? rubidium::$request['GET']['module'] : null : null;
 	}
 	/*	?mode=admin&module=page&section=list
 		Load is valid if either:
@@ -20,16 +26,19 @@ class module_admin extends module_default {
 	
 	*/
 	function validateLoad() {
+
 		//If module is specified and they aren't trying to do something recursive here...
-		if (rubidium::$request['GET']['module'] != '' && rubidium::$request['GET']['module'] != 'admin') {
+		if (self::$moduleToLoad != '') {
 			//and if the module exists...
-			if (in_array(rubidium::$request['GET']['module'], self::$available_modules)) {
-				require (ROOT_PATH . "modules/" . rubidium::$request['GET']['module'] . "/admin.php");
-				self::$moduleAdminName = "module_" . rubidium::$request['GET']['module'] . "_admin";
+			if (in_array(self::$moduleToLoad, self::$availableModules)) {
+				require (ROOT_PATH . "modules/" . self::$moduleToLoad . "/admin.php");
+				self::$moduleAdminName = "module_" . self::$moduleToLoad . "_admin";
 				$moduleAdmin = new self::$moduleAdminName();
 				if ($moduleAdmin::validateLoad()) {
-					
+					unset($moduleAdmin);
+					return true;
 				} else {
+					unset($moduleAdmin);
 					self::load404();
 				}
 				return true;
@@ -50,20 +59,22 @@ class module_admin extends module_default {
 	}
 	
 	function returnPage() {
-		if (! self::$pageContentLoaded) {
-			if (self::$moduleToLoad) {
-				self::$pageContent = $moduleAdmin->returnPage();
-//				self::$pageContent['title'] = 'placeholder';
-//				self::$pageContent['content'] = 'module index for '.self::$moduleToLoad;
-//				self::$pageContent['templateCategory'] = 'modules/admin';
-//				self::$pageContent['templateToLoad'] = 'generic';
-			} else {
-				self::$pageContent['title'] = 'admin index';
-				self::$pageContent['content'] = 'admin cp index page';
-				self::$pageContent['templateCategory'] = 'modules/admin';
-				self::$pageContent['templateToLoad'] = 'generic';
+		if (self::$authorized || self::$onLoginPage) {
+			if (! self::$pageContentLoaded) {
+				if (self::$moduleToLoad) {
+					$moduleAdmin = new self::$moduleAdminName();
+					self::$pageContentLoaded = true;
+					self::$pageContent = $moduleAdmin::returnPage();
+				} else {
+					self::$pageContent['title'] = 'admin index';
+					self::$pageContent['content'] = 'admin cp index page';
+					self::$pageContent['templateCategory'] = 'modules/admin';
+					self::$pageContent['templateToLoad'] = 'generic';
+				}
 			}
+		} else {
+			header('Location: index.php?mode=admin&module=admin&section=login');
 		}
-			return self::$pageContent;
+	return self::$pageContent;
 	}
 }

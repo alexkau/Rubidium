@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.0.6, created on 2011-02-27 19:44:02
+<?php /* Smarty version Smarty-3.0.6, created on 2011-03-09 15:37:44
          compiled from "/var/www/rubidium/templates/core/wrapper.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:13673435344d6b1a02971da2-94427225%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_smarty_tpl->decodeProperties(array (
     '75acc48772562a63598a7a9453d7158c16a98902' => 
     array (
       0 => '/var/www/rubidium/templates/core/wrapper.tpl',
-      1 => 1298864642,
+      1 => 1299712909,
       2 => 'file',
     ),
   ),

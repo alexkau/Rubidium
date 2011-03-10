@@ -58,7 +58,6 @@ class module_page extends module_default {
 			self::$pageContent = self::loadPage(rubidium::$modules['page']['default_action_value']);
 			debug::addMessage("Loading default page");
 		}
-		print_r(self::$pageContent);
 		return self::$pageContent;
 	}
 }

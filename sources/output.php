@@ -21,9 +21,10 @@ class outputHandler {
 				self::$workingModuleName = "module_" . self::$mode;
 				$workingModule = new self::$workingModuleName();
 				if ($workingModule::validateLoad()) {
-					self::$toLoad['mode']	= self::$mode;
+					/*self::$toLoad['mode']	= self::$mode;
 					self::$toLoad['id']	= rubidium::$request['GET']['id'];
-					self::$loadInfo = $workingModule::returnPage(self::$toLoad);
+					self::$loadInfo = $workingModule::returnPage(self::$toLoad);*/
+					self::$loadInfo = $workingModule::returnPage();
 				} else {
 					self::load404();
 				}
