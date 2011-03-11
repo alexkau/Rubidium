@@ -1,4 +1,5 @@
 <?php
+echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class module_admin extends module_default {
 	
 	static public $availableModules	= array();
@@ -13,6 +14,7 @@ class module_admin extends module_default {
 		self::$availableModules = classDB::getSimpleTable('modules','id','enabled = 1','');
 		self::$moduleToLoad = (rubidium::$request['GET']['module'] != '') ? rubidium::$request['GET']['module'] : null;
 		self::$onLoginPage = (rubidium::$request['GET']['module'] == 'admin' && rubidium::$request['GET']['section'] == 'login') ? true : false;
+		self::checkAuthorization();
 	}
 	/*	?mode=admin&module=page&section=list
 		Load is valid if either:
@@ -21,6 +23,15 @@ class module_admin extends module_default {
 			-> If it is, then load module's admin section: If requested page doesn't exist, then return true and give admin CP's 404 page	
 	
 	*/
+	
+	function checkAuthorization() {
+		$adminInfo = classDB::getTable('admin_info', 'name', 'name, value');
+		session_start();
+		if ($adminInfo['login_key']['value'] != '' && $_SESSION['loginkey'] == $adminInfo['login_key']['value'] && time() > $admininfo['timeout_time']['value']) {
+			classDB::store('admin_info', 'value', time() + 1800, "`name` = 'timeout_time'");
+			self::$authorized = true;
+		}
+	}
 	function validateLoad() {
 
 		//If module is specified and they aren't trying to do something recursive here...
@@ -65,7 +76,9 @@ class module_admin extends module_default {
 			}
 		} else {
 			header('Location: index.php?mode=admin&module=admin&section=login');
+			die();
 		}
+	self::$pageContent['authorized'] = self::$authorized;
 	return self::$pageContent;
 	}
 }

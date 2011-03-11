@@ -23,3 +23,9 @@
 #footer {
 	text-align: right;
 }
+.right {
+	float: right;
+}
+.left {
+	float: left;
+}

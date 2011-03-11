@@ -1,4 +1,5 @@
 <?php
+echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class classDB {
 	static public $database = null;
 	public static function connect() {
@@ -153,6 +154,7 @@ class classDB {
 	function store($table, $field, $data, $conditions) {
 		$query = "update {$table} set {$field} = '{$data}'";
 		$query .= ($conditions != '') ? ' WHERE ' . $conditions : '';
+		debug::addMessage("Running MySQL query: " . $query);
 		return (self::$database->query($query)) ? true : false;
 	}
 }

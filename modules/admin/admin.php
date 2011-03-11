@@ -1,4 +1,5 @@
 <?php
+echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class module_admin_admin {
 	static public $pageContent	= array();
 	static public $section		= null;

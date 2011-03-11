@@ -1,4 +1,5 @@
 <?php
+echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class outputHandler {
 	static public $toLoad				= array();
 	static public $loadInfo				= array();
@@ -78,7 +79,7 @@ class outputHandler {
 		debug::addMessage("Template engine loaded");
 		self::setTemplateVars($smarty, self::$loadInfo, self::$toLoad);
 		if (self::$mode = 'admin') {
-			$smarty->display('core/adminwrapper.tpl');
+			$smarty->display('modules/admin/wrapper.tpl');
 		} else {
 			$smarty->display('core/wrapper.tpl');
 		}

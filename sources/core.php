@@ -1,4 +1,5 @@
 <?php
+echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class rubidium {
 	static public $startTime = null;
 	static public $settings = array();
