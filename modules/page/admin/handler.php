@@ -6,9 +6,18 @@ class module_page_admin {
 	function __construct() {
 		self::$section = rubidium::$request['GET']['section'];
 	}
+	
 	function validateLoad() {
 		return true;
 	}
+	
+	function buildSidebar() {
+		return array(	'General'		=> array( 	'Manage Pages'	=> 'manage',
+									'Settings'	=> 'settings'),
+				'section_2'		=> array( 	'Link 1'	=> 'section1',
+									'Link 2'	=> 'section2'), );
+	}
+	
 	function returnPage() {
 		if (self::$section && file_exists(ROOT_PATH . 'templates/modules/page/admin/' . self::$section . '.tpl')) {
 				//classDB::store('module_admin_sections', 'pageInfo', rubidium::arrayToString(self::$pageContent), "`name` = 'login'"); echo '<br/>';
@@ -21,9 +30,11 @@ class module_page_admin {
 			}
 		} else {
 			//self::$pageContent = rubidium::stringToArray(classDB::mysqlToString(classDB::select('module_page_sections', 'pageInfo', "`name` = 'index'")));
-			self::$section = 'index';
+			self::$section = 'manage';
 			self::$pageContent = self::returnPage();
 		}
-	return self::$pageContent;
+		self::$pageContent['section'] = self::$section;
+		self::$pageContent['sidebar'] = self::buildSidebar();
+		return self::$pageContent;
 	}
 }

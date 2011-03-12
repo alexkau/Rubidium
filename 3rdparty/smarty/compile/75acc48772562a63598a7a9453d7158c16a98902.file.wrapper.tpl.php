@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.0.6, created on 2011-03-09 15:37:44
+<?php /* Smarty version Smarty-3.0.6, created on 2011-03-11 19:20:04
          compiled from "/var/www/rubidium/templates/core/wrapper.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:13673435344d6b1a02971da2-94427225%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_smarty_tpl->decodeProperties(array (
     '75acc48772562a63598a7a9453d7158c16a98902' => 
     array (
       0 => '/var/www/rubidium/templates/core/wrapper.tpl',
-      1 => 1299712909,
+      1 => 1299730591,
       2 => 'file',
     ),
   ),
@@ -42,5 +42,6 @@ Break here because of Chrome's autocomplete URL bar T__T
 		<?php $_template = new Smarty_Internal_Template((@ROOT_PATH)."templates/core/footer.tpl", $_smarty_tpl->smarty, $_smarty_tpl, $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null);
  echo $_template->getRenderedTemplate();?><?php $_template->updateParentVariables(0);?><?php unset($_template);?>
 	</div>
+	
 </body>
 </html>

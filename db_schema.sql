@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.9
+-- version 3.3.5
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 11, 2011 at 05:38 PM
--- Server version: 5.1.44
--- PHP Version: 5.3.2
+-- Generation Time: Mar 11, 2011 at 10:41 PM
+-- Server version: 5.1.49
+-- PHP Version: 5.3.3-1ubuntu9.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS `admin_info` (
 --
 
 INSERT INTO `admin_info` (`name`, `value`) VALUES
-('login_key', 'yr1s6y1han8d9i3zida86t2owoat4ro6mfb5m1tonsqsp5dji6y8d5z9idc3b4jufh3xzm1krgliwe7l9m53vn416kmti8wn4pnsn6pc0s7hm649mmgm1gjwbed10fr'),
+('login_key', '0wjg8ycmz3u4bb2qzcef1oy8r5zrnbchpp6gfn1iesub0kjdaadite1gsxenvwgyvxr8vvlmls6125krdikdkhptiwfn69os2sidwf812ghe0ekghtx9ccgh50y3872'),
 ('password_salt', 'fqrpprx5rfcg8wc5'),
 ('password_hash', '422ffac138fb207c8d48da89d4d7f446e17c6442930b8611ef5a1c9139a24a20905b2a7787826aa0e0d97402d308abebcdc442823caea8acd4748ba05937a83d'),
-('timeout_time', '1299883912');
+('timeout_time', '1299913426');
 
 -- --------------------------------------------------------
 
@@ -45,6 +45,7 @@ INSERT INTO `admin_info` (`name`, `value`) VALUES
 
 CREATE TABLE IF NOT EXISTS `module_admin_sections` (
   `name` varchar(32) NOT NULL,
+  `public_name` varchar(64) NOT NULL,
   `templateCategory` varchar(128) NOT NULL,
   `templateName` varchar(128) NOT NULL,
   `pageInfo` mediumtext NOT NULL
@@ -54,10 +55,11 @@ CREATE TABLE IF NOT EXISTS `module_admin_sections` (
 -- Dumping data for table `module_admin_sections`
 --
 
-INSERT INTO `module_admin_sections` (`name`, `templateCategory`, `templateName`, `pageInfo`) VALUES
-('index', 'modules/admin', 'dashboard', 'title=Admin+CP+Dashboard&templateCategory=modules%2Fadmin&templateToLoad=dashboard'),
-('login', 'modules/admin', 'login', 'title=Admin+CP+Login&templateCategory=modules%2Fadmin&templateToLoad=login'),
-('logout', 'modules/admin', 'logout', 'title=Logged+Out&templateCategory=modules%2Fadmin&templateToLoad=logout');
+INSERT INTO `module_admin_sections` (`name`, `public_name`, `templateCategory`, `templateName`, `pageInfo`) VALUES
+('index', 'Index', 'modules/admin', 'dashboard', 'title=Admin+CP+Dashboard&templateCategory=modules%2Fadmin&templateToLoad=dashboard'),
+('login', 'Log in', 'modules/admin', 'login', 'title=Admin+CP+Login&templateCategory=modules%2Fadmin&templateToLoad=login'),
+('logout', 'Log out', 'modules/admin', 'logout', 'title=Logged+Out&templateCategory=modules%2Fadmin&templateToLoad=logout'),
+('settings', 'Settings', 'modules/admin', 'settings', 'title=Settings&templateCategory=modules%2Fadmin&templateToLoad=settings');
 
 -- --------------------------------------------------------
 
@@ -90,6 +92,7 @@ INSERT INTO `module_page_pages` (`id`, `title`, `content`, `last_updated`) VALUE
 
 CREATE TABLE IF NOT EXISTS `module_page_sections` (
   `name` varchar(32) NOT NULL,
+  `public_name` varchar(64) NOT NULL,
   `pageInfo` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -97,8 +100,10 @@ CREATE TABLE IF NOT EXISTS `module_page_sections` (
 -- Dumping data for table `module_page_sections`
 --
 
-INSERT INTO `module_page_sections` (`name`, `pageInfo`) VALUES
-('index', 'title=Page Manager&templateCategory=modules%2Fpage%2Fadmin&templateToLoad=index');
+INSERT INTO `module_page_sections` (`name`, `public_name`, `pageInfo`) VALUES
+('index', 'Index', 'title=Page Manager&templateCategory=modules%2Fpage%2Fadmin&templateToLoad=index'),
+('manage', 'Manage Pages', 'title=Manage Pages&templateCategory=modules%2Fpage%2Fadmin&templateToLoad=manage'),
+('settings', 'Settings', 'title=Settings&templateCategory=modules%2Fpage%2Fadmin&templateToLoad=settings');
 
 -- --------------------------------------------------------
 
@@ -147,3 +152,4 @@ INSERT INTO `settings` (`id`, `name`, `description`, `value`) VALUES
 (2, 'footer', 'Global site footer', '&copy; 2011 The Rubidium Project'),
 (5, '404_page', 'ID of page to display on 404 error', '3'),
 (4, 'default_mode', 'Default mode to load if not specified', 'page');
+

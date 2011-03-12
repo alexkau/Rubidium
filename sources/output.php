@@ -82,7 +82,7 @@ class outputHandler {
 		$smarty->setConfigDir	(SMARTY_DIR . 'config');
 		debug::addMessage("Template engine loaded");
 		self::setTemplateVars($smarty, self::$loadInfo, self::$toLoad);
-		if (self::$mode = 'admin') {
+		if (self::$mode == 'admin') {
 			$smarty->display('modules/admin/wrapper.tpl');
 		} else {
 			$smarty->display('core/wrapper.tpl');

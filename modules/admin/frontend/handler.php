@@ -44,7 +44,7 @@ class module_admin extends module_default {
 		if (self::$moduleToLoad != '') {
 			//and if the module exists...
 			if (in_array(self::$moduleToLoad, self::$availableModules)) {
-				//and if it has an admin handler file...
+				//...then get its handler file.
 				require (ROOT_PATH . "modules/" . self::$moduleToLoad . "/admin/handler.php");
 				self::$moduleAdminName = "module_" . self::$moduleToLoad . "_admin";
 				$moduleAdmin = new self::$moduleAdminName();
@@ -75,16 +75,17 @@ class module_admin extends module_default {
 					self::$pageContentLoaded = true;
 					self::$pageContent = $moduleAdmin::returnPage();
 				} else {
-					self::$pageContent['title'] = 'admin index';
-					self::$pageContent['content'] = 'admin cp index page';
-					self::$pageContent['templateCategory'] = 'modules/admin';
-					self::$pageContent['templateToLoad'] = 'generic';
+					require (ROOT_PATH . "modules/admin/admin/handler.php");
+					self::$moduleToLoad	= 'admin';
+					self::$moduleAdminName	= 'module_admin_admin';
+					self::$pageContent	= self::returnPage();
 				}
 			}
 		} else {
 			header('Location: index.php?mode=admin&module=admin&section=login');
 			die();
 		}
+	self::$pageContent['module']		= self::$moduleToLoad;
 	self::$pageContent['authorized']	= self::$authorized;
 	self::$pageContent['timeout']		= self::$timeout;
 	return self::$pageContent;

@@ -1,1 +1,1 @@
-<div id='content'>{$loadInfo.content}</div>
+{$loadInfo.content}

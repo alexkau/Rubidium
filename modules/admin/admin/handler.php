@@ -9,9 +9,18 @@ class module_admin_admin extends module_default {
 		self::$section = rubidium::$request['GET']['section'];
 		self::$availableSections = classDB::getSimpleTable('module_admin_sections', 'name', '', '');
 	}
+	
 	function validateLoad() {
 		return true;
 	}
+	
+	function buildSidebar() {
+		return array(	'System' => array( 	'Index'			=> 'index',
+							'Settings'		=> 'settings'),
+				'section_2' => array( 	'Link 1'		=> 'section1',
+							'Link 2'		=> 'section2'), );
+	}
+	
 	function returnPage() {
 		if (self::$section && in_array(self::$section, self::$availableSections)) {
 				//classDB::store('module_admin_sections', 'pageInfo', rubidium::arrayToString(self::$pageContent), "`name` = 'login'"); echo '<br/>';
@@ -27,6 +36,8 @@ class module_admin_admin extends module_default {
 			self::$section = 'index';
 			self::$pageContent = self::returnPage();
 		}
+		self::$pageContent['section'] = self::$section;
+		self::$pageContent['sidebar'] = self::buildSidebar();
 		return self::$pageContent;
 	}
 }

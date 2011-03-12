@@ -1,1 +1,1 @@
-<div id='content'>Admin CP Dashboard</div>
+Admin CP Dashboard
