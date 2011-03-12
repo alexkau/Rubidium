@@ -37,7 +37,7 @@ class module_page extends module_default {
 		$pageInfo = classDB::select('module_page_pages','*','id = "' . $idToLoad . '"');
 		if ($pageInfo) {
 			$pageArray = $pageInfo->fetch_assoc();
-			debug::addMessage('Page info: '.print_r($pageArray,true));
+			//debug::addMessage('Page info: '.print_r($pageArray,true));
 			$pageArray['templateCategory'] = 'modules/page';
 			$pageArray['templateToLoad'] = 'page';
 			return $pageArray;

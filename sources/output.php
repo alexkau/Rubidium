@@ -68,6 +68,7 @@ class outputHandler {
 	static public function setTemplateVars($smarty, $loadInfo, $toLoad) {
 		$smarty->assign('toLoad',	$toLoad);
 		$smarty->assign('loadInfo',	$loadInfo);
+		//print_r($loadInfo);
 		$smarty->assign('config',	rubidium::$config);
 		$smarty->assign('settings',	rubidium::$settings);
 		$smarty->assign('modules',	rubidium::$modules);

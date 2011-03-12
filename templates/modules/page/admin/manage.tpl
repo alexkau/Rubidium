@@ -1,9 +1,7 @@
-Manage Pages
+<h2>Manage Pages</h2>
 
-<ul id='pageList'>
-{foreach $loadInfo.pageList as $id => $data}
-	<li>
-		<a href='index.php?mode=admin&module=page&section=manage&edit={$id}'>{$data.title}</a>
-	</li>
-{/foreach}
-</ul>
+{if $loadInfo.subsection}
+	{include file="`$smarty.const.ROOT_PATH`templates/modules/page/admin/`$loadInfo.subsection`.tpl"}
+{else}
+	{include file="`$smarty.const.ROOT_PATH`templates/modules/page/admin/pageList.tpl"}
+{/if}

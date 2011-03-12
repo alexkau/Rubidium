@@ -8,9 +8,8 @@
 <body>
 <br />
 <br />
-<hr />
-Break here because of Chrome's autocomplete URL bar T__T
-<hr />
+<br />
+<br />
 <br />
 <br />
 	<div id='wrapper'>

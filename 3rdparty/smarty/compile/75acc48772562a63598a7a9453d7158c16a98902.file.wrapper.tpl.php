@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.6, created on 2011-03-11 19:20:04
+<?php /* Smarty version Smarty-3.0.6, created on 2011-03-12 13:57:39
          compiled from "/var/www/rubidium/templates/core/wrapper.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:13673435344d6b1a02971da2-94427225%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:18328875094d7bec53a45d42-86638628%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '75acc48772562a63598a7a9453d7158c16a98902' => 
     array (
       0 => '/var/www/rubidium/templates/core/wrapper.tpl',
-      1 => 1299730591,
+      1 => 1299966996,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13673435344d6b1a02971da2-94427225',
+  'nocache_hash' => '18328875094d7bec53a45d42-86638628',
   'function' => 
   array (
   ),
@@ -29,9 +29,8 @@ $_smarty_tpl->decodeProperties(array (
 <body>
 <br />
 <br />
-<hr />
-Break here because of Chrome's autocomplete URL bar T__T
-<hr />
+<br />
+<br />
 <br />
 <br />
 	<div id='wrapper'>

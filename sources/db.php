@@ -158,4 +158,17 @@ class classDB {
 		debug::addMessage("Running MySQL query: " . $query);
 		return (self::$database->query($query)) ? true : false;
 	}
+	
+	function store1($table, $content, $conditions) {
+		$comma = '';
+		$query = "update {$table} set ";
+		foreach ($content as $field => $data) {
+			$query .= "{$comma}`{$field}` = '{$data}'";
+			$comma = ", ";
+		}
+		$query .= ($conditions != '') ? ' WHERE ' . $conditions : '';
+		debug::addMessage("Running MySQL query: " . $query);
+//		return (self::$database->query($query)) ? true : false;
+		self::$database->query($query);
+	}
 }
