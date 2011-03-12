@@ -17,7 +17,7 @@ CREATE DATABASE `rubidium` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_c
 USE `rubidium`;
 
 -- --------------------------------------------------------
-
+--
 --
 -- Table structure for table `admin_info`
 --
