@@ -2,12 +2,13 @@
 echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class module_admin extends module_default {
 	
-	static public $availableModules	= array();
-	static public $pageContent			= null;
+	static public $availableModules		= array();
+	static public $pageContent		= null;
 	static public $pageContentLoaded	= false;
-	static public $moduleToLoad			= null;
+	static public $moduleToLoad		= null;
 	static public $moduleAdminName		= null;
 	static public $authorized		= false;
+	static public $timeout			= false;
 	static public $onLoginPage		= false;
 	
 	function __construct() {
@@ -27,9 +28,12 @@ class module_admin extends module_default {
 	function checkAuthorization() {
 		$adminInfo = classDB::getTable('admin_info', 'name', 'name, value');
 		session_start();
-		if ($adminInfo['login_key']['value'] != '' && $_SESSION['loginkey'] == $adminInfo['login_key']['value'] && time() > $admininfo['timeout_time']['value']) {
+		if ($adminInfo['login_key']['value'] != '' && $_SESSION['loginkey'] == $adminInfo['login_key']['value'] && time() <= $adminInfo['timeout_time']['value']) {
 			classDB::store('admin_info', 'value', time() + 1800, "`name` = 'timeout_time'");
 			self::$authorized = true;
+		}
+		if (time() >= $adminInfo['timeout_time']['value']) {
+			self::$timeout = true;
 		}
 	}
 	function validateLoad() {
@@ -45,6 +49,7 @@ class module_admin extends module_default {
 					self::load404();
 				}
 				unset($moduleAdmin);
+				
 			} else {
 				self::load404();
 			}
@@ -78,7 +83,8 @@ class module_admin extends module_default {
 			header('Location: index.php?mode=admin&module=admin&section=login');
 			die();
 		}
-	self::$pageContent['authorized'] = self::$authorized;
+	self::$pageContent['authorized']	= self::$authorized;
+	self::$pageContent['timeout']		= self::$timeout;
 	return self::$pageContent;
 	}
 }

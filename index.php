@@ -1,5 +1,9 @@
 <?php
+//This will have each script print its path when it loads, for debugging purposes.
+//If this is enabled, most redirects WILL NOT WORK.
 define("PRINT_FILENAMES",0);
+
+
 echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);
 

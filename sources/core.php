@@ -1,13 +1,13 @@
 <?php
 echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class rubidium {
-	static public $startTime = null;
-	static public $settings = array();
-	static public $modules = array();
-	static public $config = array();
-	static public $request = array();
-	static public $toLoad = array();
-	static public $DB = null;
+	static public $startTime	= null;
+	static public $settings		= array();
+	static public $modules		= array();
+	static public $config		= array();
+	static public $request		= array();
+	static public $toLoad		= array();
+	static public $DB		= null;
 	
 	function init() {
 		self::startTimer();
@@ -35,7 +35,7 @@ class rubidium {
 
 		//Load settings and request
 		self::$settings = classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
-		self::$modules = classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected', '', '' );
+		self::$modules = classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected', '', array("order_by" => "numeric_id") );
 		self::getRequest();
 		
 		//Load output handler and build page

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.3.5
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 10, 2011 at 06:23 PM
--- Server version: 5.1.49
--- PHP Version: 5.3.3-1ubuntu9.3
+-- Generation Time: Mar 11, 2011 at 05:38 PM
+-- Server version: 5.1.44
+-- PHP Version: 5.3.2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS `admin_info` (
 --
 
 INSERT INTO `admin_info` (`name`, `value`) VALUES
-('login_key', 'd2je76vkmopf2tunagy474dv8id1f16clw3dhsbt5y8v6vjjsi74ic42s2q0zv0rlh4ffg16t5oh91ogc2x8fzvy990tdwvatp6dk10md28wpwfomlq8ka339s9tdm7'),
+('login_key', 'yr1s6y1han8d9i3zida86t2owoat4ro6mfb5m1tonsqsp5dji6y8d5z9idc3b4jufh3xzm1krgliwe7l9m53vn416kmti8wn4pnsn6pc0s7hm649mmgm1gjwbed10fr'),
 ('password_salt', 'fqrpprx5rfcg8wc5'),
 ('password_hash', '422ffac138fb207c8d48da89d4d7f446e17c6442930b8611ef5a1c9139a24a20905b2a7787826aa0e0d97402d308abebcdc442823caea8acd4748ba05937a83d'),
-('timeout_time', '1299810831');
+('timeout_time', '1299883912');
 
 -- --------------------------------------------------------
 
@@ -85,25 +85,45 @@ INSERT INTO `module_page_pages` (`id`, `title`, `content`, `last_updated`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `module_page_sections`
+--
+
+CREATE TABLE IF NOT EXISTS `module_page_sections` (
+  `name` varchar(32) NOT NULL,
+  `pageInfo` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `module_page_sections`
+--
+
+INSERT INTO `module_page_sections` (`name`, `pageInfo`) VALUES
+('index', 'title=Page Manager&templateCategory=modules%2Fpage%2Fadmin&templateToLoad=index');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `modules`
 --
 
 CREATE TABLE IF NOT EXISTS `modules` (
+  `numeric_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Numeric ID for sorting',
   `id` varchar(32) NOT NULL COMMENT 'ID used by software',
   `name` varchar(32) NOT NULL COMMENT 'Public name for module',
   `default_action` varchar(32) NOT NULL COMMENT 'Action of default content to load for this mode (e.g. id)',
   `default_action_value` varchar(32) NOT NULL COMMENT 'Default value for default action (e.g. 1)',
   `enabled` tinyint(1) NOT NULL COMMENT 'Is the mode enabled? (Page\r\ncannot be disabled)',
-  `protected` tinyint(1) NOT NULL COMMENT 'Can it be uninstalled?\r\n(Addon modes cannot be protected)'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `protected` tinyint(1) NOT NULL COMMENT 'Can it be uninstalled?\r\n(Addon modes cannot be protected)',
+  PRIMARY KEY (`numeric_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `modules`
 --
 
-INSERT INTO `modules` (`id`, `name`, `default_action`, `default_action_value`, `enabled`, `protected`) VALUES
-('page', 'Pages', 'id', '1', 1, 1),
-('admin', 'Admin', 'module', 'dashboard', 1, 1);
+INSERT INTO `modules` (`numeric_id`, `id`, `name`, `default_action`, `default_action_value`, `enabled`, `protected`) VALUES
+(2, 'page', 'Pages', 'id', '1', 1, 1),
+(1, 'admin', 'Dashboard', 'module', 'dashboard', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -127,4 +147,3 @@ INSERT INTO `settings` (`id`, `name`, `description`, `value`) VALUES
 (2, 'footer', 'Global site footer', '&copy; 2011 The Rubidium Project'),
 (5, '404_page', 'ID of page to display on 404 error', '3'),
 (4, 'default_mode', 'Default mode to load if not specified', 'page');
-

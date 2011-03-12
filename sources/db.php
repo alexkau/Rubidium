@@ -88,6 +88,7 @@ class classDB {
 		{
 			$query .= " LIMIT ".$options['limit'];
 		}
+		//echo $query . "<br />";
 		debug::addMessage("Running MySQL query: {$query}");
 		$result = self::$database->query($query);
 		if (mysqli_num_rows($result) > 0) {
@@ -141,7 +142,7 @@ class classDB {
 	function getSimpleTable($table, $field, $conditions, $options) {
 		$temp = self::select($table, $field, $conditions, $options);
 		while ($row = $temp->fetch_assoc()) {
-			$output[] = $row['id'];
+			$output[] = $row["{$field}"];
 		}
 		return $output;
 	}

@@ -20,6 +20,8 @@ class module_admin_admin_login {
 				classDB::store('admin_info', 'value', time() + 1800, "`name` = 'timeout_time'");
 				//Set login key in cookie
 				$_SESSION['loginkey'] = self::$loginKey;
+				header('Location: index.php?mode=admin&module=admin&section=index');
+				die();
 			} else {
 				module_admin_admin::$pageContent['loginfailed'] = true;
 			}

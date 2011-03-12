@@ -9,7 +9,7 @@ class module_page extends module_default {
 	 * Returns false (404) if page is specified but doesn't exist
 	 */
 	function validateLoad() {
-		if (rubidium::$request['GET']['id'] != '') {
+		if (rubidium::$request['GET']['id'] != '' && in_array(self::$section, self::$availableSections)) {
 			self::$pageContent = self::loadPage(rubidium::$request['GET']['ID']);
 			//if (classDB::select('module_page_pages', '*', 'id = "' . rubidium::$request['GET']['id'] . '"')) {
 			if (is_array(self::$pageContent)) {
