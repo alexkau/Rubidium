@@ -8,7 +8,7 @@ class module_page_admin_manage {
 	function execute() {
 		self::$post	= rubidium::$request['POST'];
 		self::$get	= rubidium::$request['GET'];
-		self::$pageList = self::getPageList();
+		self::updatePageList();
 		if (self::checkPostData()) {
 			switch (self::$post['action']) {
 				case 'editPage':
@@ -21,6 +21,7 @@ class module_page_admin_manage {
 					$pageContent	= self::$post['pageContent'];
 					classDB::insert('module_page_pages', array('title' => $pageTitle, 'content' => $pageContent, 'last_updated' => $timeNow));
 					$temp = classDB::select('module_page_pages', 'id', "`title` = '{$pageTitle}' AND `content` = '{$pageContent}' AND `last_updated` = '{$timeNow}'");
+					self::updatePageList();
 					module_page_admin::$pageContent['newPageId']	= classDB::mysqlToString($temp);
 					module_page_admin::$pageContent['pageList']	= self::$pageList;
 					module_page_admin::$pageContent['changesMade'] = true;
@@ -35,6 +36,7 @@ class module_page_admin_manage {
 				$toDelete = self::$get['edit'];
 				classDB::delete('module_page_pages', "`id` = {$toDelete}");
 				module_page_admin::$pageContent['deletedPage'] = 'true';
+				self::updatePageList();
 			} else {
 				module_page_admin::$pageContent['cantDelete404'] = 'true';
 			}
@@ -52,8 +54,6 @@ class module_page_admin_manage {
 				case 'add':
 					module_page_admin::$pageContent['subsection']	= 'add';
 					break;
-				case 'delete':
-					module_page_admin::$pageContent['subsection']	= 'add';
 				default:
 					break;
 			}
@@ -63,14 +63,14 @@ class module_page_admin_manage {
 	}
 	
 	/**
-	 * getPageList
-	 * Returns array of all pages: id => array(data)
+	 * updatePageList
+	 * Sets self::$pageList to array of all pages: id => array(data)
 	 */
-	function getPageList() {
+	function updatePageList() {
 		$pageList = classDB::getTable('module_page_pages', 'id', '*', '', '');
 		//print_r($pageList);
 		//print_r(array_keys($pageList));
-		return $pageList;
+		self::$pageList = $pageList;
 	}
 	
 	/**

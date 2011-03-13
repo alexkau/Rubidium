@@ -34,9 +34,7 @@ class rubidium {
 		classDB::connect(rubidium::$config);
 
 		//Load settings and request
-		self::$settings = classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
-		self::$modules = classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected', '', array("order_by" => "numeric_id") );
-		self::getRequest();
+		self::getInfo();
 		
 		//Load output handler and build page
 		require(ROOT_PATH . 'sources/output.php');
@@ -51,6 +49,12 @@ class rubidium {
 		debug::addMessage("Page rendered successfully in ". self::endTimer() ." seconds");
 		echo (DEBUG == 1 || DEBUG == 2) ? debug::compileOutput() : '';
 
+	}
+	
+	function getInfo() {
+		self::$settings = classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
+		self::$modules = classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected', '', array("order_by" => "numeric_id") );
+		self::getRequest();
 	}
 	
 	function startTimer() {

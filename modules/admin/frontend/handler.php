@@ -12,30 +12,32 @@ class module_admin extends module_default {
 	static public $onLoginPage		= false;
 	
 	function __construct() {
+		session_start();
 		self::$availableModules = classDB::getSimpleTable('modules','id','enabled = 1','');
-		self::$moduleToLoad = (rubidium::$request['GET']['module'] != '') ? rubidium::$request['GET']['module'] : null;
-		self::$onLoginPage = (rubidium::$request['GET']['module'] == 'admin' && rubidium::$request['GET']['section'] == 'login') ? true : false;
-		self::checkAuthorization();
+		if (self::checkAuthorization() || rubidium::$request['GET']['section'] = 'login') {
+			self::$moduleToLoad = (rubidium::$request['GET']['module'] != '') ? rubidium::$request['GET']['module'] : null;
+			self::$onLoginPage = (rubidium::$request['GET']['module'] == 'admin' && rubidium::$request['GET']['section'] == 'login') ? true : false;
+		} else {
+			rubidium::$request['GET']['section'] = 'login';
+			self::$moduleToLoad = 'admin';
+			self::$onLoginPage = true;
+		}
 	}
-	/*	?mode=admin&module=page&section=list
-		Load is valid if either:
-		-No values specified
-		-$_GET['module'] is in_array(available_modules)
-			-> If it is, then load module's admin section: If requested page doesn't exist, then return true and give admin CP's 404 page	
-	
-	*/
 	
 	function checkAuthorization() {
 		$adminInfo = classDB::getTable('admin_info', 'name', 'name, value');
-		session_start();
 		if ($adminInfo['login_key']['value'] != '' && $_SESSION['loginkey'] == $adminInfo['login_key']['value']) {
-			if (time() >= $adminInfo['timeout_time']['value']) {
+			if (time() > $adminInfo['timeout_time']['value']) {
 				self::$timeout = true;
 				session_destroy();
+				return false;
 			} else {
 				classDB::store('admin_info', 'value', time() + 1800, "`name` = 'timeout_time'");
 				self::$authorized = true;
+				return true;
 			}
+		} else {
+			return false;
 		}
 	}
 	function validateLoad() {

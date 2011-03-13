@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.6, created on 2011-03-12 17:24:04
+<?php /* Smarty version Smarty-3.0.6, created on 2011-03-13 12:47:54
          compiled from "/var/www/rubidium/templates/modules/page/admin/add.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:20297093994d7c1cb4e62ab0-10280516%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:7842379794d7d1f6a01a230-72160325%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'bc9bd397b12b900269cf410430a270ed042678f8' => 
     array (
       0 => '/var/www/rubidium/templates/modules/page/admin/add.tpl',
-      1 => 1299979225,
+      1 => 1299985926,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '20297093994d7c1cb4e62ab0-10280516',
+  'nocache_hash' => '7842379794d7d1f6a01a230-72160325',
   'function' => 
   array (
   ),
@@ -19,8 +19,6 @@ $_smarty_tpl->decodeProperties(array (
 )); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_smarty_tpl->getVariable('loadInfo')->value['changesMade']){?>
 	<p class='message'>
-	<?php echo $_smarty_tpl->getVariable('config')->value['base_url'];?>
-
 		The page was successfully added.<br />
 		You can view it at <a href="<?php echo $_smarty_tpl->getVariable('config')->value['base_url'];?>
 /index.php?mode=page&id=<?php echo $_smarty_tpl->getVariable('loadInfo')->value['newPageId'];?>
