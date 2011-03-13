@@ -3,6 +3,7 @@ class module_page_admin_manage {
 	static public $pageList		= array();
 	static public $post		= array();
 	static public $get		= array();
+	static public $urlMode		= null;
 	
 	function execute() {
 		self::$post	= rubidium::$request['POST'];
@@ -10,22 +11,52 @@ class module_page_admin_manage {
 		self::$pageList = self::getPageList();
 		if (self::checkPostData()) {
 			switch (self::$post['action']) {
-				case "editPage":
-					classDB::store1('module_page_pages', array('title' => self::$post['pageTitle'], 'content' => self::$post['pageContent']), '`id` = '.self::$post['id']);
+				case 'editPage':
+					classDB::store1('module_page_pages', array('title' => self::$post['pageTitle'], 'content' => self::$post['pageContent'], 'last_updated' => time()), '`id` = '.self::$post['id']);
+					module_page_admin::$pageContent['changesMade'] = true;
+					break;
+				case 'addPage':
+					$timeNow	= time();
+					$pageTitle	= self::$post['pageTitle'];
+					$pageContent	= self::$post['pageContent'];
+					classDB::insert('module_page_pages', array('title' => $pageTitle, 'content' => $pageContent, 'last_updated' => $timeNow));
+					$temp = classDB::select('module_page_pages', 'id', "`title` = '{$pageTitle}' AND `content` = '{$pageContent}' AND `last_updated` = '{$timeNow}'");
+					module_page_admin::$pageContent['newPageId']	= classDB::mysqlToString($temp);
+					module_page_admin::$pageContent['pageList']	= self::$pageList;
+					module_page_admin::$pageContent['changesMade'] = true;
 					break;
 				default:
 					break;
 			}
-			
 			module_page_admin::$pageContent['changesMade'] = true;
+		}
+		if (self::$get['delete'] == 'true' && in_array(self::$get['edit'], array_keys(self::$pageList))) {
+			if (self::$get['edit'] != rubidium::$settings['404_page']['value']) {
+				$toDelete = self::$get['edit'];
+				classDB::delete('module_page_pages', "`id` = {$toDelete}");
+				module_page_admin::$pageContent['deletedPage'] = 'true';
+			} else {
+				module_page_admin::$pageContent['cantDelete404'] = 'true';
+			}
 		}
 		if (self::checkGetData()) {
 			//Process it
 			module_page_admin::$pageContent['changesMade'] = true;
 		}
-		if (self::checkUrlParams()) {
-			module_page_admin::$pageContent['pageEditInfo']	= self::getSinglePageInfo(rubidium::$request['GET']['edit']);
-			module_page_admin::$pageContent['subsection']	= 'edit';
+		if (self::checkUrlParams() && self::$get['delete'] != 'true') {
+			switch (self::$urlMode) {
+				case 'edit':
+					module_page_admin::$pageContent['pageEditInfo']	= self::getSinglePageInfo(rubidium::$request['GET']['edit']);
+					module_page_admin::$pageContent['subsection']	= 'edit';
+					break;
+				case 'add':
+					module_page_admin::$pageContent['subsection']	= 'add';
+					break;
+				case 'delete':
+					module_page_admin::$pageContent['subsection']	= 'add';
+				default:
+					break;
+			}
 		} else {
 			module_page_admin::$pageContent['pageList']	= self::$pageList;
 		}
@@ -38,6 +69,7 @@ class module_page_admin_manage {
 	function getPageList() {
 		$pageList = classDB::getTable('module_page_pages', 'id', '*', '', '');
 		//print_r($pageList);
+		//print_r(array_keys($pageList));
 		return $pageList;
 	}
 	
@@ -63,6 +95,14 @@ class module_page_admin_manage {
 					return false;
 				}
 				break;
+			//Need to add errors if title or content isn't filled in, rather than just returning false
+			case 'addPage':
+				if (self::$post['pageTitle'] != '' && self::$post['pageContent'] != '') {
+					return true;
+				} else {
+					return false;
+				}
+				break;
 			default:
 				return false;
 		}
@@ -82,7 +122,11 @@ class module_page_admin_manage {
 	 * Returns true if there's a valid page (e.g. edit) specified in the URL
 	 */
 	function checkUrlParams() {
-		if (rubidium::$request['GET']['edit'] != '' && in_array(rubidium::$request['GET']['edit'], array_keys(self::$pageList)) ) {
+		if (self::$get['edit'] != '' && in_array(self::$get['edit'], array_keys(self::$pageList)) ) {
+			self::$urlMode = 'edit';
+			return true;
+		} else if (self::$get['add'] == 'true') {
+			self::$urlMode = 'add';
 			return true;
 		} else {
 			return false;

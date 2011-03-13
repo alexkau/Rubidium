@@ -168,7 +168,30 @@ class classDB {
 		}
 		$query .= ($conditions != '') ? ' WHERE ' . $conditions : '';
 		debug::addMessage("Running MySQL query: " . $query);
-//		return (self::$database->query($query)) ? true : false;
+		self::$database->query($query);
+	}
+	
+	function insert($table, $content) {
+		$comma = '';
+		$query = "INSERT INTO {$table} ( ";
+		foreach ($content as $field => $data) {
+			$query .= "{$comma}`{$field}`";
+			$comma = ", ";
+		}
+		$query .= ') VALUES (';
+		$comma = '';
+		foreach ($content as $field => $data) {
+			$query .= "{$comma}'{$data}'";
+			$comma = ", ";
+		}
+		$query .= ')';
+		debug::addMessage("Running MySQL query: " . $query);
+		self::$database->query($query);
+	}
+	
+	function delete($table, $conditions) {
+		$query = "DELETE FROM {$table} WHERE {$conditions}";
+		debug::addMessage("Running MySQL query: " . $query);
 		self::$database->query($query);
 	}
 }
