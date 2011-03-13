@@ -38,6 +38,7 @@ class module_admin_admin extends module_default {
 		}
 		self::$pageContent['section'] = self::$section;
 		self::$pageContent['sidebar'] = self::buildSidebar();
+		//print_r(self::$pageContent);
 		return self::$pageContent;
 	}
 }

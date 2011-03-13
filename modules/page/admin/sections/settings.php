@@ -1,13 +1,14 @@
 <?
+echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class module_page_admin_settings {
 	static public $post	= array();
 	static public $get	= array();
 	static public $pageList	= array();
 	
 	function execute() {
-		self::$post					= rubidium::$request['POST'];
-		self::$get					= rubidium::$request['GET'];
-		self::$pageList 				= self::getPageList();
+		self::$post	= rubidium::$request['POST'];
+		self::$get	= rubidium::$request['GET'];
+		self::$pageList	= self::getPageList();
 		if (self::processPostData()) {
 			module_page_admin::$pageContent['changesMade'] = true;
 			rubidium::getInfo();
