@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 11, 2011 at 10:41 PM
+-- Generation Time: Mar 13, 2011 at 01:37 PM
 -- Server version: 5.1.49
 -- PHP Version: 5.3.3-1ubuntu9.3
 
@@ -12,12 +12,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `rubidium`
 --
-DROP DATABASE `rubidium`;
 CREATE DATABASE `rubidium` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `rubidium`;
 
 -- --------------------------------------------------------
---
+
 --
 -- Table structure for table `admin_info`
 --
@@ -32,10 +31,10 @@ CREATE TABLE IF NOT EXISTS `admin_info` (
 --
 
 INSERT INTO `admin_info` (`name`, `value`) VALUES
-('login_key', '0wjg8ycmz3u4bb2qzcef1oy8r5zrnbchpp6gfn1iesub0kjdaadite1gsxenvwgyvxr8vvlmls6125krdikdkhptiwfn69os2sidwf812ghe0ekghtx9ccgh50y3872'),
-('password_salt', 'fqrpprx5rfcg8wc5'),
-('password_hash', '422ffac138fb207c8d48da89d4d7f446e17c6442930b8611ef5a1c9139a24a20905b2a7787826aa0e0d97402d308abebcdc442823caea8acd4748ba05937a83d'),
-('timeout_time', '1299913426');
+('login_key', 'o2no03e7abvogo3qhgw6pkv7wk6kzc9kgbalj0tdiacqzd3m7reuitm3909hjffpkj5cioobntiz6ykcoj4mrgfjncpw8d57tp84pv1eep0nwidjd6suzyglz7u6qg3'),
+('password_salt', '0eyasvnxldlvxe6z'),
+('password_hash', '8691f1231a0752bdd0eace8183550c0713d4d6f39741c5a082323f24409bc9fba6c6c645f2fd23f17416ff016c15d91d49de4eab70ac40a1d229335fc59dd153'),
+('timeout_time', '1300049780');
 
 -- --------------------------------------------------------
 
@@ -71,18 +70,20 @@ CREATE TABLE IF NOT EXISTS `module_page_pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Page ID',
   `title` varchar(256) NOT NULL COMMENT 'Page title',
   `content` text NOT NULL COMMENT 'Page content',
-  `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Last updated',
+  `last_updated` int(11) NOT NULL COMMENT 'Last updated',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `module_page_pages`
 --
 
 INSERT INTO `module_page_pages` (`id`, `title`, `content`, `last_updated`) VALUES
-(1, 'Test Page 1', 'This is a test page.', '2010-12-22 16:09:43'),
-(2, 'Test Page 2', 'This is another test page.', '2011-01-07 17:43:45'),
-(3, '404 Error', 'Error 404 - The requested page was not found.', '2011-02-25 19:24:18');
+(1, 'Test Page 1', '<p>\r\n	This is a test page.</p>\r\n', 1299977195),
+(2, 'Test Page 2', '<p>\r\n	This is another test page.</p>\r\n<p>\r\n	&nbsp;</p>\r\n<p style="text-align: right; ">\r\n	<strong>lalalalala</strong></p>\r\n<p style="text-align: center; ">\r\n	<embed bgcolor="#FFFFFF" flashvars="autoPlay=yes&amp;playlistPath=http://oliverrudland.co.uk/playlist.xml&amp;overColor=#000033&amp;playerSkin=1" height="245" id="mymovie" name="mymovie" quality="high" src="http://oliverrudland.co.uk/playerMultipleList.swf" style="undefined" type="application/x-shockwave-flash" width="220"></embed></p>\r\n', 1299977734),
+(3, '404 Error', '<p>\r\n	Error 404 - The requested page was not found.</p>\r\n', 1299977215),
+(23, 'Index Page', '<p>\r\n	This is the default Rubidium index page. Open up the Admin CP and visit the Pages tab to change the content here!</p>\r\n', 1300045717),
+(22, 'Another Test Page', '<p>\r\n	Testing!!!</p>\r\n<p>\r\n	&nbsp;</p>\r\n<p>\r\n	I just lost the game.</p>\r\n', 1299985914);
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
 --
 
 INSERT INTO `modules` (`numeric_id`, `id`, `name`, `default_action`, `default_action_value`, `enabled`, `protected`) VALUES
-(2, 'page', 'Pages', 'id', '1', 1, 1),
+(2, 'page', 'Pages', 'id', '23', 1, 1),
 (1, 'admin', 'Dashboard', 'module', 'dashboard', 1, 1);
 
 -- --------------------------------------------------------
