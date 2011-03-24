@@ -4,6 +4,7 @@ class rubidium {
 	static public $startTime	= null;
 	static public $settings		= array();
 	static public $modules		= array();
+	static public $navbar		= array();
 	static public $config		= array();
 	static public $request		= array();
 	static public $toLoad		= array();
@@ -20,8 +21,7 @@ class rubidium {
 		//$baseconfig from file
 		//goes to self::$config
 		require(ROOT_PATH . 'config.php');
-		if ( is_array( $baseconfig ) )
-		{
+		if ( is_array( $baseconfig ) ) {
 			foreach( $baseconfig as $k => $v )
 			{
 				self::$config[$k] = $v;
@@ -48,12 +48,31 @@ class rubidium {
 		//Finalize debug output
 		debug::addMessage("Page rendered successfully in ". self::endTimer() ." seconds");
 		echo (DEBUG == 1 || DEBUG == 2) ? debug::compileOutput() : '';
+	}
+	
+	/**
+	 * Creates a minimal instance of the class for basic operations.
+	 * Mainly intended for things such as processing AJAX requests
+	 */
+	function instantiate() {
+		require (ROOT_PATH . 'config.php');
+		if ( is_array( $baseconfig ) ) {
+			foreach( $baseconfig as $k => $v )
+			{
+				self::$config[$k] = $v;
+			}
+		}
+		require(ROOT_PATH . 'sources/debug.php');
+		require(ROOT_PATH . 'sources/db.php');
+		classDB::connect(rubidium::$config);
 
+		self::getInfo();
 	}
 	
 	function getInfo() {
-		self::$settings = classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
-		self::$modules = classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected', '', array("order_by" => "numeric_id") );
+		self::$settings	= classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
+		self::$modules	= classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected', '', array("order_by" => "numeric_id") );
+		self::$navbar	= classDB::getTable('navbar', 'position', 'id, position, title, url, regex', '', array( 'order_by' => 'position', 'order_dir' => 'ASC' ));
 		self::getRequest();
 	}
 	

@@ -1,16 +1,15 @@
-/* --------------------------------------------------------------
-
-   reset.css
-   * Resets default browser CSS.
-
--------------------------------------------------------------- */
-
 html { 
 	margin:0; 
-	padding:0; 
+	padding: 0; 
 	border:0;
 	font-family: arial, verdana, tahoma, sans-serif;
 	font-size: 0.9em;
+	height: 100%;
+}
+
+body {
+	padding: 0;
+	background: #E3E8EE;
 }
 
 body, div, span, object, iframe,
@@ -62,56 +61,100 @@ a img { border: none; }
 /* Remember to define your own focus styles! */
 :focus { outline: 0; }
 
+.hide {
+	display: none;
+}
 
 #header {
-	padding: 0;
-	border-bottom: 1px solid #000;
 	overflow: hidden;
+	background: url(../images/headerbg.png) bottom center repeat-x;
+	color:  #fff;
+	border-radius: 5px 5px 0 0;
+	height: 35px;
+	padding: 10px;
+	margin: 20px 5% 0;
 }
 	#header h1 {
 		font-size: 1.2em;
 		margin: 10px;
 		float: left;
-		font-weight: bold;
 	}
-	#header ul {
-		margin: 5px 0 0;
+	#topright {
+		padding: 10px 10px 10px 0;
+		float: right;
+	}
+		#topright a {
+			color: #fff;
+		}
+
+#nav {
+	height: 36px;
+	background-color: #183558;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.4)), to(transparent));
+	background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.4) 0%, transparent 100%);
+	background-image: linear-gradient(top, rgba(0, 0, 0, 0.4), transparent);
+	margin: 0 5%;
+}
+	#nav ul {
 		padding: 0;
 		display: block;
-		clear: both;
 	}
-		#header li {
+		#nav li {
 			float: left;
-			border-right: 1px solid #000;
-			border-top: 1px solid #000;
+			margin: 0 2px -3px 6px;
 		}
-			#header li a {
-				background: #ccc;
-				color: #000;
+			#nav li a {
+				color: #fff;
 				display: block;
+				margin: 5px 0;
 				padding: 5px;
+				border-radius: 5px;
 			}
-			#header li a:hover {
-				background: #ddd;
+			#nav li a:hover {
+				background-color: #254265;
+				background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.15)), to(transparent));
+				background-image: -moz-linear-gradient(top, rgba(255,255,255,0.15) 0%, transparent 100%);
+				background-image: linear-gradient(top, #fff, transparent);
 			}
-			#header li a:active {
-				background: #bbb;
+			#nav li a:active {
+				background-color: #0B284B;
+				background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.15)), to(transparent));
+				background-image: -moz-linear-gradient(top, rgba(255,255,255,0.15) 0%, transparent 100%);
+				background-image: linear-gradient(top, #fff, transparent);
 			}
-			#header li.selected a {
-				background: #eee;
+			#nav li.selected a {
+				background-color: #D3D9E0;
+				color: #183558;
+				font-weight: bold;
+				background-image: -webkit-gradient(linear, left top, left bottom, from(#EFF3F8), to(#D3D9E0));
+				background-image: -moz-linear-gradient(top, #EFF3F8 0%, #D3D9E0 100%);
+				background-image: linear-gradient(top, #EFF3F8, #D3D9E0);
+				
 			}
-	#header #logout {
-		padding: 10px;
-	}
+			#nav li.selected a:hover {
+				background-color: #ECF3FA;
+				background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.15)), to(transparent));
+				background-image: -moz-linear-gradient(top, rgba(255,255,255,0.15) 0%, transparent 100%);
+				background-image: linear-gradient(top, #fff, transparent);
+			}
+			#nav li.selected a:active {
+				background-color: #C6CCD3;
+				background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.15)), to(transparent));
+				background-image: -moz-linear-gradient(top, rgba(255,255,255,0.15) 0%, transparent 100%);
+				background-image: linear-gradient(top, #fff, transparent);
+			}
+
+
 h2 {
 	font-size: 1.2em;
 	margin: 3px;
 	font-weight: bold;
 }
 #wrapper {
-	width: 90%;
-	border: 1px solid #002765;
-	margin: 0 auto;
+	border: 1px solid #B0BBC4;
+	border-width: 0px 1px 1px;
+	background: #fff;
+	margin: 0 5%;
 	overflow: hidden;
 }
 #content {
@@ -121,7 +164,7 @@ h2 {
 	text-align: right;
 	padding: 5px;
 	clear: both;
-	border-top: 1px solid #000;
+	border-top: 1px solid #B0BBC4;
 }
 .right {
 	float: right;
@@ -139,8 +182,38 @@ ul {
 	margin-left: 20px;
 }
 
-
-
+.sortable {
+	list-style-type: none; margin: 0; padding: 0; width: 60%;
+}
+	.sortable li {
+	}
+	.sortable span {
+		background: #eee;
+		display: block;
+		margin: 0 5px 5px 5px; padding: 5px;
+	}
+	.ui-state-highlight {
+		height: 1.15em; line-height: 1.2em; background: #ddd;
+		margin: 0 4px 4px 4px; padding: 5px;
+		border: 1px solid #bbb;
+	}
+	.handle {
+		cursor: pointer;
+		margin: 0 5px -2px 0;
+	}
+	
+.textInputList input {
+	width: 250px;
+}
+.textInputList span {
+	padding: 3px 5px 0 0;
+	width: 100px;
+	text-align: right;
+	float: left;
+}
+.textInputList li {
+	padding: 3px;
+}
 
 
 

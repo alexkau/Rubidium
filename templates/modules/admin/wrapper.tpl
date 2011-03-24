@@ -8,14 +8,11 @@
 	{include file="`$smarty.const.ROOT_PATH`templates/core/jsinclude.tpl"}
 </head>
 <body>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/header.tpl"}
+{if $loadInfo.authorized && $loadInfo.templateToLoad != 'logout'}
+	{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/nav.tpl"}
+{/if}
 	<div id='wrapper'{if $loadInfo.authorized && $loadInfo.templateToLoad != 'logout'} class='narrow'{/if}>
-		{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/header.tpl"}
 		{if $loadInfo.authorized && $loadInfo.templateToLoad != 'logout'}
 			{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/sidebar.tpl"}
 		{/if}

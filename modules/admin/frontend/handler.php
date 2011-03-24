@@ -1,6 +1,6 @@
 <?php
 echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
-class module_admin extends module_default {
+class module_admin {
 	
 	static public $availableModules		= array();
 	static public $pageContent		= null;

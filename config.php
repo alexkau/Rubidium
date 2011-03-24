@@ -1,6 +1,6 @@
 <?php
 $baseconfig['sql_user']		= 'root';
-$baseconfig['sql_password']	= '';
+$baseconfig['sql_password']	= 'root';
 $baseconfig['sql_server']	= 'localhost';
 $baseconfig['sql_database']	= 'rubidium';
 $baseconfig['base_url']		= 'http://localhost/rubidium';
@@ -13,4 +13,4 @@ $baseconfig['base_url']		= 'http://localhost/rubidium';
  *     Debug level 1 has not been implemented yet;
  *     either level will display all messages.
  */
-define("DEBUG",1);
+define("DEBUG",0);

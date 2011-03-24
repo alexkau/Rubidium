@@ -3,6 +3,7 @@ echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class outputHandler {
 	static public $toLoad			= array();
 	static public $loadInfo			= array();
+	static public $loadInfoTemp		= array();
 	static public $smarty			= null;
 	static public $mode			= null;
 	static public $workingModuleName	= null;
@@ -30,7 +31,7 @@ class outputHandler {
 				$workingModule = new self::$workingModuleName();
 				if ($workingModule::validateLoad()) {
 					self::$loadInfo = $workingModule::returnPage();
-					debug::addmessage('Loaded specified page');
+					debug::addMessage('Loaded specified page');
 				} else {
 					self::load404();
 				}
@@ -49,9 +50,13 @@ class outputHandler {
 		}
 	}
 	
+	function setLoadInfoVar($key, $var) {
+		self::$loadInfoTemp[$key] = $var;
+	}
+	
 	//At this point, generic 404s are always handled by the page module
 	static public function load404() {
-		if(!in_array('page', self::$loadedModules)) {
+		if (!in_array('page', self::$loadedModules)) {
 			require (ROOT_PATH . "modules/page/frontend/handler.php");
 			self::$loadedModules[] = 'page';
 		}
@@ -67,11 +72,17 @@ class outputHandler {
 	}
 	static public function setTemplateVars($smarty, $loadInfo, $toLoad) {
 		$smarty->assign('toLoad',	$toLoad);
+
+		foreach(self::$loadInfoTemp as $key => $var) {
+			$loadInfo[$key] = $var;
+		}
+
 		$smarty->assign('loadInfo',	$loadInfo);
 		//print_r($loadInfo);
 		$smarty->assign('config',	rubidium::$config);
 		$smarty->assign('settings',	rubidium::$settings);
 		$smarty->assign('modules',	rubidium::$modules);
+		$smarty->assign('navbar',	rubidium::$navbar);
 	}
 	static public function buildPage() {
 		//Load the Smarty template engine

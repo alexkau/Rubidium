@@ -169,6 +169,7 @@ class classDB {
 		$query .= ($conditions != '') ? ' WHERE ' . $conditions : '';
 		debug::addMessage("Running MySQL query: " . $query);
 		self::$database->query($query);
+		//echo $query."<br/>";
 	}
 	
 	function insert($table, $content) {

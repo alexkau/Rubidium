@@ -23,6 +23,8 @@ Release notes:
 The following third-party software is used in Rubidium:
 	CSS3 Buttons, used under the Unlicense:
 		http://css3buttons.michaelhenriksen.dk/
+	Silk icon set, used under the Creative Commons 2.5 license:
+		http://www.famfamfam.com/lab/icons/silk/
 	Smarty, used under the LGPL license:
 		http://www.smarty.net/
 	CKEditor, used under the LGPL license:
