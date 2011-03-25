@@ -17,7 +17,8 @@ class module_admin_admin extends module_default {
 	function buildSidebar() {
 		return array(	'System' => array( 	'Index'			=> 'index',
 							'Settings'		=> 'settings',
-							'Navigation Bar'	=> 'navbar') );
+							'Navigation Bar'	=> 'navbar',
+							'Modules'		=> 'modules') );
 	}
 	
 	function returnPage() {

@@ -17,17 +17,8 @@ class rubidium {
 		debug::addMessage("Loading file sources/core.php");
 		debug::addMessage("Running init routine");
 		
-		//Get config
-		//$baseconfig from file
-		//goes to self::$config
-		require(ROOT_PATH . 'config.php');
-		if ( is_array( $baseconfig ) ) {
-			foreach( $baseconfig as $k => $v )
-			{
-				self::$config[$k] = $v;
-			}
-		}
-
+		self::loadConfig();
+		
 		//Set up database and connect
 		require(ROOT_PATH . 'sources/db.php');
 		debug::addMessage("Loading file sources/db.php");
@@ -69,9 +60,21 @@ class rubidium {
 		self::getInfo();
 	}
 	
+	function loadConfig() {
+		require(ROOT_PATH . 'config.php');
+		if ( is_array( $baseconfig ) ) {
+			foreach( $baseconfig as $k => $v )
+			{
+				self::$config[$k] = $v;
+			}
+		} else {
+			die('Unable to load config file!');
+		}
+	}
+	
 	function getInfo() {
 		self::$settings	= classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
-		self::$modules	= classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected', '', array("order_by" => "numeric_id") );
+		self::$modules	= classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected, numeric_id', '', array("order_by" => "numeric_id") );
 		self::$navbar	= classDB::getTable('navbar', 'position', 'id, position, title, url, regex', '', array( 'order_by' => 'position', 'order_dir' => 'ASC' ));
 		self::getRequest();
 	}
@@ -197,5 +200,24 @@ class rubidium {
 		$hash = hash("sha512", $password.$adminInfo['password_salt']['value']);
 		//echo $hash."<br/>".$adminInfo['password_hash']['value'];
 		return ($hash == $adminInfo['password_hash']['value']) ? true : false;
+	}
+	
+	/**
+	 * changeConfigSetting
+	 * Changes the specified setting in the config file
+	 * Refreshes config settings when done writing
+	 *
+	 * $setting: Name of setting to change (from $baseconfig)
+	 * $value: Value to put in the setting
+	 */
+	function changeConfigSetting($setting, $value) {
+		$configfilename = ROOT_PATH . 'config.php';
+		$configfile = fopen($configfilename, 'r+');
+		$configtemp = fread($configfile, filesize($configfilename));
+		$configtemp = preg_replace("/(?<=$baseconfig\['{$setting}'\][\t ][\t ]= ').*(?=';\n)/i", $value, $configtemp);
+		ftruncate ($configfile, 0);
+		fwrite($configfile, $configtemp);
+		fclose($configfile);
+		self::loadConfig();
 	}
 }

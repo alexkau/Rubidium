@@ -21,3 +21,8 @@ function confirmDeleteItem(delUrl) {
     document.location = delUrl;
   }
 }
+function confirmDeleteModule(delUrl) {
+  if (confirm("Are you sure you want to remove this module?")) {
+    document.location = delUrl;
+  }
+}

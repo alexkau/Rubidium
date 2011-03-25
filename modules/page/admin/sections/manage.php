@@ -122,8 +122,7 @@ class module_page_admin_manage {
 				break;
 			default:
 				return false;
-		}
-		
+		}		
 	}
 	
 	/**
