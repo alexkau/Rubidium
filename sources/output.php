@@ -76,7 +76,6 @@ class outputHandler {
 		foreach(self::$loadInfoTemp as $key => $var) {
 			$loadInfo[$key] = $var;
 		}
-
 		$smarty->assign('loadInfo',	$loadInfo);
 		//print_r($loadInfo);
 		$smarty->assign('config',	rubidium::$config);

@@ -9,25 +9,38 @@ class module_admin_admin_settings {
 	}
 	
 	function processPostData() {
-		if (self::$post['oldpassword'] != '' || self::$post['newpassword1'] != '' || self::$post['newpassword2'] != '') {
-			if (self::$post['oldpassword'] != '' && self::$post['newpassword1'] != '' && self::$post['newpassword2'] != '') {
-				if (rubidium::checkPassword(self::$post['oldpassword'])) {
-					if (self::$post['newpassword1'] == self::$post['newpassword2']) {
-						rubidium::setPassword(self::$post['newpassword1']);
-						module_admin_admin::$pageContent['changesMade'] = true;
-						return true;
+		switch (self::$post['action']) {
+			case changePassword:
+				if (self::$post['oldpassword'] != '' || self::$post['newpassword1'] != '' || self::$post['newpassword2'] != '') {
+					if (self::$post['oldpassword'] != '' && self::$post['newpassword1'] != '' && self::$post['newpassword2'] != '') {
+						if (rubidium::checkPassword(self::$post['oldpassword'])) {
+							if (self::$post['newpassword1'] == self::$post['newpassword2']) {
+								rubidium::setPassword(self::$post['newpassword1']);
+								outputHandler::setLoadInfoVar('changesMade', true);
+								return true;
+							} else {
+								outputHandler::setLoadInfoVar('error', "The new passwords did not match.");
+								return true;
+							}
+						} else {
+							outputHandler::setLoadInfoVar('error', "You did not enter the correct password.");
+							return true;
+						}
 					} else {
-						module_admin_admin::$pageContent['error'] = "The new passwords did not match.";
+						outputHandler::setLoadInfoVar('error', "You must enter a value for all three fields.");
 						return true;
 					}
-				} else {
-					module_admin_admin::$pageContent['error'] = "You did not enter the correct password.";
-					return true;
 				}
-			} else {
-				module_admin_admin::$pageContent['error'] = "You must enter a value for all three boxes.";
-				return true;
-			}
+				break;
+			case changeSiteUrl:
+				if (self::$post['siteUrl'] != rubidium::$config['base_url']) {
+					$config = file_get_contents(ROOT_PATH . 'config.php');
+					echo $config;
+
+				}
+				break;
+			default:
+				break;
 		}
 	}
 }

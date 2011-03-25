@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.6, created on 2011-03-13 14:20:02
+<?php /* Smarty version Smarty-3.0.6, created on 2011-03-24 13:25:36
          compiled from "/htdocs/rubidium/templates/modules/page/admin/settings.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:5871341424d7d3502986e64-99390940%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1512059554d8ba8c0e69a48-00394656%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '3811fb33fcb224596460a348c10b8c2c56669768' => 
     array (
       0 => '/htdocs/rubidium/templates/modules/page/admin/settings.tpl',
-      1 => 1300051059,
+      1 => 1300998335,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '5871341424d7d3502986e64-99390940',
+  'nocache_hash' => '1512059554d8ba8c0e69a48-00394656',
   'function' => 
   array (
   ),
@@ -25,7 +25,7 @@ $_smarty_tpl->decodeProperties(array (
 <?php }?>
 <form action="<?php echo $_SERVER['REQUEST_URI'];?>
 " method="post">
-	<ul>
+	<ul class='textInputList'>
 		<li><span>Change default page</span>
 			<select name="default">
 				<?php  $_smarty_tpl->tpl_vars['data'] = new Smarty_Variable;

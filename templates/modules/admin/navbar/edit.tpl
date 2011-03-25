@@ -1,3 +1,8 @@
+{if $loadInfo.changesMade}
+	<p class='message'>
+		The change was successfully made.
+	</p>
+{/if}
 <form action="{$smarty.server.REQUEST_URI}" method="post">
 <ul class='textInputList'>
 	<li><span>Title</span><input type="text" name="itemTitle" value="{$loadInfo.itemEditInfo.title}"></input></li>

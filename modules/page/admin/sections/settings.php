@@ -10,10 +10,10 @@ class module_page_admin_settings {
 		self::$get	= rubidium::$request['GET'];
 		self::$pageList	= self::getPageList();
 		if (self::processPostData()) {
-			module_page_admin::$pageContent['changesMade'] = true;
+			outputHandler::setLoadInfoVar('changesMade', true);
 			rubidium::getInfo();
 		}
-		module_page_admin::$pageContent['pageList']	= self::$pageList;
+		outputHandler::setLoadInfoVar('pageList', self::$pageList);
 	}
 	
 	function getPageList() {

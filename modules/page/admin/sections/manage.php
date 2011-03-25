@@ -62,7 +62,7 @@ class module_page_admin_manage {
 					break;
 			}
 		} else {
-			module_page_admin::$pageContent['pageList']	= self::$pageList;
+			outputHandler::setLoadInfoVar('pageList', self::$pageList);
 		}
 	}
 	

@@ -10,8 +10,18 @@
 {/if}
 <span>Change administrator password:</span><br />
 <form action="{$smarty.server.REQUEST_URI}" method="post">
-<span class='indent'>Old password:</span><input type="password" name="oldpassword" /><br />
-<span class='indent'>New password:</span><input type="password" name="newpassword1" /><br />
-<span class='indent'>Confirm new password:</span><input type="password" name="newpassword2" /><br />
-<input type='submit' class='primary button' value='Change password' />
+	<ul class='textInputList'>
+		<li><span>Old password:</span><input type="password" name="oldpassword" /><br />
+		<li><span>New password:</span><input type="password" name="newpassword1" /><br />
+		<li><span>Confirm new password:</span><input type="password" name="newpassword2" /><br />
+	</ul>
+	<input type="hidden" value="changePassword" name="action" />
+	<input type='submit' class='primary button' value='Change password' />
+</form>
+<form action="{$smarty.server.REQUEST_URI}" method="post">
+	<ul class='textInputList'>
+		<li><span>Site URL:</span><input type="text" name="siteUrl" value="{$config.base_url}" /><br />
+	</ul>
+	<input type="hidden" value="changeSiteUrl" name="action" />
+	<input type='submit' class='primary button' value='Change site URL' />
 </form>

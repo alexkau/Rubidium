@@ -112,9 +112,10 @@ class rubidium {
 	//Gets the current request info
 	function getRequest() {
 		//GET array must be converted to lowercase so case sensitivity doesn't matter (index.php?mode=page versus index.php?MODE=PAGE)
-		self::$request['GET']		= ((! empty($_GET)) ? self::arrayToLower(self::cleanArray($_GET)) : null);
-		self::$request['POST']		= ((! empty($_POST)) ? self::cleanArray($_POST) : null);
-		self::$request['COOKIES']	= ((! empty($_COOKIES)) ? self::cleanArray($_COOKIES) : null);
+		//Arrays are only cleaned if get_magic_quotes_gpc is false
+		self::$request['GET']		= ((! empty($_GET)) ? get_magic_quotes_gpc() ? self::arrayToLower($_GET) : self::arrayToLower(self::cleanArray($_GET)) : null);
+		self::$request['POST']		= ((! empty($_POST)) ? get_magic_quotes_gpc() ? $_POST : self::cleanArray($_POST) : null);
+		self::$request['COOKIES']	= ((! empty($_COOKIES)) ? get_magic_quotes_gpc() ? $_COOKIES :self::cleanArray($_COOKIES) : null);
 		debug::addMessage("GET input loaded: ".print_r(self::$request['GET'],true));
 	}
 	

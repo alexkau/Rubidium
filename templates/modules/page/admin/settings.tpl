@@ -5,7 +5,7 @@
 	</p>
 {/if}
 <form action="{$smarty.server.REQUEST_URI}" method="post">
-	<ul>
+	<ul class='textInputList'>
 		<li><span>Change default page</span>
 			<select name="default">
 				{foreach $loadInfo.pageList as $id => $data}

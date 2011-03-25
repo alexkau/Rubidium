@@ -13,14 +13,17 @@ class module_admin_admin_navbar {
 		if (self::checkPostData()) {
 			switch (self::$post['action']) {
 				case 'editItem':
-					//classDB::store1('module_page_pages', array('title' => self::$post['pageTitle'], 'content' => self::$post['pageContent'], 'last_updated' => time()), '`id` = '.self::$post['id']);
+					$itemTitle	= self::$post['itemTitle'];
+					$itemUrl	= self::$post['itemUrl'];
+					$itemRegex	= self::$post['itemRegex'];
+					classDB::store1('navbar', array('title' => $itemTitle, 'url' => $itemUrl, 'regex' => $itemRegex), '`id` = '.self::$post['id']);
 					outputHandler::setLoadInfoVar('changesMade', true);
 					break;
 				case 'addItem':
 					$itemTitle	= self::$post['itemTitle'];
 					$itemUrl	= self::$post['itemUrl'];
-					$regex		= self::$post['itemRegex'];
-					classDB::insert('navbar', array('title' => $itemTitle, 'url' => $itemUrl, 'regex' => $regex, 'position' => self::getNextItemPosition()));
+					$itemRegex	= self::$post['itemRegex'];
+					classDB::insert('navbar', array('title' => $itemTitle, 'url' => $itemUrl, 'regex' => $itemRegex, 'position' => self::getNextItemPosition()));
 					self::updateItemList();
 					outputHandler::setLoadInfoVar('changesMade', true);
 					break;
