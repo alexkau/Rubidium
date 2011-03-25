@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.0.6, created on 2011-03-22 13:04:07
+<?php /* Smarty version Smarty-3.0.6, created on 2011-03-24 22:06:12
          compiled from "/htdocs/rubidium/templates/core/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2934313804d8900b7b6cce1-45513995%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:9798867034d8c22c4851ed1-45656020%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2934313804d8900b7b6cce1-45513995',
+  'nocache_hash' => '9798867034d8c22c4851ed1-45656020',
   'function' => 
   array (
   ),

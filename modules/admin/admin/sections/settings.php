@@ -34,9 +34,8 @@ class module_admin_admin_settings {
 				break;
 			case changeSiteUrl:
 				if (self::$post['siteUrl'] != rubidium::$config['base_url']) {
-					$config = file_get_contents(ROOT_PATH . 'config.php');
-					echo $config;
-
+					$configtemp = explode("\n", file_get_contents(ROOT_PATH . 'config.php'));
+					
 				}
 				break;
 			default:
