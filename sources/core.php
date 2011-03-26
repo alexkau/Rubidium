@@ -214,7 +214,8 @@ class rubidium {
 		$configfilename = ROOT_PATH . 'config.php';
 		$configfile = fopen($configfilename, 'r+');
 		$configtemp = fread($configfile, filesize($configfilename));
-		$configtemp = preg_replace("/(?<=$baseconfig\['{$setting}'\][\t ][\t ]= ').*(?=';\n)/i", $value, $configtemp);
+		//$configtemp = preg_replace("/(?<=$baseconfig\['{$setting}'\]\t*= ').*(?=';\n)/i", $value, $configtemp);
+		$configtemp = preg_replace('/^\$baseconfig\[\'' . $setting . '\'\](\s*).+/m', "\$baseconfig['{$setting}']$1= '{$value}';", $configtemp);
 		ftruncate ($configfile, 0);
 		fwrite($configfile, $configtemp);
 		fclose($configfile);
