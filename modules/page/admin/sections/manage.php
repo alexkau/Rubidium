@@ -12,10 +12,12 @@ class module_page_admin_manage {
 		if (self::checkPostData()) {
 			switch (self::$post['action']) {
 				case 'editPage':
+					$timeNow = time();
 					classDB::store1('module_page_pages', array('title' => self::$post['pageTitle'], 'content' => self::$post['pageContent'], 'last_updated' => time()), '`id` = '.self::$post['id']);
 					outputHandler::setLoadInfoVar('changesMade', true);
 					break;
 				case 'addPage':
+					$timeNow = time();
 					$pageTitle	= self::$post['pageTitle'];
 					$pageContent	= self::$post['pageContent'];
 					classDB::insert('module_page_pages', array('title' => $pageTitle, 'content' => $pageContent, 'last_updated' => $timeNow));
