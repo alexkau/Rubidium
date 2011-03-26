@@ -34,7 +34,7 @@ class module_admin_admin_settings {
 				break;
 			case changeSiteUrl:
 				if (self::$post['siteUrl'] != rubidium::$config['base_url']) {
-					rubidium::changeconfigSetting('base_url', self::$post['siteUrl']);
+					rubidium::changeConfigSetting('base_url', self::$post['siteUrl']);
 					outputHandler::setLoadInfoVar('changesMade', true);
 				}
 				break;

@@ -4,8 +4,8 @@ class module_admin_admin_login {
 	static public $loginKey = null;
 	function execute() {
 		if (module_admin::$authorized) {
-			header('Location: index.php?mode=admin&module=admin&section=index');
-			die();
+			header("Location: index.php?mode=admin&module=admin&section=index");
+//			die();
 		}
 		if (rubidium::$request['POST']['password'] != '') {
 			if (rubidium::checkPassword(rubidium::$request['POST']['password'])) {

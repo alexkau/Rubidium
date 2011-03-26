@@ -18,7 +18,7 @@ class rubidium {
 		debug::addMessage("Running init routine");
 		
 		self::loadConfig();
-		
+
 		//Set up database and connect
 		require(ROOT_PATH . 'sources/db.php');
 		debug::addMessage("Loading file sources/db.php");
@@ -26,7 +26,7 @@ class rubidium {
 
 		//Load settings and request
 		self::getInfo();
-		
+
 		//Load output handler and build page
 		require(ROOT_PATH . 'sources/output.php');
 		debug::addMessage("Loading file sources/output.php");
@@ -46,13 +46,7 @@ class rubidium {
 	 * Mainly intended for things such as processing AJAX requests
 	 */
 	function instantiate() {
-		require (ROOT_PATH . 'config.php');
-		if ( is_array( $baseconfig ) ) {
-			foreach( $baseconfig as $k => $v )
-			{
-				self::$config[$k] = $v;
-			}
-		}
+		self::loadConfig();
 		require(ROOT_PATH . 'sources/debug.php');
 		require(ROOT_PATH . 'sources/db.php');
 		classDB::connect(rubidium::$config);
@@ -60,7 +54,7 @@ class rubidium {
 		self::getInfo();
 	}
 	
-	function loadConfig() {
+	function loadConfig() {	
 		require(ROOT_PATH . 'config.php');
 		if ( is_array( $baseconfig ) ) {
 			foreach( $baseconfig as $k => $v )
@@ -68,7 +62,7 @@ class rubidium {
 				self::$config[$k] = $v;
 			}
 		} else {
-			die('Unable to load config file!');
+			die('Unable to load config file');
 		}
 	}
 	
@@ -212,13 +206,9 @@ class rubidium {
 	 */
 	function changeConfigSetting($setting, $value) {
 		$configfilename = ROOT_PATH . 'config.php';
-		$configfile = fopen($configfilename, 'r+');
-		$configtemp = fread($configfile, filesize($configfilename));
-		//$configtemp = preg_replace("/(?<=$baseconfig\['{$setting}'\]\t*= ').*(?=';\n)/i", $value, $configtemp);
+		$configtemp = file_get_contents($configfilename);
 		$configtemp = preg_replace('/^\$baseconfig\[\'' . $setting . '\'\](\s*).+/m', "\$baseconfig['{$setting}']$1= '{$value}';", $configtemp);
-		ftruncate ($configfile, 0);
-		fwrite($configfile, $configtemp);
-		fclose($configfile);
+		file_put_contents($configfilename, $configtemp);
 		self::loadConfig();
 	}
 }
