@@ -29,8 +29,8 @@ class outputHandler {
 				}
 				self::$workingModuleName = "module_" . self::$mode;
 				$workingModule = new self::$workingModuleName();
-				if ($workingModule::validateLoad()) {
-					self::$loadInfo = $workingModule::returnPage();
+				if ($workingModule->validateLoad()) {
+					self::$loadInfo = $workingModule->returnPage();
 					debug::addMessage('Loaded specified page');
 				} else {
 					self::load404();
@@ -46,7 +46,7 @@ class outputHandler {
 			self::$workingModuleName = "module_" . rubidium::$settings['default_mode']['value'];
 			$workingModule = new self::$workingModuleName();
 			debug::addMessage("Loading default content");
-			self::$loadInfo = $workingModule::returnPage(self::$defaults);
+			self::$loadInfo = $workingModule->returnPage(self::$defaults);
 		}
 	}
 	
@@ -68,7 +68,7 @@ class outputHandler {
 		self::$toLoad['action']	= 'id';
 		self::$toLoad['value']	= rubidium::$settings['404_page']['value'];
 		debug::addMessage("Page not found, loading 404 error");
-		self::$loadInfo = $workingModule::returnPage(self::$toLoad);
+		self::$loadInfo = $workingModule->returnPage(self::$toLoad);
 	}
 	static public function setTemplateVars($smarty, $loadInfo, $toLoad) {
 		$smarty->assign('toLoad',	$toLoad);

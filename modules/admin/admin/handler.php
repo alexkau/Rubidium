@@ -29,7 +29,7 @@ class module_admin_admin extends module_default {
 				require (ROOT_PATH . 'modules/admin/admin/sections/' . self::$section . '.php');
 				$sectionClassName = "module_admin_admin_" . self::$section;
 				$sectionClass = new $sectionClassName();
-				$sectionClass::execute();
+				$sectionClass->execute();
 			}
 		} else {
 //			self::$pageContent = rubidium::stringToArray(classDB::mysqlToString(classDB::select('module_admin_sections', 'pageInfo', "`name` = 'index'")));

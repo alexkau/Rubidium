@@ -50,7 +50,7 @@ class module_admin {
 				require (ROOT_PATH . "modules/" . self::$moduleToLoad . "/admin/handler.php");
 				self::$moduleAdminName = "module_" . self::$moduleToLoad . "_admin";
 				$moduleAdmin = new self::$moduleAdminName();
-				if (!$moduleAdmin::validateLoad()) {
+				if (!$moduleAdmin->validateLoad()) {
 					self::load404();
 				}
 				unset($moduleAdmin);
@@ -75,7 +75,7 @@ class module_admin {
 				if (self::$moduleToLoad) {
 					$moduleAdmin = new self::$moduleAdminName();
 					self::$pageContentLoaded = true;
-					self::$pageContent = $moduleAdmin::returnPage();
+					self::$pageContent = $moduleAdmin->returnPage();
 				} else {
 					require (ROOT_PATH . "modules/admin/admin/handler.php");
 					self::$moduleToLoad	= 'admin';

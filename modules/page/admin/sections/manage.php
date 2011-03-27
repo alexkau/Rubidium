@@ -1,4 +1,4 @@
-<?
+<?php
 class module_page_admin_manage {
 	static public $pageList		= array();
 	static public $post		= array();

@@ -26,7 +26,7 @@ class module_page_admin {
 				require (ROOT_PATH . 'modules/page/admin/sections/' . self::$section . '.php');
 				$sectionClassName = "module_page_admin_" . self::$section;
 				$sectionClass = new $sectionClassName();
-				$sectionClass::execute();
+				$sectionClass->execute();
 			}
 		} else {
 			//self::$pageContent = rubidium::stringToArray(classDB::mysqlToString(classDB::select('module_page_sections', 'pageInfo', "`name` = 'index'")));

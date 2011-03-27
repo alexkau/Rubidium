@@ -1,4 +1,4 @@
-<?
+<?php
 echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class module_page_admin_settings {
 	static public $post	= array();
