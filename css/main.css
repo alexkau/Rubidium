@@ -79,6 +79,9 @@ a img { border: none; }
 		margin: 10px;
 		float: left;
 	}
+	#header h1 a {
+		color: #fff;
+	}
 	#topright {
 		padding: 10px 10px 10px 0;
 		float: right;
@@ -202,8 +205,8 @@ ul {
 		margin: 0 5px -2px 0;
 	}
 	
-.textInputList input {
-	width: 250px;
+.textInputList input, input.wide {
+	width: 300px;
 }
 .textInputList span {
 	padding: 3px 5px 0 0;
@@ -215,7 +218,21 @@ ul {
 	padding: 3px;
 }
 
+label {
+	width: 150px;
+	vertical-align: top;
+	text-align: right;
+	float: left;
+	padding: 3px 10px 0 0;
+}
+label.error {
+	float: none;
+	margin: 5px 0 0 5px;
+}
 
+#recaptcha_area {
+	margin-left: 160px;
+}
 
 
 /* Code for buttons */

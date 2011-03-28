@@ -68,7 +68,7 @@ class rubidium {
 	
 	function getInfo() {
 		self::$settings	= classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
-		self::$modules	= classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected, numeric_id', '', array("order_by" => "numeric_id") );
+		self::$modules	= classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected, numeric_id', 'enabled = 1', array("order_by" => "numeric_id") );
 		self::$navbar	= classDB::getTable('navbar', 'position', 'id, position, title, url, regex', '', array( 'order_by' => 'position', 'order_dir' => 'ASC' ));
 		self::getRequest();
 	}

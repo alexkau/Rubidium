@@ -13,9 +13,7 @@ class module_page_admin {
 	
 	function buildSidebar() {
 		return array(	'General'		=> array( 	'Manage Pages'	=> 'manage',
-									'Settings'	=> 'settings'),
-				'section_2'		=> array( 	'Link 1'	=> 'section1',
-									'Link 2'	=> 'section2'), );
+									'Settings'	=> 'settings') );
 	}
 	
 	function returnPage() {

@@ -32,10 +32,15 @@ class module_admin_admin_settings {
 					}
 				}
 				break;
-			case changeSiteUrl:
+			case changeSiteSettings:
 				if (self::$post['siteUrl'] != rubidium::$config['base_url']) {
 					rubidium::changeConfigSetting('base_url', self::$post['siteUrl']);
 					outputHandler::setLoadInfoVar('changesMade', true);
+				}
+				if (self::$post['siteTitle'] != rubidium::$settings['site_title']['value']) {
+					classDB::store1('settings', array('value' => self::$post['siteTitle']), '`name` = "site_title"');			
+					outputHandler::setLoadInfoVar('changesMade', true);
+					rubidium::getInfo();
 				}
 				break;
 			default:

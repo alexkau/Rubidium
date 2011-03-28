@@ -59,6 +59,7 @@ class module_admin_admin_modules {
 				classDB::store1('modules', array('enabled' => 0), '`numeric_id` = '.self::$get['edit']);
 				outputHandler::setLoadInfoVar('message', 'The module was successfully disabled.');
 				self::updateModuleList();
+				rubidium::getInfo();
 				outputHandler::setLoadInfoVar('moduleToEdit', self::$moduleList[self::$get['edit']]);
 			} else {
 				outputHandler::setLoadInfoVar('error', 'This module is protected; you cannot disable or remove it.');
@@ -67,9 +68,11 @@ class module_admin_admin_modules {
 			classDB::store1('modules', array('enabled' => 1), '`numeric_id` = '.self::$get['edit']);
 			outputHandler::setLoadInfoVar('message', 'The module was successfully enabled.');
 			self::updateModuleList();
+			rubidium::getInfo();
 			outputHandler::setLoadInfoVar('moduleToEdit', self::$moduleList[self::$get['edit']]);
 		}
 		outputHandler::setLoadInfoVar('request_url', preg_replace('/\&(disable|enable)=true/i', '', $_SERVER['REQUEST_URI']));
+		outputHandler::setLoadInfoVar('fullModuleList', self::$moduleList);
 	}
 	function updateModuleList() {
 		self::$moduleList = classDB::getTable('modules', 'numeric_id', '*', '', '');

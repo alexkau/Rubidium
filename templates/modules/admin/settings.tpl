@@ -8,7 +8,6 @@
 		There was an error in making the change: {$loadInfo.error}
 	</p>
 {/if}
-<span>Change administrator password:</span><br />
 <form action="{$smarty.server.REQUEST_URI}" method="post">
 	<ul class='textInputList'>
 		<li><span>Old password:</span><input type="password" name="oldpassword" /><br />
@@ -16,12 +15,13 @@
 		<li><span>Confirm new password:</span><input type="password" name="newpassword2" /><br />
 	</ul>
 	<input type="hidden" value="changePassword" name="action" />
-	<input type='submit' class='primary button' value='Change password' />
+	<input type='submit' class='primary button' value='Change administrator password' />
 </form>
 <form action="{$smarty.server.REQUEST_URI}" method="post">
 	<ul class='textInputList'>
 		<li><span>Site URL:</span><input type="text" name="siteUrl" value="{$config.base_url}" /><br />
+		<li><span>Site title:</span><input type="text" name="siteTitle" value="{$settings.site_title.value}" /><br />
 	</ul>
-	<input type="hidden" value="changeSiteUrl" name="action" />
-	<input type='submit' class='primary button' value='Change site URL' />
+	<input type="hidden" value="changeSiteSettings" name="action" />
+	<input type='submit' class='primary button' value='Change site settings' />
 </form>

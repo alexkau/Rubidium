@@ -21,7 +21,7 @@ class outputHandler {
 		self::setDefaults();
 		self::$mode = rubidium::$request['GET']['mode'];
 		require (ROOT_PATH . "sources/module_default.php");
-		if (self::$mode != "") {
+		if (self::$mode != "" && in_array(self::$mode, array_keys(rubidium::$modules))) {
 			if (file_exists (ROOT_PATH . "modules/" . self::$mode . "/frontend/handler.php")) {
 				if(!in_array(self::$mode, self::$loadedModules)) {
 					require (ROOT_PATH . "modules/" . self::$mode . "/frontend/handler.php");
