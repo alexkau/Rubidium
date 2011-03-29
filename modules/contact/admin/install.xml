@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<data>
+	<sections>
+		<section>
+			<name>settings</name>
+			<public_name>Settings</public_name>
+			<pageInfo>title=Settings&amp;templateCategory=modules%2Fcontact%2Fadmin&amp;templateToLoad=settings</pageInfo>
+		</section>
+	</sections>
+	<moduleInfo>
+		<module_id>contact</module_id>
+		<module_name>Contact</module_name>
+		<default_action>showForm</default_action>
+		<default_action_value>true</default_action_value>
+	</moduleInfo>
+</data>

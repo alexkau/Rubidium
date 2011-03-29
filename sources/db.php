@@ -159,6 +159,7 @@ class classDB {
 		return (self::$database->query($query)) ? true : false;
 	}
 	
+	//Should change this function name to update
 	function store1($table, $content, $conditions) {
 		$comma = '';
 		$query = "update {$table} set ";
@@ -188,11 +189,31 @@ class classDB {
 		$query .= ')';
 		debug::addMessage("Running MySQL query: " . $query);
 		self::$database->query($query);
+		//echo $query;
 	}
 	
 	function delete($table, $conditions) {
 		$query = "DELETE FROM {$table} WHERE {$conditions}";
 		debug::addMessage("Running MySQL query: " . $query);
+		self::$database->query($query);
+	}
+	
+	/**
+	 * createSetionsTable
+	 * Creates a sections table for the specified module 
+	 */
+	function createSectionsTable($moduleName) {
+		$query = 	"CREATE TABLE IF NOT EXISTS `module_{$moduleName}_sections` (
+				`name` varchar(32) NOT NULL,
+				`public_name` varchar(64) NOT NULL,
+				`pageInfo` mediumtext NOT NULL
+				) ENGINE=MyISAM DEFAULT CHARSET=latin1;";
+		self::$database->query($query);
+		//echo $query;
+	}
+	
+	function deleteSectionsTable($moduleName) {
+		$query = "DROP TABLE `module_{$moduleName}_sections`;";
 		self::$database->query($query);
 	}
 }

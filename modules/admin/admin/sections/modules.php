@@ -17,14 +17,27 @@ class module_admin_admin_modules {
 					rubidium::getInfo();
 					self::updateModuleList();
 					break;
-				case 'add':
-					$pageTitle	= self::$post['pageTitle'];
-					$pageContent	= self::$post['pageContent'];
-					$temp = classDB::select('module_page_pages', 'id', "`title` = '{$pageTitle}' AND `content` = '{$pageContent}' AND `last_updated` = '{$timeNow}'");
-					self::updatePageList();
-					outputHandler::setLoadInfoVar('newPageId', classDB::mysqlToString($temp));
-					outputHandler::setLoadInfoVar('pageList', self::$pageList);
-					outputHandler::setLoadInfoVar('changesMade', true);
+				case 'install':
+					$toInstall = self::$get['install'];
+					if (self::validateModuleForInstall($toInstall)) {
+						
+						$xml = self::getInstallXml($toInstall);
+						classDB::insert('modules', array(	'id' => $xml->moduleInfo->module_id,
+											'name' => $xml->moduleInfo->module_name,
+											'default_action' => $xml->moduleInfo->default_action,
+											'default_action_value' => $xml->moduleInfo->default_action_value,
+											'enabled' => '1',
+											'protected' => '0'));
+						classDB::createSectionsTable($toInstall);
+						foreach ($xml->sections->section as $id => $content) {
+							classDB::insert("module_{$toInstall}_sections", array('name' => $content->name, 'public_name' => $content->public_name, 'pageInfo' => $content->pageInfo));
+						}
+					} else {
+						outputHandler::setLoadInfoVar('error', 'The specified module is invalid.');
+					}
+					outputHandler::setLoadInfoVar('moduleInstalled', true);
+					rubidium::getInfo();
+					self::updateModuleList();
 					break;
 				default:
 					break;
@@ -36,9 +49,22 @@ class module_admin_admin_modules {
 					outputHandler::setLoadInfoVar('moduleToEdit', self::$moduleList[self::$get['edit']]);
 					outputHandler::setLoadInfoVar('subsection', 'edit');
 					break;
-				case 'add':
-					outputHandler::setLoadInfoVar('subsection', 'add');
+				case 'installList':
+					outputHandler::setLoadInfoVar('subsection', 'installList');
+					outputHandler::setLoadInfoVar('installableModules', self::getInstallableModules());
 					break;
+				case 'installConfirm':
+					outputHandler::setLoadInfoVar('subsection', 'installModule');
+					if (self::validateModuleForInstall(self::$get['install'])) {
+						if (self::getInstallXml(self::$get['install'])) {
+							outputHandler::setLoadInfoVar('moduleValidated', true);
+							outputHandler::setLoadInfoVar('moduleToInstall', self::$get['install']);
+						} else {
+							outputHandler::setLoadInfoVar('badXml', true);
+						}
+					} else {
+						outputHandler::setLoadInfoVar('moduleValidated', false);
+					}
 				default:
 					break;
 			}
@@ -47,9 +73,11 @@ class module_admin_admin_modules {
 			if (!self::$moduleList[self::$get['edit']]['protected']) {
 				$toDelete = self::$get['edit'];
 				classDB::delete('modules', "`numeric_id` = {$toDelete}");
+				classDB::deleteSectionsTable($toDelete);
 				outputHandler::setLoadInfoVar('subsection', null);
 				outputHandler::setLoadInfoVar('message', 'The module was successfully removed.');
 				self::updateModuleList();
+				rubidium::getInfo();
 				outputHandler::setLoadInfoVar('moduleToEdit', self::$moduleList[self::$get['edit']]);
 			} else {
 				outputHandler::setLoadInfoVar('error', 'This module is protected; you cannot disable or remove it.');
@@ -88,19 +116,65 @@ class module_admin_admin_modules {
 					return false;
 				}
 				break;
+			case 'install':
+				return true;
+				break;
 			default:
 				return false;
 		}
 	}
+	
 	function checkUrlParams() {
 		if (self::$get['edit'] != '' && in_array(self::$get['edit'], array_keys(self::$moduleList)) ) {
 			self::$urlMode = 'edit';
 			return true;
-		} else if (self::$get['add'] == 'true') {
-			self::$urlMode = 'add';
+		} else if (self::$get['install'] == 'true') {
+			self::$urlMode = 'installList';
+			return true;
+		} else if (self::$get['install'] != '') {
+			self::$urlMode = 'installConfirm';
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	function getInstallableModules() {
+		$moduleTemp = array();
+		//Need to get all modules (enabled or disabled), except sorted by name this time
+		$moduleNames = classDB::getSimpleTable('modules', 'id', '', '');
+		$module_dir = dir(ROOT_PATH . 'modules/');
+		while (false !== ($dir = $module_dir->read())) {
+			if($dir != '.' && $dir != '..' && is_dir(ROOT_PATH . 'modules/' . $dir) && !in_array($dir, $moduleNames)) {
+				$moduleTemp[] = $dir;
+			}
+		}
+		return $moduleTemp;
+	}
+	
+	function validateModuleForInstall($moduleName) {
+		$modulePath = ROOT_PATH . 'modules/' . $moduleName;
+		if (		is_dir($modulePath) &&
+				file_exists($modulePath . '/admin/handler.php') &&
+				file_exists($modulePath . '/frontend/handler.php') &&
+				is_dir(ROOT_PATH . 'templates/modules/' . $moduleName) &&
+				file_exists($modulePath . '/admin/install.xml')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function getInstallXml($moduleName) {
+		if ( $xml = simplexml_load_file('/htdocs/rubidium/modules/' . $moduleName . '/admin/install.xml') ) {
+//			print_r($xml);
+			return $xml;
+		} else {
+			return false;
+		}
+/*		foreach($xml->section as $id => $content) {
+			echo "<br/><br/><br/><br/>";
+			print_r($content);
+		}*/
 	}
 }
