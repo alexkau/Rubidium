@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 28, 2011 at 01:40 PM
+-- Generation Time: Mar 29, 2011 at 02:05 PM
 -- Server version: 5.1.44
 -- PHP Version: 5.3.2
 
@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS `admin_info` (
 --
 
 INSERT INTO `admin_info` (`name`, `value`) VALUES
-('login_key', 'tf3f889p8c7y8r8zmggg2j69zsvao5dxe8ivj5ru2dmwg7quq9wwie1ia6xd2xg9xungdg818mavk9rqvbplhdbv0eqzndnj5gz4zxkbghlp4utvt2p5xfm3nsnahza'),
+('login_key', '9hvb2ce4r7ndk7i75vas53pfhd6qq1yl5n0gj2lf7o0wz5f96nfr457l1rjbtlpju8k4el8f0ider2uhxnd0kkwhf524zteiv9dmbz6t6ny7d4v6fz0ircwiyklcws6'),
 ('password_salt', 'vfmw1x92mbdcawfl'),
 ('password_hash', 'e5d145740638e9e1faf5e86082149ca643ea234422aab72d0ead04e0d97bb76b0ceb9122042209dbab5696e7c6876e9e40c5d607b1240c3066a1b48e6e112533'),
-('timeout_time', '1301346593');
+('timeout_time', '1301434432');
 
 -- --------------------------------------------------------
 
@@ -46,8 +46,6 @@ INSERT INTO `admin_info` (`name`, `value`) VALUES
 CREATE TABLE IF NOT EXISTS `module_admin_sections` (
   `name` varchar(32) NOT NULL,
   `public_name` varchar(64) NOT NULL,
-  `templateCategory` varchar(128) NOT NULL,
-  `templateName` varchar(128) NOT NULL,
   `pageInfo` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -55,13 +53,13 @@ CREATE TABLE IF NOT EXISTS `module_admin_sections` (
 -- Dumping data for table `module_admin_sections`
 --
 
-INSERT INTO `module_admin_sections` (`name`, `public_name`, `templateCategory`, `templateName`, `pageInfo`) VALUES
-('index', 'Index', 'modules/admin', 'dashboard', 'title=Admin+CP+Dashboard&templateCategory=modules%2Fadmin&templateToLoad=dashboard'),
-('login', 'Log in', 'modules/admin', 'login', 'title=Admin+CP+Login&templateCategory=modules%2Fadmin&templateToLoad=login'),
-('logout', 'Log out', 'modules/admin', 'logout', 'title=Logged+Out&templateCategory=modules%2Fadmin&templateToLoad=logout'),
-('settings', 'Settings', 'modules/admin', 'settings', 'title=Settings&templateCategory=modules%2Fadmin&templateToLoad=settings'),
-('navbar', 'Navigation Bar', 'modules/admin', 'navbar', 'title=Navigation%20Bar&templateCategory=modules%2Fadmin&templateToLoad=navbar'),
-('modules', 'Modules', 'modules/admin', 'modules', 'title=Modules&templateCategory=modules%2Fadmin&templateToLoad=modules');
+INSERT INTO `module_admin_sections` (`name`, `public_name`, `pageInfo`) VALUES
+('index', 'Index', 'title=Admin+CP+Dashboard&templateCategory=modules%2Fadmin&templateToLoad=dashboard'),
+('login', 'Log in', 'title=Admin+CP+Login&templateCategory=modules%2Fadmin&templateToLoad=login'),
+('logout', 'Log out', 'title=Logged+Out&templateCategory=modules%2Fadmin&templateToLoad=logout'),
+('settings', 'Settings', 'title=Settings&templateCategory=modules%2Fadmin&templateToLoad=settings'),
+('navbar', 'Navigation Bar', 'title=Navigation%20Bar&templateCategory=modules%2Fadmin&templateToLoad=navbar'),
+('modules', 'Modules', 'title=Modules&templateCategory=modules%2Fadmin&templateToLoad=modules');
 
 -- --------------------------------------------------------
 
@@ -72,8 +70,6 @@ INSERT INTO `module_admin_sections` (`name`, `public_name`, `templateCategory`, 
 CREATE TABLE IF NOT EXISTS `module_contact_sections` (
   `name` varchar(32) NOT NULL,
   `public_name` varchar(64) NOT NULL,
-  `templateCategory` varchar(128) NOT NULL,
-  `templateName` varchar(128) NOT NULL,
   `pageInfo` mediumtext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -81,8 +77,12 @@ CREATE TABLE IF NOT EXISTS `module_contact_sections` (
 -- Dumping data for table `module_contact_sections`
 --
 
-INSERT INTO `module_contact_sections` (`name`, `public_name`, `templateCategory`, `templateName`, `pageInfo`) VALUES
-('settings', 'Settings', 'modules/contact/admin', 'settings', 'title=Settings&templateCategory=modules%2Fcontact%2Fadmin&templateToLoad=settings');
+INSERT INTO `module_contact_sections` (`name`, `public_name`, `pageInfo`) VALUES
+('settings', 'Settings', 'title=Settings&templateCategory=modules%2Fcontact%2Fadmin&templateToLoad=settings'),
+('settings', 'Settings', 'title=Settings&templateCategory=modules%2Fcontact%2Fadmin&templateToLoad=settings'),
+('settings', 'Settings', 'title=Settings&templateCategory=modules%2Fcontact%2Fadmin&templateToLoad=settings'),
+('settings', 'Settings', 'title=Settings&templateCategory=modules%2Fcontact%2Fadmin&templateToLoad=settings'),
+('settings', 'Settings', 'title=Settings&templateCategory=modules%2Fcontact%2Fadmin&templateToLoad=settings');
 
 -- --------------------------------------------------------
 
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
   `enabled` tinyint(1) NOT NULL COMMENT 'Is the mode enabled? (Page\r\ncannot be disabled)',
   `protected` tinyint(1) NOT NULL COMMENT 'Can it be uninstalled?\r\n(Addon modes cannot be protected)',
   PRIMARY KEY (`numeric_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `modules`
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
 INSERT INTO `modules` (`numeric_id`, `id`, `name`, `default_action`, `default_action_value`, `enabled`, `protected`) VALUES
 (2, 'page', 'Pages', 'id', '23', 1, 1),
 (1, 'admin', 'Dashboard', 'module', 'dashboard', 1, 1),
-(4, 'contact', 'Contact', 'showForm', 'true', 1, 0);
+(10, 'contact', 'Contact', 'showForm', 'true', 1, 0);
 
 -- --------------------------------------------------------
 
