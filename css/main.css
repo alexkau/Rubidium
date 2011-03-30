@@ -234,6 +234,26 @@ label.error {
 	margin-left: 160px;
 }
 
+.message {
+	background: #f1f6ec url(../images/information.png) no-repeat 8px 11px;
+	padding: 10px 10px 10px 30px;
+	border: 1px solid #b0ce94;
+	color: #3e4934;
+	line-height: 150%;
+	border-radius: 8px;
+}
+
+	.message h3 {
+		padding: 0;
+		color: #323232;
+	}
+	
+	.message.error {
+		background: #f3dddd url(../images/exclamation.png) no-repeat 8px 11px;
+		border-color: #deb7b7;
+		color: #281b1b;
+	}
+
 
 /* Code for buttons */
 a.button, input.button { display: inline-block; padding: 7px 9px; font-size: 12px; line-height:1; color: #3C3C3D; text-shadow: 1px 1px 0 #FFFFFF; background: #ECECEC url('../images/css3buttons_backgrounds.png') 0 0 no-repeat; white-space: nowrap; overflow: visible; cursor: pointer; text-decoration: none; border: 1px solid #CACACA; -webkit-border-radius: 2px; -moz-border-radius: 2px; -webkit-background-clip: padding-box; border-radius: 2px; outline: none; position: relative; zoom: 1; *display: inline; }
