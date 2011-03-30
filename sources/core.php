@@ -62,11 +62,12 @@ class rubidium {
 				self::$config[$k] = $v;
 			}
 		} else {
-			die('Unable to load config file');
+			header("Location: install.php");
 		}
 	}
 	
 	function getInfo() {
+		require_once(ROOT_PATH . 'sources/db.php');
 		self::$settings	= classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
 		self::$modules	= classDB::getTable('modules', 'id', 'id, name, default_action, default_action_value, enabled, protected, numeric_id', 'enabled = 1', array("order_by" => "numeric_id") );
 		self::$navbar	= classDB::getTable('navbar', 'position', 'id, position, title, url, regex', '', array( 'order_by' => 'position', 'order_dir' => 'ASC' ));
@@ -178,6 +179,7 @@ class rubidium {
 	 * Generates a password salt, SHA-512 hashes it against the password, and sets the admin password and salt
 	 */
 	function setPassword($password) {
+		require_once(ROOT_PATH . 'sources/db.php');
 		$salt = self::generateSalt();
 		$hash = hash("sha512", $password.$salt);
 		//echo "Password: {$password} - Salt: {$salt} - Hash: {$hash}";

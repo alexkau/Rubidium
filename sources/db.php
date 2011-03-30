@@ -2,6 +2,7 @@
 echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
 class classDB {
 	static public $database = null;
+	
 	public static function connect() {
 		self::$database = new mysqli(rubidium::$config['sql_server'],rubidium::$config['sql_user'],rubidium::$config['sql_password']);
 		if (mysqli_connect_errno()) {
@@ -207,7 +208,7 @@ class classDB {
 				`name` varchar(32) NOT NULL,
 				`public_name` varchar(64) NOT NULL,
 				`pageInfo` mediumtext NOT NULL
-				) ENGINE=MyISAM DEFAULT CHARSET=latin1;";
+				) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 		self::$database->query($query);
 		//echo $query;
 	}
