@@ -7,10 +7,11 @@ people with little or no previous website management experience.
 Release notes:
 
 -1.0.0 Beta 2:
-	-The visual style is more or less complete.
+	-The visual style is mostly complete.
 	-Modules can now be added, edited and removed.
 	-All settings are editable in the admin CP.
-	-A contact form module is now included.
+	-A contact form module has been added.
+	-An installation script has been added.
 
 -1.0.0 Beta 1:
 	-The current visual style is extremely minimal and will be
