@@ -166,7 +166,7 @@ class module_admin_admin_modules {
 	}
 	
 	function getInstallXml($moduleName) {
-		if ( $xml = simplexml_load_file('/htdocs/rubidium/modules/' . $moduleName . '/admin/install.xml') ) {
+		if ( $xml = simplexml_load_file(ROOT_PATH . 'modules/' . $moduleName . '/admin/install.xml') ) {
 //			print_r($xml);
 			return $xml;
 		} else {
