@@ -21,6 +21,7 @@
 	<ul class='textInputList'>
 		<li><span>Site URL:</span><input type="text" name="siteUrl" value="{$config.base_url}" /><br />
 		<li><span>Site title:</span><input type="text" name="siteTitle" value="{$settings.site_title.value}" /><br />
+		<li><span>Site footer:</span><input type="text" name="footer" value="{$settings.footer.value}" /><br />
 	</ul>
 	<input type="hidden" value="changeSiteSettings" name="action" />
 	<input type='submit' class='primary button' value='Change site settings' />

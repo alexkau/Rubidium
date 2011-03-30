@@ -42,6 +42,11 @@ class module_admin_admin_settings {
 					outputHandler::setLoadInfoVar('changesMade', true);
 					rubidium::getInfo();
 				}
+				if (self::$post['footer'] != rubidium::$settings['footer']['value']) {
+					classDB::store1('settings', array('value' => self::$post['footer']), '`name` = "footer"');			
+					outputHandler::setLoadInfoVar('changesMade', true);
+					rubidium::getInfo();
+				}
 				break;
 			default:
 				break;

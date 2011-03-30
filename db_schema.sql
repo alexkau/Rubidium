@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2011 at 02:05 PM
+-- Generation Time: Mar 29, 2011 at 02:21 PM
 -- Server version: 5.1.44
 -- PHP Version: 5.3.2
 
@@ -35,7 +35,7 @@ INSERT INTO `admin_info` (`name`, `value`) VALUES
 ('login_key', '9hvb2ce4r7ndk7i75vas53pfhd6qq1yl5n0gj2lf7o0wz5f96nfr457l1rjbtlpju8k4el8f0ider2uhxnd0kkwhf524zteiv9dmbz6t6ny7d4v6fz0ircwiyklcws6'),
 ('password_salt', 'vfmw1x92mbdcawfl'),
 ('password_hash', 'e5d145740638e9e1faf5e86082149ca643ea234422aab72d0ead04e0d97bb76b0ceb9122042209dbab5696e7c6876e9e40c5d607b1240c3066a1b48e6e112533'),
-('timeout_time', '1301434432');
+('timeout_time', '1301435475');
 
 -- --------------------------------------------------------
 
@@ -201,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 --
 
 INSERT INTO `settings` (`id`, `name`, `description`, `value`) VALUES
-(2, 'footer', 'Global site footer', '&copy; 2011 The Rubidium Project'),
+(2, 'footer', 'Global site footer', 'Powered by Rubidium 1.0.0 Beta 2'),
 (5, '404_page', 'ID of page to display on 404 error', '3'),
 (4, 'default_mode', 'Default mode to load if not specified', 'page'),
 (7, 'recaptcha_public_key', 'reCaptcha public key', '6Le77sISAAAAAImz59nMZPQJNqeSU3O6kduZ3KyC'),
