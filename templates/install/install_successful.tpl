@@ -1,0 +1,1 @@
+<p class='message'>Congratulations! You have successfully installed Rubidium.<br /><br /><a href='{$config.base_url}'>Click here</a> to visit your website, or <a href='{$config.base_url}/index.php?mode=admin'>click here</a> to access the administrator control panel.</p>

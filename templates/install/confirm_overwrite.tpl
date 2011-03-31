@@ -1,0 +1,2 @@
+<p class='message error'>The installer has detected that you already have a copy of Rubidium installed in this location. Are you sure you want to overwrite it?</p>
+If so, <a href='install.php?force=true'>click here to continue</a>.

@@ -1,0 +1,1 @@
+<p class='message error'>Could not connect to the MySQL server with the specified username and password.</p>

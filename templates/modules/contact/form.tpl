@@ -9,6 +9,6 @@
 		<label for='return_addr'>Return address</label><input type='text' name='return_addr' class='required' /><br />
 		<label for='message'>Message</label><textarea rows='10' cols='50' name='message' class='required'></textarea>
 		{$loadInfo.recaptcha}
-		<input type='submit' value='Send message' />
+		<label></label><input type='submit' class='button' value='Send message' />
 	</form>
 </div>

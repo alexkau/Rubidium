@@ -1,4 +1,4 @@
-<h2>Settings</h2>
+<h2>Page Module Settings</h2>
 {if $loadInfo.changesMade}
 	<p class='message'>
 		The change was successfully made.

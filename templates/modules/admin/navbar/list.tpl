@@ -1,7 +1,6 @@
 {if $loadInfo.deletedItem}
 	<p class='message'>The item was successfully deleted.</p>
 {/if}
-<a class='button' href='index.php?mode=admin&module=admin&section=navbar&add=true'>Add item</a>
 <div id='hidden' class='hide'></div>
 <ul id='navsort' class='sortable'>
 	{foreach $navbar as $id=>$content}
@@ -10,3 +9,4 @@
 		</li>
 	{/foreach}
 </ul>
+<a class='button' href='index.php?mode=admin&module=admin&section=navbar&add=true'>Add item</a>

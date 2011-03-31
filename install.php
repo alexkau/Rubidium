@@ -10,9 +10,11 @@ class rubidiumInstall {
 	static public $error		= null;
 	static public $database		= null;
 	static public $siteUrl		= null;
+	static public $loadInfo		= null;
 	
 	function execute() {
 		define('ROOT_PATH', dirname( __FILE__ ) . '/');
+		define('SMARTY_DIR', dirname( __FILE__ ) . '/3rdparty/smarty/');
 		require('config.php');
 		require('sources/core.php');
 		require('sources/debug.php');
@@ -34,80 +36,49 @@ class rubidiumInstall {
 					self::doInstall();
 					$lock = fopen(installer_lock, 'w');
 					fclose($lock);
-					self::$toDisplay = "<p class='message'>Congratulations! You have successfully installed Rubidium.<br /><br /><a href='" . rubidium::$config['base_url'] . "'>Click here</a> to visit your website, or <a href='" . rubidium::$config['base_url'] . "/index.php?mode=admin'>click here</a> to access the administrator control panel.</p>";
+					self::$loadInfo['config'] = $baseconfig;
+					self::$loadInfo['template'] = 'install_successful';
 					break;
 				case 'config':
 					if (self::validateSqlConn()) {
-						self::$toDisplay = "<p class='message'>Successfully connected to the database.<br /><br />Please enter the following configuration values.</p>
-									<form action='install.php?step=install' method='post'>
-										<label for='admin_password'>Administrator password</label><input type='password' name='admin_password' class='wide' /><br />
-										<label for='site_url'>Site URL</label><input type='text' name='site_url' value='" . self::$siteUrl . "' class='wide' /><br />
-										<!-- Include autodetected url here at some point -->
-										<label for='site_title'>Site Title</label><input type='text' name='site_title' class='wide' /><br />
-										<label for='contact_email'>Contact email</label><input type='text' name='contact_email' class='wide' /><br />
-										<input type='hidden' name='sql_user' value='" . self::$post['sql_user'] . "' />
-										<input type='hidden' name='sql_password' value='" . self::$post['sql_password'] . "' />
-										<input type='hidden' name='sql_server' value='" . self::$post['sql_server'] . "' />
-										<input type='hidden' name='sql_database' value='" . self::$post['sql_database'] . "' />
-										<input type='submit' class='button' value='Continue' />
-									</form>
-								";
+						self::$loadInfo['template'] = 'config_setup';
+						self::$loadInfo['siteUrl'] = self::$siteUrl;						
 					} else if (self::$error == 'db_login_failed') {
-						self::$toDisplay = "<p class='message error'>Could not connect to the MySQL server with the specified username and password.</p>";
+						self::$loadInfo['template'] = 'mysql_conn_failed';
 					} else if (self::$error == 'db_select_failed') {
-						self::$toDisplay = "<p class='message error'>Could not select the specified database.</p>";
+						self::$loadInfo['template'] = 'mysql_select_failed';
 					} else {
-						self::$toDisplay = "<p class='message error'>An unknown error occurred while connecting to the database.</p>";
+						self::$loadInfo['template'] = 'mysql_unknown_error';
 					}
 					break;
 				case 'db':
-					self::$toDisplay = 	"<p class='message'>This step will set up the database.<br /><br />If you are unsure of any of these values, contact your webhost for assistance.</p>
-									<form action='install.php?step=config' method='post'>
-										<label for='sql_user'>MySQL user</label><input type='text' name='sql_user' /><br />
-										<label for='sql_password'>MySQL password</label><input type='password' name='sql_password' /><br />
-										<label for='sql_server'>MySQL server location</label><input type='text' name='sql_server' value='localhost' /><br />
-										<label for='sql_database'>MySQL database</label><input type='text' name='sql_database' /><br />
-										<input type='submit' class='button' value='Continue' />
-									</form>
-								";
+					self::$loadInfo['template'] = 'db_setup';
 					break;
 				default:
 					if ($baseconfig['sql_user'] != '' && self::$get['force'] != 'true') {
-						self::$toDisplay = 	"<p class='message error'>The installer has detected that you already have a copy of Rubidium installed in this location. Are you sure you want to overwrite it?</p>
-									If so, <a href='install.php?force=true'>click here to continue</a>.";
+						self::$loadInfo['template'] = 'confirm_overwrite';
 					} else {
-						self::$toDisplay = "<p class='message'>Welcome to the Rubidium installer.<br /><br />This script will install Rubidium on your web server. <a href='install.php?step=db'>Click here</a> to continue.</p>";
+						self::$loadInfo['template'] = 'landing';
 					}
 					break;
 			}
 		} else {
-			self::$toDisplay = "<p class='message error'>The installer is currently locked due to a previous installation. If you want to proceed, you must delete the file \"installer_lock\" to unlock the installer.</p>";
+			self::$loadInfo['template'] = 'installer_locked';
 		}
 		
 		self::displayPage();
 	}
 	
 	function displayPage() {
-		echo "
-			
-			<!DOCTYPE HTML>		
-			<html> 
-			<head> 
-				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'> 
-				<title>Index Page</title> 
-				<link rel='stylesheet' href='http://localhost/rubidium/css/main.css' type='text/css' /> 
-			</head> 
-			<body> 
-			<div id='header'> 
-				<h1>Rubidium Installer</h1> 
-			</div>
-			<div id='wrapper'> 
-				<div id='content'>
-					" . self::$toDisplay . "
-				</div>
-			</div>	
-			</body> 
-			</html>";
+		require(SMARTY_DIR . 'Smarty.class.php');
+		$smarty = new Smarty();
+		$smarty->setTemplateDir	(ROOT_PATH . 'templates');
+		$smarty->setCompileDir	(SMARTY_DIR . 'compile');
+		$smarty->setCacheDir	(SMARTY_DIR . 'cache');
+		$smarty->setConfigDir	(SMARTY_DIR . 'config');
+		$smarty->assign		('config', rubidium::$config);
+		$smarty->assign		('loadInfo', self::$loadInfo);
+		$smarty->display	('install/wrapper.tpl');
 	}
 	
 	function validateSqlConn() {

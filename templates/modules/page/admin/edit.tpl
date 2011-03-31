@@ -2,8 +2,9 @@
 {if $loadInfo.changesMade}
 	<p class='message'>Your changes were successfully made.</p>
 {/if}
-Title: <input type="text" name="pageTitle" value="{$loadInfo.pageEditInfo.title}"></input> <a href="index.php?mode=page&id={$loadInfo.pageEditInfo.id}">View page</a>
+Title: <input type="text" name="pageTitle" value="{$loadInfo.pageEditInfo.title}"></input>
 <textarea class="editor" name="pageContent">{$loadInfo.pageEditInfo.content}</textarea>
+<a class='button' href="index.php?mode=page&id={$loadInfo.pageEditInfo.id}">View page</a>
 <input type="submit" class='button' value="Save changes" />
 <a class='button negative' onclick="javascript:confirmDelete('{$smarty.server.REQUEST_URI}&delete=true')">Delete page</a>
 <input type="hidden" value="{$loadInfo.pageEditInfo.id}" name="id" />

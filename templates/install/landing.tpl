@@ -1,0 +1,1 @@
+<p class='message'>Welcome to the Rubidium installer.<br /><br />This script will install Rubidium on your web server. <a href='install.php?step=db'>Click here</a> to continue.</p>

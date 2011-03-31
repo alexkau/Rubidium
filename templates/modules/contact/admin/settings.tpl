@@ -8,7 +8,6 @@
 		There was an error in making the change: {$loadInfo.error}
 	</p>
 {/if}
-<span>Change contact form settings:</span><br />
 <form action="{$smarty.server.REQUEST_URI}" method="post">
 	<label for='email'>Contact email</label><input class='wide' type="text" name="email" value='{$settings.contact_email.value}' /><br />
 	<label for='public_key'>reCaptcha public key</label><input class='wide' type="text" name="public_key" value='{$settings.recaptcha_public_key.value}' /><br />

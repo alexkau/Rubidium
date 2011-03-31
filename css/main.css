@@ -12,6 +12,13 @@ body {
 	background: #E3E8EE;
 }
 
+a:hover {
+	color: #6480a1;
+}
+a {
+	color: #3e5c7d;
+}
+
 body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, blockquote, pre,
 a, abbr, acronym, address, code,
@@ -185,20 +192,24 @@ ul {
 	margin-left: 20px;
 }
 
+textarea.editor, #cke_pageContent {
+	margin: 15px 0;
+}
+
 .sortable {
-	list-style-type: none; margin: 0; padding: 0; width: 60%;
+	list-style-type: none; margin: 0; padding: 0; width: 400px;
 }
 	.sortable li {
 	}
 	.sortable span {
-		background: #eee;
+		background: #E3E8EE;
 		display: block;
 		margin: 0 5px 5px 5px; padding: 5px;
 	}
 	.ui-state-highlight {
-		height: 1.15em; line-height: 1.2em; background: #ddd;
-		margin: 0 4px 4px 4px; padding: 5px;
-		border: 1px solid #bbb;
+		height: 1.15em; line-height: 1.2em; background: #cbcfd4;
+		margin: -1px 5px 5px; padding: 5px;
+		border: 1px solid #b0b4b8;
 	}
 	.handle {
 		cursor: pointer;
@@ -241,6 +252,7 @@ label.error {
 	color: #3e4934;
 	line-height: 150%;
 	border-radius: 8px;
+	margin: 5px 0;
 }
 
 	.message h3 {
@@ -254,9 +266,20 @@ label.error {
 		color: #281b1b;
 	}
 
+p.info {
+	margin: 10px;
+}
+
+.textLinkList {
+	margin: 10px 0 20px;
+}
+.textLinkList a {
+	margin: 0 0 0 15px;
+}
 
 /* Code for buttons */
 a.button, input.button { display: inline-block; padding: 7px 9px; font-size: 12px; line-height:1; color: #3C3C3D; text-shadow: 1px 1px 0 #FFFFFF; background: #ECECEC url('../images/css3buttons_backgrounds.png') 0 0 no-repeat; white-space: nowrap; overflow: visible; cursor: pointer; text-decoration: none; border: 1px solid #CACACA; -webkit-border-radius: 2px; -moz-border-radius: 2px; -webkit-background-clip: padding-box; border-radius: 2px; outline: none; position: relative; zoom: 1; *display: inline; }
+input.button { padding: 6px 9px 8px !important; }
 a.button.primary, input.button.primary { font-weight: bold }
 a.button:hover, input.button:hover { color: #FFFFFF; border-color: #388AD4; text-decoration: none; text-shadow: -1px -1px 0 rgba(0,0,0,0.3); background-position: 0 -40px; background-color: #2D7DC5; }
 a.button:active, a.button.active, input.button:active, input.button.active { background-position: 0 -81px; border-color: #347BBA; background-color: #0F5EA2; color: #FFFFFF; text-shadow: none; }

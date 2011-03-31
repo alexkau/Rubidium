@@ -1,1 +1,1 @@
-Admin CP Dashboard placeholder<br/><br/>This will be filled in with non-essential stuff at some point.
+<p class='info'>Welcome to the Rubidium administrator control panel.</p>
