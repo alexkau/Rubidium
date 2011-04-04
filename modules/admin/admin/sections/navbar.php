@@ -5,6 +5,7 @@ class module_admin_admin_navbar {
 	static public $get	= array();
 	static public $itemList	= array();
 	static public $urlMode	= null;
+	static public $pageList	= array();
 	
 	function execute() {
 		self::$post	= rubidium::$request['POST'];
@@ -46,12 +47,20 @@ class module_admin_admin_navbar {
 					outputHandler::setLoadInfoVar('subsection', 'edit');
 					break;
 				case 'add':
+					self::$pageList = self::getPageList();
+					outputHandler::setLoadInfoVar('pageList', self::$pageList);
 					outputHandler::setLoadInfoVar('subsection', 'add');
 					break;
 				default:
 					break;
 			}
 		}
+	}
+	
+	//For auto-generation of navbar items for pages
+	function getPageList() {
+		$pageList = classDB::getTable('module_page_pages', 'id', '*', '', '');
+		return $pageList;
 	}
 	
 	function updateItemList() {

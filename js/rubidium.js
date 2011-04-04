@@ -30,6 +30,13 @@ function confirmDeleteModule(delUrl) {
 	}
 }
 
+function generateNavbarItem(content) {
+	itemInfo = content.split("|!|!|");
+	document.navbaradd.itemTitle.value = itemInfo[0];
+	document.navbaradd.itemUrl.value = 'index.php?mode=page&id=' + itemInfo[1];
+	document.navbaradd.itemRegex.value = '/mode=page&id=' + itemInfo[1] + '/i';
+}
+
 
 
 /**

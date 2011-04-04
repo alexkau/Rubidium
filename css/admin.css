@@ -26,3 +26,8 @@
 		#sidebar li.selected a {
 			color: #000;
 		}
+
+.navbaraddform {
+	width: 350px;
+	float: left;
+}
