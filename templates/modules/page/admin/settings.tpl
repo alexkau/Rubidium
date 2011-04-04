@@ -1,4 +1,5 @@
 <h2>Page Module Settings</h2>
+{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/inlinehelp.tpl" message="This page lets you change the settings for the page management module.<br />To make a change, click on the dropdown menu, select the desired page from the list, and click the 'Save Changes' button.<br />The default page is the page that is shown when a user first visits your website.<br />The 404 error page is the page that is shown when a user attempts to access a nonexistent page."}
 {if $loadInfo.changesMade}
 	<p class='message'>
 		The change was successfully made.

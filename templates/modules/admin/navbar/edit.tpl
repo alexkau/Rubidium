@@ -1,3 +1,4 @@
+{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/inlinehelp.tpl" message="From here, you can edit or delete a navbar item.<br />After making your desired changes, click the 'Save changes' button.<br />If you wish to delete this item, click the 'Delete item' button."}
 {if $loadInfo.changesMade}
 	<p class='message'>
 		The change was successfully made.

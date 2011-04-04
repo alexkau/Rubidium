@@ -72,6 +72,18 @@ a img { border: none; }
 	display: none;
 }
 
+div.center {
+	text-align: center;
+}
+
+#loginbox {
+	width: 500px;
+/*	border: 2px solid #4c698a;*/
+	margin: 0 auto;
+	padding: 15px;
+	border-radius: 10px;
+}
+
 #header {
 	overflow: hidden;
 	background: url(../images/headerbg.png) bottom center repeat-x;
@@ -216,7 +228,7 @@ textarea.editor, #cke_pageContent {
 		margin: 0 5px -2px 0;
 	}
 	
-.textInputList input, input.wide {
+.textInputList input.text, input.wide {
 	width: 300px;
 }
 .textInputList span {
@@ -229,7 +241,7 @@ textarea.editor, #cke_pageContent {
 	padding: 3px;
 }
 
-label {
+label.left {
 	width: 150px;
 	vertical-align: top;
 	text-align: right;
@@ -265,10 +277,12 @@ label.error {
 		border-color: #deb7b7;
 		color: #281b1b;
 	}
-
-p.info {
-	margin: 10px;
-}
+	
+	.message.info {
+		background-color: #F9F7E0;
+		border-color: #EADCA0;
+		color: #000;
+	}
 
 .textLinkList {
 	margin: 10px 0 20px;

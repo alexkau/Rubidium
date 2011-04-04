@@ -1,3 +1,4 @@
+{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/inlinehelp.tpl" message="This page lists all of your installed modules.<br />To edit a module's information, click on its name.<br />To install a new module, click 'Install new module' after uploading its files."}
 <ul class='textLinkList'>
 	{foreach $loadInfo.fullModuleList as $name => $data}
 		<li>

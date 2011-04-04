@@ -82,6 +82,7 @@ class outputHandler {
 		$smarty->assign('settings',	rubidium::$settings);
 		$smarty->assign('modules',	rubidium::$modules);
 		$smarty->assign('navbar',	rubidium::$navbar);
+		$smarty->assign('inlineHelp',	rubidium::$settings['useInlineHelp']['value']);
 	}
 	static public function buildPage() {
 		//Load the Smarty template engine

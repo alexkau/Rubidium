@@ -4,6 +4,7 @@
 	</p>
 	{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/navbar/list.tpl"}
 {else}
+	{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/inlinehelp.tpl" message="From here, you can add a link to the navigation bar.<br />After entering the desired title and URL for the link, click the 'Add Item' button.<br />If a value is entered for 'Regex to match', the link will be highlighted when the specified regular expression matches against the current URL. This feature is for advanced users only, however an automatic generator for these regular expressions will be added soon."}
 	<form action="{$smarty.server.REQUEST_URI}" method="post">
 	<ul class='textInputList'>
 		<li><span>Title</span><input type="text" name="itemTitle"></input></li>

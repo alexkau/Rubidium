@@ -1,3 +1,4 @@
+{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/inlinehelp.tpl" message="This is a list of all of the pages on your website.<br />Click on a page to edit it, or click the 'Add Page' button to create a new page."}
 {if $loadInfo.deletedPage}
 	<p class='message'>The page was successfully deleted.</p>
 {/if}

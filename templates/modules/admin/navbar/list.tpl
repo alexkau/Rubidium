@@ -1,3 +1,4 @@
+{include file="`$smarty.const.ROOT_PATH`templates/modules/admin/inlinehelp.tpl" message="This page lets you manage the items in the navigation bar.<br />Click on an item to edit it, or click the 'Add item' button to add a new item.<br />To rearrange the items, click and drag on the icon to the left of an item."}
 {if $loadInfo.deletedItem}
 	<p class='message'>The item was successfully deleted.</p>
 {/if}

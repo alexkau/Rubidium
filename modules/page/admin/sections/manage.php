@@ -9,7 +9,7 @@ class module_page_admin_manage {
 		self::$post	= rubidium::$request['POST'];
 		self::$get	= rubidium::$request['GET'];
 		self::updatePageList();
-		if (self::checkPostData()) {
+			if (self::checkPostData()) {
 			switch (self::$post['action']) {
 				case 'editPage':
 					$timeNow = time();

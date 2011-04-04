@@ -204,13 +204,14 @@ file_put_contents(ROOT_PATH . 'config.php', $configfile);
 		
 		classDB::$database->query("
 		INSERT INTO `settings` (`id`, `name`, `description`, `value`) VALUES
-			(2, 'footer', 'Global site footer', 'Powered by Rubidium'),
-			(5, '404_page', 'ID of page to display on 404 error', '2'),
-			(4, 'default_mode', 'Default mode to load if not specified', 'page'),
-			(7, 'recaptcha_public_key', 'reCaptcha public key', '6Le77sISAAAAAImz59nMZPQJNqeSU3O6kduZ3KyC'),
-			(8, 'recaptcha_private_key', 'reCaptcha private key', '6Le77sISAAAAAKDDS37FXdDMqopZgvEhAL1ItCA1'),
-			(9, 'contact_email', 'Contact email', '" . self::$post['contact_email'] . "'),
-			(10, 'site_title', 'Global title for the site', '" . self::$post['site_title'] . "');");
+			(1, 'footer', 'Global site footer', 'Powered by Rubidium'),
+			(2, '404_page', 'ID of page to display on 404 error', '2'),
+			(3, 'default_mode', 'Default mode to load if not specified', 'page'),
+			(4, 'recaptcha_public_key', 'reCaptcha public key', '6Le77sISAAAAAImz59nMZPQJNqeSU3O6kduZ3KyC'),
+			(5, 'recaptcha_private_key', 'reCaptcha private key', '6Le77sISAAAAAKDDS37FXdDMqopZgvEhAL1ItCA1'),
+			(6, 'contact_email', 'Contact email', '" . self::$post['contact_email'] . "'),
+			(7, 'site_title', 'Global title for the site', '" . self::$post['site_title'] . "'),
+			(8, 'useInlineHelp', 'Bool - Show ACP inline help?', '1');");
 
 		classDB::close();
 	}
