@@ -189,9 +189,11 @@ file_put_contents(ROOT_PATH . 'config.php', $configfile);
 			PRIMARY KEY (`id`) )
 			ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 		
+		
+		$sitePath = preg_replace('/\/install.php?(.*)/i', '', $_SERVER['REQUEST_URI'])
 		classDB::$database->query("
 		INSERT INTO `navbar` (`id`, `position`, `url`, `title`, `regex`) VALUES
-			(1, 0, '" . self::$siteUrl . "', 'Index', '/(?!index)|(mode=page&id=1)/i');");
+			(1, 0, '" . self::$siteUrl . "', 'Index', '/(" . $sitePath . "\/(?!index))|(mode=page&id=1)|(index.php(?!.))/i');");
 		
 		classDB::$database->query("
 		CREATE TABLE `settings` (

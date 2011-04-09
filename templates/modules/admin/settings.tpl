@@ -11,9 +11,9 @@
 {/if}
 <form action="{$smarty.server.REQUEST_URI}" method="post">
 	<ul class='textInputList'>
-		<li><span>Site URL:</span><input type="text" class='wide' name="siteUrl" value="{$config.base_url}" /><br />
-		<li><span>Site title:</span><input type="text" class='wide' name="siteTitle" value="{$settings.site_title.value}" /><br />
-		<li><span>Site footer:</span><input type="text" class='wide' name="footer" value="{$settings.footer.value}" /><br />
+		<li><span>Site URL</span><input type="text" class='wide' name="siteUrl" value="{$config.base_url}" /><br />
+		<li><span>Site title</span><input type="text" class='wide' name="siteTitle" value="{$settings.site_title.value}" /><br />
+		<li><span>Site footer</span><input type="text" class='wide' name="footer" value="{$settings.footer.value}" /><br />
 		<li><span>Enable inline help?</span><input type='radio' name='useInlineHelp' value='1' id='yes' {if $inlineHelp}checked {/if}/><label for='yes'>Yes</label><input type='radio' name='useInlineHelp' value='0' id='no' {if !$inlineHelp}checked {/if}/><label for='no'>No</label></li>
 	</ul>
 	<input type="hidden" value="changeSiteSettings" name="action" />
