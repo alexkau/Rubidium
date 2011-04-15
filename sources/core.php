@@ -1,5 +1,14 @@
 <?php
-echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
+/**
+ * Core handler file
+ * @package rubidium 
+ */
+
+/**
+ * General i/o handler + procedures
+ * @author alex
+ * @package rubidium
+ */
 class rubidium {
 	static public $startTime	= null;
 	static public $settings		= array();
@@ -10,6 +19,9 @@ class rubidium {
 	static public $toLoad		= array();
 	static public $DB		= null;
 	
+	/**
+	 * Loads basic required items, builds page, cleans up
+	 */
 	function init() {
 		self::startTimer();
 		require(ROOT_PATH . 'sources/debug.php');
@@ -54,11 +66,14 @@ class rubidium {
 		self::getInfo();
 	}
 	
+	/**
+	 * Loads settings from config.php and assigns them to self::$config
+	 * If the config isn't set up, redirects to install.php
+	 */
 	function loadConfig() {	
 		require(ROOT_PATH . 'config.php');
 		if ( is_array( $baseconfig ) ) {
-			foreach( $baseconfig as $k => $v )
-			{
+			foreach( $baseconfig as $k => $v ) {
 				self::$config[$k] = $v;
 			}
 		} else {
@@ -66,6 +81,9 @@ class rubidium {
 		}
 	}
 	
+	/**
+	 * Gets system settings, module information and navbar information; assigns them to class variables
+	 */
 	function getInfo() {
 		require_once(ROOT_PATH . 'sources/db.php');
 		self::$settings	= classDB::getTable('settings', 'name', 'name, value', '',  array( 'order_by' => 'name', 'order_dir' => 'ASC' ));
@@ -74,6 +92,9 @@ class rubidium {
 		self::getRequest();
 	}
 	
+	/**
+	 * Starts the page load timer 
+	 */
 	function startTimer() {
 		$mtime = microtime(); 
 		$mtime = explode(" ",$mtime); 
@@ -81,6 +102,10 @@ class rubidium {
 		self::$startTime = $mtime;
 	}
 	
+	/**
+	 * Stops the page load timer and returns the total time taken (seconds to 2 decimals)
+	 * @return number
+	 */
 	function endTimer() {
 		$mtime = microtime(); 
 		$mtime = explode(" ",$mtime); 
@@ -91,44 +116,46 @@ class rubidium {
 	}
 	
 	/**
-	 * arrayToString
-	 * Input array, out comes string (for DB storage)
+	 * Converts an array into a string (url query type) for DB storage
+	 * @param array $array
+	 * @return string
 	 */
 	function arrayToString($array) {
 		return http_build_query($array);
 	}
 	
 	/**
-	 * stringToArray
-	 * Input string (from DB), out comes array
+	 * Takes a string (from arrayToString) and returns it to the array from which it came
+	 * @param string $string
+	 * @return array
 	 */
 	function stringToArray($string) {
 		parse_str($string, $array);
 		return $array;
 	}
 	
-	//Gets the current request info
+	/**
+	 * Loads GET and POST requests and cookies, escapes them if magic quotes aren't enabled
+	 */
 	function getRequest() {
 		//GET array must be converted to lowercase so case sensitivity doesn't matter (index.php?mode=page versus index.php?MODE=PAGE)
-		//Arrays are only cleaned if get_magic_quotes_gpc is false
 		self::$request['GET']		= ((! empty($_GET)) ? get_magic_quotes_gpc() ? self::arrayToLower($_GET) : self::arrayToLower(self::cleanArray($_GET)) : null);
 		self::$request['POST']		= ((! empty($_POST)) ? get_magic_quotes_gpc() ? $_POST : self::cleanArray($_POST) : null);
 		self::$request['COOKIES']	= ((! empty($_COOKIES)) ? get_magic_quotes_gpc() ? $_COOKIES :self::cleanArray($_COOKIES) : null);
 		debug::addMessage("GET input loaded: ".print_r(self::$request['GET'],true));
 	}
 	
-	//Cleans all values in an array
-	function cleanArray($array)
-	{
-		if(is_array($array)) {
-			foreach($array as $k => $v)
-			{
-				if(is_array($array[$k]))
-				{
+	/**
+	 * Escapes all values in an array (for use if magic quotes aren't enabled)
+	 * @param array $array
+	 * @return array|boolean
+	 */
+	function cleanArray($array) {
+		if (is_array($array)) {
+			foreach ($array as $k => $v) {
+				if (is_array($array[$k])) {
 					self::cleanArray($array[$k]);
-				}
-				else
-				{
+				} else {
 					$output[$k] = addslashes($array[$k]);
 				}
 			}
@@ -138,7 +165,12 @@ class rubidium {
 		}
 	}
 
-	//Converts an entire array's contents to lowercase, including keys
+	/**
+	 * Converts all values in an array to lowercase
+	 * @param array $array
+	 * @param integer $round
+	 * @return string
+	 */
 	function arrayToLower($array,$round = 0){ 
 		foreach($array as $key => $value){ 
 			//Must unset key first, otherwise it's completely removed if it's already lowercase
@@ -149,8 +181,8 @@ class rubidium {
 	}
 	
 	/**
-	 * generateHash
-	 * Returns a random 16-character string to be used as a password hash
+	 * Generates a random 16-character string to be used as a password salt
+	 * @return string
 	 */
 	function generateSalt() {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -162,8 +194,8 @@ class rubidium {
 	}
 	
 	/**
-	 * generateLoginKey
-	 * Returns a random 128-character string to be used as a password hash
+	 * Returns a random 128-character string to be used as a login key
+	 * @return string
 	 */
 	function generateLoginKey() {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
@@ -175,21 +207,22 @@ class rubidium {
 	}
 	
 	/**
-	 * setPassword
 	 * Generates a password salt, SHA-512 hashes it against the password, and sets the admin password and salt
+	 * @param string $password
 	 */
 	function setPassword($password) {
 		require_once(ROOT_PATH . 'sources/db.php');
 		$salt = self::generateSalt();
 		$hash = hash("sha512", $password.$salt);
 		//echo "Password: {$password} - Salt: {$salt} - Hash: {$hash}";
-		classDB::store('admin_info', 'value', $salt, "`name` = 'password_salt'");
-		classDB::store('admin_info', 'value', $hash, "`name` = 'password_hash'");
+		classDB::update('admin_info', array('value' => $salt), "`name` = 'password_salt'");
+		classDB::update('admin_info', array('value' => $hash), "`name` = 'password_hash'");
 	}
 	
 	/**
-	 * checkPassword
-	 * Checks specified admin password against database, returns true or false
+	 * Checks the specified admin password against database, returns true or false
+	 * @param string $password
+	 * @return boolean
 	 */
 	function checkPassword($password) {
 		$adminInfo = classDB::getTable('admin_info', 'name', 'name, value');
@@ -199,12 +232,10 @@ class rubidium {
 	}
 	
 	/**
-	 * changeConfigSetting
 	 * Changes the specified setting in the config file
 	 * Refreshes config settings when done writing
-	 *
-	 * $setting: Name of setting to change (from $baseconfig)
-	 * $value: Value to put in the setting
+	 * @param string $setting
+	 * @param string $value
 	 */
 	function changeConfigSetting($setting, $value) {
 		$configfilename = ROOT_PATH . 'config.php';

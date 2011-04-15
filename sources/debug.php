@@ -1,4 +1,13 @@
 <?php
+/**
+ * Debug handler file
+ * @package rubidium 
+ */
+/**
+ * Stores and outputs debug messages
+ * @author alex
+ * @package rubidium
+ */
 class debug {
 	static public $messages = array();
 	static public $output = array();

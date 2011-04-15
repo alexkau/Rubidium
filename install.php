@@ -1,7 +1,16 @@
 <?php
-define("PRINT_FILENAMES",0);
+/**
+ * Installer
+ * @package rubidium 
+ */
+
 rubidiumInstall::execute();
 
+/**
+ * Installer
+ * @author alex
+ * @package rubidium
+ */
 class rubidiumInstall {
 	static public $post		= null;
 	static public $get		= null;
@@ -12,6 +21,9 @@ class rubidiumInstall {
 	static public $siteUrl		= null;
 	static public $loadInfo		= null;
 	
+	/**
+	 * Determines which step to run and does it
+	 */
 	function execute() {
 		define('ROOT_PATH', dirname( __FILE__ ) . '/');
 		define('SMARTY_DIR', dirname( __FILE__ ) . '/3rdparty/smarty/');
@@ -69,6 +81,9 @@ class rubidiumInstall {
 		self::displayPage();
 	}
 	
+	/**
+	 * Loads Smarty, sets variables, displays the page
+	 */
 	function displayPage() {
 		require(SMARTY_DIR . 'Smarty.class.php');
 		$smarty = new Smarty();
@@ -81,6 +96,11 @@ class rubidiumInstall {
 		$smarty->display	('install/wrapper.tpl');
 	}
 	
+	/**
+	 * Checks whether the database connection is valid
+	 * Returns an error if appropriate
+	 * @return boolean
+	 */
 	function validateSqlConn() {
 		self::$database = new mysqli(self::$post['sql_server'],self::$post['sql_user'],self::$post['sql_password']);
 		if (mysqli_connect_errno()) {
@@ -94,6 +114,9 @@ class rubidiumInstall {
 		}
 	}
 	
+	/**
+	 * Writes config file, creates and populates database
+	 */
 	function doInstall() {		
 $configfile = 
 "<?php
@@ -103,13 +126,10 @@ $configfile =
 \$baseconfig['sql_database']	= '" . self::$post['sql_database'] . "';
 \$baseconfig['base_url']		= '" . self::$post['site_url'] . "';
 
-/* Defines the debug level
+/**
+ * Defines the debug level
  * 0 = No messages displayed
- * 1 = Most messages displayed
- * 2 = All messages displayed, including those with private info:
- *     This level should NOT be used on live sites.
- *     Debug level 1 has not been implemented yet;
- *     either level will display all messages.
+ * 1 = Display debug messages (only for development/testing)
  */
 define('DEBUG',0);";
 file_put_contents(ROOT_PATH . 'config.php', $configfile);
@@ -190,10 +210,10 @@ file_put_contents(ROOT_PATH . 'config.php', $configfile);
 			ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 		
 		
-		$sitePath = preg_replace('/\/install.php?(.*)/i', '', $_SERVER['REQUEST_URI'])
+		$sitePath = preg_replace('/\/install.php?(.*)/i', '', substr($_SERVER['REQUEST_URI'], 1));
 		classDB::$database->query("
 		INSERT INTO `navbar` (`id`, `position`, `url`, `title`, `regex`) VALUES
-			(1, 0, '" . self::$siteUrl . "', 'Index', '/(" . $sitePath . "\/(?!index))|(mode=page&id=1)|(index.php(?!.))/i');");
+			(1, 0, '" . self::$siteUrl . "', 'Index', '/(" . $sitePath . "\/\(?!index))|(mode=page&id=1)|(index.php(?!.))/i');");
 		
 		classDB::$database->query("
 		CREATE TABLE `settings` (
@@ -218,6 +238,10 @@ file_put_contents(ROOT_PATH . 'config.php', $configfile);
 		classDB::close();
 	}
 	
+	/**
+	 * Generates a random 16-character string to be used as a password salt 
+	 * @return string
+	 */
 	function generateSalt() {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyz';
 		$string = '';
@@ -227,6 +251,10 @@ file_put_contents(ROOT_PATH . 'config.php', $configfile);
 		return $string;
 	}
 	
+	/**
+	 * Generates a password salt, SHA-512 hashes it against the password, and sets the admin password and salt
+	 * @param unknown_type $password
+	 */
 	function setPassword($password) {
 		$salt = self::generateSalt();
 		$hash = hash("sha512", $password.$salt);

@@ -1,28 +1,49 @@
 <?php
-echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
+/**
+ * Database class file
+ * @package rubidium 
+ */
+
+/**
+ * Handles all database management - data insertion/deletion/modification.
+ * @author alex
+ * @package rubidium
+ */
 class classDB {
+	/**
+	 * Database MySQLi object
+	 * @var object
+	 */
 	static public $database = null;
 	
+	/**
+	 * Connects to the database, using the configuration from the config file
+	 */
 	public static function connect() {
 		self::$database = new mysqli(rubidium::$config['sql_server'],rubidium::$config['sql_user'],rubidium::$config['sql_password']);
 		if (mysqli_connect_errno()) {
 			die('<br />Database connection failed. Please check back later or notify the administrator.');
 		}
-		//Connect to DB; die if connection failed
 		self::$database->select_db(rubidium::$config['sql_database']) or die('Unable to select database');
 		debug::addMessage("Connected to database ".rubidium::$config['sql_database']);
 	}
 	
+	/**
+	 * Closes the database session if one exists
+	 */
 	public static function close() {
-		mysqli_close(self::$database);
+		if (self::$database) {
+			mysqli_close(self::$database);
+		}
 	}
 	
+
 	/**
-	 * SelectByID
 	 * Selects a single row (by ID) from a specified table
 	 * Returns true if exactly one row is selected, otherwise false
-	 * $table = table to select from
-	 * $id = ID of row to select
+	 * @param string $table
+	 * @param integer $id
+	 * @return array|boolean
 	 */
 	function selectByID($table, $id) {
 		$query = "select * from {$table} where `id` = {$id}";
@@ -35,12 +56,13 @@ class classDB {
 		}
 	}
  
+
 	/**
-	 * SelectByName
 	 * Selects a single row (by name) from a specified table
 	 * Returns true if exactly one row is selected, otherwise false
-	 * $table = table to select from
-	 * $name = name of row to select
+	 * @param string $table
+	 * @param string $name
+	 * @return array|boolean
 	 */
 	function selectByName($table, $name) {
 		$query = "select * from {$table} where `name` = {$name}";
@@ -53,8 +75,8 @@ class classDB {
 		}
 	}
 	
+
 	/**
-	 * Select
 	 * Selects all results given certain criteria
 	 *
 	 * $options = array(
@@ -66,27 +88,26 @@ class classDB {
 	 *
 	 * $fields = "name, description, value";
 	 * $conditions = "id > 5";
+	 *
+	 * @param string $table
+	 * @param string $fields
+	 * @param string $conditions
+	 * @param array $options
+	 * @return array|boolean
 	 */
 	function select($table, $fields="*", $conditions="", $options=array()) {
 		$query = "SELECT {$fields} FROM {$table}";
-
-		if($conditions != "")
-		{
+		if ($conditions != "") {
 			$query .= " WHERE ".$conditions;
 		}
-		
-		if(isset($options['order_by']))
-		{
+		if (isset($options['order_by'])) {
 			$query .= " ORDER BY ".$options['order_by'];
 			$query .= (isset($options['order_dir'])) ? " ".strtoupper($options['order_dir']) : '';
 		}
-		
-		if(isset($options['limit_start']) && isset($options['limit']))
-		{
+		if (isset($options['limit_start']) && isset($options['limit'])) {
 			$query .= " LIMIT ".$options['limit_start'].", ".$options['limit'];
 		}
-		else if(isset($options['limit']))
-		{
+		else if(isset($options['limit'])) {
 			$query .= " LIMIT ".$options['limit'];
 		}
 		//echo $query . "<br />";
@@ -101,9 +122,11 @@ class classDB {
 	}
 	
 	/**
-	 * mysqlToArray
 	 * Converts a MySQL object to an array
-	 * $key is the name of the array value to use as the key for the array
+	 * $key = the name of the array value to use as the key for the array
+	 * @param object $input
+	 * @param string $key
+	 * @return array
 	 */
 	function mysqlToArray($input, $key) {
 		$array = array();
@@ -114,8 +137,9 @@ class classDB {
 	}
 	
 	/**
-	 * mysqlToSimpleArray
-	 * Same as mysqlToArray, except only processes a single field and formats it as a string
+	 * Converts a MySQL object to a string - Only processes a single row.
+	 * @param object $input
+	 * @return string
 	 */
 	function mysqlToString($input) {
 		$array = array();
@@ -123,12 +147,13 @@ class classDB {
 	}
 	
 	/**
-	 * getTable
 	 * Gets specified data from specified table and formats it as an array
-	 * $table: Table to pull data from
-	 * $key: Name of field to use for array key
-	 * $fields: Fields to pull from table
-	 * $options: Options to use (see self::select())
+	 * @param string $table
+	 * @param string $key
+	 * @param string $fields
+	 * @param string $conditions
+	 * @param array $options
+	 * @return array
 	 */
 	function getTable($table, $key, $fields, $conditions, $options) {
 		$temp = self::select($table, $fields, $conditions, $options);
@@ -137,8 +162,12 @@ class classDB {
 	}
 	
 	/**
-	 * getSimpleTable
 	 * Same as getTable, except only pulls a single field and formats it as a non-nested array
+	 * @param string $table
+	 * @param string $field
+	 * @param string $conditions
+	 * @param array $options
+	 * @return array
 	 */
 	function getSimpleTable($table, $field, $conditions, $options) {
 		$temp = self::select($table, $field, $conditions, $options);
@@ -149,19 +178,14 @@ class classDB {
 	}
 	
 	/**
-	 * store
-	 * Stores $data in $table.$field where $conditions
+	 * Stores data in where $conditions
+	 * content: array (field => data)
 	 * DO NOT LEAVE $conditions BLANK unless you're absolutely certain you want to overwrite everything.
+	 * @param string $table
+	 * @param array $content
+	 * @param string $conditions
 	 */
-	function store($table, $field, $data, $conditions) {
-		$query = "update {$table} set {$field} = '{$data}'";
-		$query .= ($conditions != '') ? ' WHERE ' . $conditions : '';
-		debug::addMessage("Running MySQL query: " . $query);
-		return (self::$database->query($query)) ? true : false;
-	}
-	
-	//Should change this function name to update
-	function store1($table, $content, $conditions) {
+	function update($table, $content, $conditions) {
 		$comma = '';
 		$query = "update {$table} set ";
 		foreach ($content as $field => $data) {
@@ -174,6 +198,12 @@ class classDB {
 		//echo $query."<br/>";
 	}
 	
+	/**
+	 * Inserts specified content into specified table
+	 * content: array (field => data)
+	 * @param string $table
+	 * @param array $content
+	 */
 	function insert($table, $content) {
 		$comma = '';
 		$query = "INSERT INTO {$table} ( ";
@@ -193,6 +223,11 @@ class classDB {
 		//echo $query;
 	}
 	
+	/**
+	 * Deletes specified data
+	 * @param string $table
+	 * @param string $conditions
+	 */
 	function delete($table, $conditions) {
 		$query = "DELETE FROM {$table} WHERE {$conditions}";
 		debug::addMessage("Running MySQL query: " . $query);
@@ -200,8 +235,8 @@ class classDB {
 	}
 	
 	/**
-	 * createSetionsTable
 	 * Creates a sections table for the specified module 
+	 * @param string $moduleName
 	 */
 	function createSectionsTable($moduleName) {
 		$query = 	"CREATE TABLE IF NOT EXISTS `module_{$moduleName}_sections` (
@@ -213,6 +248,10 @@ class classDB {
 		//echo $query;
 	}
 	
+	/**
+	 * Deletes the sections table for the specified module 
+	 * @param string $moduleName
+	 */
 	function deleteSectionsTable($moduleName) {
 		$query = "DROP TABLE `module_{$moduleName}_sections`;";
 		self::$database->query($query);

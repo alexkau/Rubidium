@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class rubidium</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class rubidium</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">General i/o handler + procedures</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> alex</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_sources---core.php.html">/sources/core.php</a> (line <span class="field"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a12">12</a></span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+												<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$config" title="details" class="var-name">$config</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$DB" title="details" class="var-name">$DB</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$modules" title="details" class="var-name">$modules</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$navbar" title="details" class="var-name">$navbar</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$request" title="details" class="var-name">$request</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$settings" title="details" class="var-name">$settings</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$startTime" title="details" class="var-name">$startTime</a>
+				</div>
+																<div class="var-title">
+					static <span class="var-type">mixed</span>
+					<a href="#$toLoad" title="details" class="var-name">$toLoad</a>
+				</div>
+																																																																															</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																				
+												<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#arrayToLower" title="details" class="method-name">arrayToLower</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$array</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$round</span> = <span class="var-default">0</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#arrayToString" title="details" class="method-name">arrayToString</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$array</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#changeConfigSetting" title="details" class="method-name">changeConfigSetting</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$setting</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#checkPassword" title="details" class="method-name">checkPassword</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$password</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array|boolean</span>
+										<a href="#cleanArray" title="details" class="method-name">cleanArray</a>
+											(<span class="var-type">array</span>&nbsp;<span class="var-name">$array</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">number</span>
+										<a href="#endTimer" title="details" class="method-name">endTimer</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#generateLoginKey" title="details" class="method-name">generateLoginKey</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#generateSalt" title="details" class="method-name">generateSalt</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getInfo" title="details" class="method-name">getInfo</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getRequest" title="details" class="method-name">getRequest</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#init" title="details" class="method-name">init</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#instantiate" title="details" class="method-name">instantiate</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#loadConfig" title="details" class="method-name">loadConfig</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setPassword" title="details" class="method-name">setPassword</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$password</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#startTimer" title="details" class="method-name">startTimer</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#stringToArray" title="details" class="method-name">stringToArray</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$string</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$config" id="$config"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$config</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a17">17</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$DB" id="$DB"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$DB</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a20">20</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$modules" id="$modules"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$modules</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a15">15</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$navbar" id="$navbar"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$navbar</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a16">16</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$request" id="$request"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$request</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a18">18</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$settings" id="$settings"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$settings</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a14">14</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$startTime" id="$startTime"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$startTime</span>
+			 = <span class="var-default"> null</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a13">13</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$toLoad" id="$toLoad"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			static <span class="var-type">mixed</span>
+			<span class="var-name">$toLoad</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a19">19</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodarrayToLower" id="arrayToLower"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">arrayToLower</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a174">174</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Converts all values in an array to lowercase</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			arrayToLower
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$array</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$round</span> = <span class="var-default">0</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$array</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$round</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodarrayToString" id="arrayToString"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">arrayToString</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a123">123</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Converts an array into a string (url query type) for DB storage</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			arrayToString
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$array</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$array</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodchangeConfigSetting" id="changeConfigSetting"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">changeConfigSetting</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a240">240</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Changes the specified setting in the config file</p>
+<p class="description"><p>Refreshes config settings when done writing</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			changeConfigSetting
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$setting</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$setting</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcheckPassword" id="checkPassword"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">checkPassword</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a227">227</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Checks the specified admin password against database, returns true or false</p>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			checkPassword
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$password</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$password</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcleanArray" id="cleanArray"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">cleanArray</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a153">153</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Escapes all values in an array (for use if magic quotes aren't enabled)</p>
+	
+	<div class="method-signature">
+		<span class="method-result">array|boolean</span>
+		<span class="method-name">
+			cleanArray
+		</span>
+					(<span class="var-type">array</span>&nbsp;<span class="var-name">$array</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$array</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodendTimer" id="endTimer"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">endTimer</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a109">109</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Stops the page load timer and returns the total time taken (seconds to 2 decimals)</p>
+	
+	<div class="method-signature">
+		<span class="method-result">number</span>
+		<span class="method-name">
+			endTimer
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgenerateLoginKey" id="generateLoginKey"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">generateLoginKey</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a200">200</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns a random 128-character string to be used as a login key</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			generateLoginKey
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgenerateSalt" id="generateSalt"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">generateSalt</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a187">187</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generates a random 16-character string to be used as a password salt</p>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			generateSalt
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetInfo" id="getInfo"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getInfo</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a87">87</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets system settings, module information and navbar information; assigns them to class variables</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getInfo
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetRequest" id="getRequest"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getRequest</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a140">140</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Loads GET and POST requests and cookies, escapes them if magic quotes aren't enabled</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getRequest
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodinit" id="init"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">init</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a25">25</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Loads basic required items, builds page, cleans up</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			init
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodinstantiate" id="instantiate"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">instantiate</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a60">60</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates a minimal instance of the class for basic operations.</p>
+<p class="description"><p>Mainly intended for things such as processing AJAX requests</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			instantiate
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodloadConfig" id="loadConfig"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">loadConfig</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a73">73</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Loads settings from config.php and assigns them to self::$config</p>
+<p class="description"><p>If the config isn't set up, redirects to install.php</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			loadConfig
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsetPassword" id="setPassword"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setPassword</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a213">213</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Generates a password salt, SHA-512 hashes it against the password, and sets the admin password and salt</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setPassword
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$password</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$password</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodstartTimer" id="startTimer"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">startTimer</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a98">98</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Starts the page load timer</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			startTimer
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodstringToArray" id="stringToArray"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">stringToArray</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcescore.php.html#a132">132</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Takes a string (from arrayToString) and returns it to the array from which it came</p>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			stringToArray
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$string</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$string</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 15 Apr 2011 13:05:23 -0700 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

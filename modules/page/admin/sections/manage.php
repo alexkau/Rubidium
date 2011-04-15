@@ -1,10 +1,23 @@
 <?php
+/**
+ * Page management section for page module
+ * @package rubidium 
+ */
+
+/**
+ * Page management section for page module
+ * @author alex
+ * @package rubidium
+ */
 class module_page_admin_manage {
 	static public $pageList		= array();
 	static public $post		= array();
 	static public $get		= array();
 	static public $urlMode		= null;
 	
+	/**
+	 * Processes request
+	 */
 	function execute() {
 		self::$post	= rubidium::$request['POST'];
 		self::$get	= rubidium::$request['GET'];
@@ -13,7 +26,7 @@ class module_page_admin_manage {
 			switch (self::$post['action']) {
 				case 'editPage':
 					$timeNow = time();
-					classDB::store1('module_page_pages', array('title' => self::$post['pageTitle'], 'content' => self::$post['pageContent'], 'last_updated' => time()), '`id` = '.self::$post['id']);
+					classDB::update('module_page_pages', array('title' => self::$post['pageTitle'], 'content' => self::$post['pageContent'], 'last_updated' => time()), '`id` = '.self::$post['id']);
 					outputHandler::setLoadInfoVar('changesMade', true);
 					break;
 				case 'addPage':
@@ -46,11 +59,6 @@ class module_page_admin_manage {
 				outputHandler::setLoadInfoVar('cantDelete404', true);
 			}
 		}
-		
-		if (self::checkGetData()) {
-			//Process it
-			outputHandler::setLoadInfoVar('changesMade', true);
-		}
 		if (self::checkUrlParams() && self::$get['delete'] != 'true') {
 			switch (self::$urlMode) {
 				case 'edit':
@@ -69,7 +77,6 @@ class module_page_admin_manage {
 	}
 	
 	/**
-	 * updatePageList
 	 * Sets self::$pageList to array of all pages: id => array(data)
 	 */
 	function updatePageList() {
@@ -77,8 +84,9 @@ class module_page_admin_manage {
 	}
 	
 	/**
-	 * getSinglePageInfo
 	 * Returns all info of specified page as an array
+	 * @param string $id
+	 * @return array
 	 */
 	function getSinglePageInfo($id) {
 		$table = classDB::getTable('module_page_pages', 'id', '*', '`id` = '.$id, '');
@@ -86,8 +94,8 @@ class module_page_admin_manage {
 	}
 	
 	/**
-	 * checkPostData
 	 * Returns true if there's valid change data to process in $_POST
+	 * @return boolean
 	 */
 	function checkPostData() {
 		switch (self::$post['action']) {
@@ -128,16 +136,8 @@ class module_page_admin_manage {
 	}
 	
 	/**
-	 * checkGetData
-	 * Returns true if there's valid change data to process in $_GET
-	 */
-	function checkGetData() {
-		return false;
-	}
-	
-	/**
-	 * checkUrlParams
 	 * Returns true if there's a valid page (e.g. edit) specified in the URL
+	 * @return boolean
 	 */
 	function checkUrlParams() {
 		if (self::$get['edit'] != '' && in_array(self::$get['edit'], array_keys(self::$pageList)) ) {

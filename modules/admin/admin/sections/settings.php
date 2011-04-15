@@ -1,13 +1,29 @@
 <?php
-echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
+/**
+ * Admin CP settings handler
+ * @package rubidium 
+ */
+
+/**
+ * Admin CP settings handler
+ * @author alex
+ * @package rubidium
+ */
 class module_admin_admin_settings {
 	static public $post	= array();
 	
+	/**
+	 * Processes the request if any changes were made
+	 */
 	function execute() {
 		self::$post	= rubidium::$request['POST'];
 		self::processPostData();
 	}
 	
+	/**
+	 * Checks if any valid changes have been requested, sets them if they have
+	 * @return boolean
+	 */
 	function processPostData() {
 		switch (self::$post['action']) {
 			case changeSiteSettings:
@@ -16,17 +32,17 @@ class module_admin_admin_settings {
 					outputHandler::setLoadInfoVar('changesMade', true);
 				}
 				if (self::$post['siteTitle'] != rubidium::$settings['site_title']['value']) {
-					classDB::store1('settings', array('value' => self::$post['siteTitle']), '`name` = "site_title"');			
+					classDB::update('settings', array('value' => self::$post['siteTitle']), '`name` = "site_title"');			
 					outputHandler::setLoadInfoVar('changesMade', true);
 					$reloadSettings = true;
 				}
 				if (self::$post['footer'] != rubidium::$settings['footer']['value']) {
-					classDB::store1('settings', array('value' => self::$post['footer']), '`name` = "footer"');			
+					classDB::update('settings', array('value' => self::$post['footer']), '`name` = "footer"');			
 					outputHandler::setLoadInfoVar('changesMade', true);
 					$reloadSettings = true;
 				}
 				if (self::$post['useInlineHelp'] != rubidium::$settings['useInlineHelp']['value']) {
-					classDB::store1('settings', array('value' => self::$post['useInlineHelp']), '`name` = "useInlineHelp"');			
+					classDB::update('settings', array('value' => self::$post['useInlineHelp']), '`name` = "useInlineHelp"');			
 					outputHandler::setLoadInfoVar('changesMade', true);
 					$reloadSettings = true;
 				}

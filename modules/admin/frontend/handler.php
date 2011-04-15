@@ -1,7 +1,15 @@
 <?php
-echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
+/**
+ * Output handler for admin CP
+ * @package rubidium 
+ */
+
+/**
+ * Output handler for admin CP
+ * @author alex
+ * @package rubidium
+ */
 class module_admin {
-	
 	static public $availableModules		= array();
 	static public $pageContent		= null;
 	static public $pageContentLoaded	= false;
@@ -11,6 +19,9 @@ class module_admin {
 	static public $timeout			= false;
 	static public $onLoginPage		= false;
 	
+	/**
+	 * If they haven't logged in, make them
+	 */
 	function __construct() {
 		session_start();
 		self::$availableModules = classDB::getSimpleTable('modules','id','enabled = 1','');
@@ -24,6 +35,11 @@ class module_admin {
 		}
 	}
 	
+	/**
+	 * Validates login key against cookie, makes sure that their session hasn't timed out
+	 * Kill the session if it's not valid
+	 * @return boolean
+	 */
 	function checkAuthorization() {
 		$adminInfo = classDB::getTable('admin_info', 'name', 'name, value');
 		if ($adminInfo['login_key']['value'] != '' && $_SESSION['loginkey'] == $adminInfo['login_key']['value']) {
@@ -32,7 +48,7 @@ class module_admin {
 				session_destroy();
 				return false;
 			} else {
-				classDB::store('admin_info', 'value', time() + 1800, "`name` = 'timeout_time'");
+				classDB::update('admin_info', 'value', time() + 1800, "`name` = 'timeout_time'");
 				self::$authorized = true;
 				return true;
 			}
@@ -40,8 +56,12 @@ class module_admin {
 			return false;
 		}
 	}
+	
+	/**
+	 * Make sure that the specified module exists, if not then load the dashboard
+	 * @return boolean
+	 */
 	function validateLoad() {
-
 		//If module is specified and they aren't trying to do something recursive here...
 		if (self::$moduleToLoad != '') {
 			//and if the module exists...
@@ -55,12 +75,16 @@ class module_admin {
 				}
 				unset($moduleAdmin);
 			} else {
-				self::load404();
+				self::$moduleToLoad = 'admin';
+				self::validateLoad();
 			}
 		}
 		return true;
 	}
 	
+	/**
+	 * This should never happen, but just in case...
+	 */
 	function load404() {
 		self::$pageContent['title']		= "404!!!";
 		self::$pageContent['content']		= "404!!!";
@@ -69,6 +93,10 @@ class module_admin {
 		self::$pageContentLoaded		= true;
 	}
 	
+	/**
+	 * Assembles the page info and returns it to the output handler
+	 * @return array
+	 */
 	function returnPage() {
 		if (self::$authorized || self::$onLoginPage) {
 			if (! self::$pageContentLoaded) {
@@ -87,9 +115,9 @@ class module_admin {
 			header('Location: index.php?mode=admin&module=admin&section=login');
 			die();
 		}
-	self::$pageContent['module']		= self::$moduleToLoad;
-	self::$pageContent['authorized']	= self::$authorized;
-	self::$pageContent['timeout']		= self::$timeout;
-	return self::$pageContent;
+		self::$pageContent['module']		= self::$moduleToLoad;
+		self::$pageContent['authorized']	= self::$authorized;
+		self::$pageContent['timeout']		= self::$timeout;
+		return self::$pageContent;
 	}
 }

@@ -1,15 +1,29 @@
 <?php
-class module_contact extends module_default {
+/**
+ * Output handler for contact form module
+ * @package rubidium 
+ */
+
+/**
+ * Output handler for contact form module * @author alex
+ * @package rubidium
+ */
+class module_contact {
 	static public $post		= null;
 	static public $pageContent	= null;
 	
-	/* validateLoad
-	 * Loads index page unless post data is sent
+	/**
+	 * Will always be true (-> form or email confirmation)
+	 * @return boolean
 	 */
 	function validateLoad() {
 		return true;
 	}
 	
+	/**
+	 * Returns true if the request was valid, otherwise sends the appropriate error
+	 * @return boolean
+	 */
 	function checkPostData() {
 		self::$post = rubidium::$request['POST'];
 		if (self::$post['subject'] != '') {
@@ -35,12 +49,18 @@ class module_contact extends module_default {
 		}
 	}
 	
+	/**
+	 * Sends the email
+	 */
 	function sendMessage() {
 		self::$post['content'] = wordwrap(self::$post['content'], 70);
 		mail(rubidium::$settings['contact_email']['value'], self::$post['subject'], self::$post['message']);
-		return true;
 	}
 	
+	/**
+	 * Validates the captcha against the reCaptcha servers
+	 * @return boolean
+	 */
 	function validateCaptcha() {
 		require_once(ROOT_PATH . '3rdparty/recaptchalib.php');
 		$privatekey = rubidium::$settings['recaptcha_private_key']['value'];
@@ -52,8 +72,9 @@ class module_contact extends module_default {
 		}
 	}
 	
-	/* returnPage
-	 * Returns the contact form unless the message was successfully sent.
+	/**
+	 * Displays the contact form or a confirmation if the message was successfully sent
+	 * @return array
 	 */
 	function returnPage() {
 		//Can't nest these if statements or it'll throw errors on a newly-loaded page

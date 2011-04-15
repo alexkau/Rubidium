@@ -1,12 +1,22 @@
 <?php
-class module_page extends module_default {
+/**
+ * Output handler for page module
+ * @package rubidium 
+ */
+
+/**
+ * Output handler for page module
+ * @author alex
+ * @package rubidium
+ */
+class module_page {
 	static public $idToLoad = null;
 	static public $pageContent = null;
 	static public $pageContentLoaded = false;
 	
-	/* validateLoad
-	 * Returns true if page exists or if no page is specified
-	 * Returns false (404) if page is specified but doesn't exist
+	/**
+	 * Returns true if page exists or if no page is specified, otherwise false
+	 * @return boolean
 	 */
 	function validateLoad() {
 		if (rubidium::$request['GET']['id'] != '') {
@@ -23,15 +33,15 @@ class module_page extends module_default {
 		}
 	}
 	
-	/* generatePage
+	/**
 	 * Gets page information from database
-	 * Returns page info if it exists, otherwise returns false
-	 * $idToLoad = ID of page to select (optional)
+	 * Returns page info if it exists, otherwise false
+	 * @param integer $idToLoad
+	 * @return string|boolean
 	 */
 	function loadPage($idToLoad = null) {
 		//If ID isn't set (normal page load), then assign value from GET
 		if ($idToLoad == null) {
-			//Loading specified page
 			$idToLoad = rubidium::$request['GET']['id'];
 		}
 		$pageInfo = classDB::select('module_page_pages','*','id = "' . $idToLoad . '"');

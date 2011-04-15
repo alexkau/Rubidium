@@ -1,5 +1,14 @@
 <?php
-echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
+/**
+ * Navbar management handler
+ * @package rubidium 
+ */
+
+/**
+ * Navbar management handler
+ * @author alex
+ * @package rubidium
+ */
 class module_admin_admin_navbar {
 	static public $post	= array();
 	static public $get	= array();
@@ -7,6 +16,9 @@ class module_admin_admin_navbar {
 	static public $urlMode	= null;
 	static public $pageList	= array();
 	
+	/**
+	 * Sets variables, processes requests if it exists
+	 */
 	function execute() {
 		self::$post	= rubidium::$request['POST'];
 		self::$get	= rubidium::$request['GET'];
@@ -17,7 +29,7 @@ class module_admin_admin_navbar {
 					$itemTitle	= self::$post['itemTitle'];
 					$itemUrl	= self::$post['itemUrl'];
 					$itemRegex	= self::$post['itemRegex'];
-					classDB::store1('navbar', array('title' => $itemTitle, 'url' => $itemUrl, 'regex' => $itemRegex), '`id` = '.self::$post['id']);
+					classDB::update('navbar', array('title' => $itemTitle, 'url' => $itemUrl, 'regex' => $itemRegex), '`id` = '.self::$post['id']);
 					outputHandler::setLoadInfoVar('changesMade', true);
 					break;
 				case 'addItem':
@@ -57,25 +69,45 @@ class module_admin_admin_navbar {
 		}
 	}
 	
-	//For auto-generation of navbar items for pages
+	/**
+	 * Returns full list of all pages for navbar item generation
+	 * @return array
+	 */
 	function getPageList() {
 		$pageList = classDB::getTable('module_page_pages', 'id', '*', '', '');
 		return $pageList;
 	}
 	
+	/**
+	 * Updates page+navbar info
+	 */
 	function updateItemList() {
 		self::$itemList = classDB::getTable('navbar', 'id', 'id, position, title, url, regex', '', array());
 		rubidium::$navbar = classDB::getTable('navbar', 'position', 'id, position, title, url, regex', '', array( 'order_by' => 'position', 'order_dir' => 'ASC' ));
 	}
 	
+	/**
+	 * Returns the position to be used for the next navbar item
+	 * @return integer
+	 */
 	function getNextItemPosition() {
 		return max(array_keys(rubidium::$navbar)) + 1;
 	}
 
+	/**
+	 * Returns info of specified navbar item
+	 * @param integer $id
+	 * @return array
+	 */
 	function getSingleItemInfo($id) {
 		$table = classDB::getTable('navbar', 'id', '*', '`id` = '.$id, '');
 		return $table[$id];
 	}
+	
+	/**
+	 * Checks whether post data is valid, sets appropriate error if not
+	 * @return boolean
+	 */
 	function checkPostData() {
 		switch (self::$post['action']) {
 			case 'editItem':
@@ -114,6 +146,10 @@ class module_admin_admin_navbar {
 		}
 	}
 	
+	/**
+	 * Checks whether there's valid URL input
+	 * @return boolean
+	 */
 	function checkUrlParams() {
 		if (self::$get['edit'] != '' && in_array(self::$get['edit'], array_keys(self::$itemList)) ) {
 			self::$urlMode = 'edit';

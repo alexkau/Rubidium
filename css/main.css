@@ -235,7 +235,7 @@ textarea.editor, #cke_pageContent {
 .textInputList input.text, input.wide {
 	width: 300px;
 }
-.textInputList span {
+.textInputList > li > span {
 	padding: 3px 5px 0 0;
 	width: 150px;
 	text-align: right;

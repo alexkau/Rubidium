@@ -1,10 +1,23 @@
 <?php
+/**
+ * Module management handler
+ * @package rubidium 
+ */
+
+/**
+ * Module management handler
+ * @author alex
+ * @package rubidium
+ */
 class module_admin_admin_modules {
 	static public $post		= null;
 	static public $get		= null;
 	static public $moduleList	= null;
 	static public $urlMode		= null;
 	
+	/**
+	 * Processes request if it's valid, passes necessary variables to output handler
+	 */
 	function execute() {
 		self::$post	= rubidium::$request['POST'];
 		self::$get	= rubidium::$request['GET'];
@@ -12,7 +25,7 @@ class module_admin_admin_modules {
 		if (self::checkPostData()) {
 			switch (self::$post['action']) {
 				case 'edit':
-					classDB::store1('modules', array('name' => self::$post['name']), '`numeric_id` = '.self::$post['id']);
+					classDB::update('modules', array('name' => self::$post['name']), '`numeric_id` = '.self::$post['id']);
 					outputHandler::setLoadInfoVar('changesMade', true);
 					rubidium::getInfo();
 					self::updateModuleList();
@@ -84,7 +97,7 @@ class module_admin_admin_modules {
 			}
 		} else if (self::$get['disable'] == 'true' && in_array(self::$get['edit'], array_keys(self::$moduleList))) {
 			if (!self::$moduleList[self::$get['edit']]['protected']) {
-				classDB::store1('modules', array('enabled' => 0), '`numeric_id` = '.self::$get['edit']);
+				classDB::update('modules', array('enabled' => 0), '`numeric_id` = '.self::$get['edit']);
 				outputHandler::setLoadInfoVar('message', 'The module was successfully disabled.');
 				self::updateModuleList();
 				rubidium::getInfo();
@@ -93,7 +106,7 @@ class module_admin_admin_modules {
 				outputHandler::setLoadInfoVar('error', 'This module is protected; you cannot disable or remove it.');
 			}
 		} else if (self::$get['enable'] == 'true' && in_array(self::$get['edit'], array_keys(self::$moduleList))) {
-			classDB::store1('modules', array('enabled' => 1), '`numeric_id` = '.self::$get['edit']);
+			classDB::update('modules', array('enabled' => 1), '`numeric_id` = '.self::$get['edit']);
 			outputHandler::setLoadInfoVar('message', 'The module was successfully enabled.');
 			self::updateModuleList();
 			rubidium::getInfo();
@@ -102,10 +115,18 @@ class module_admin_admin_modules {
 		outputHandler::setLoadInfoVar('request_url', preg_replace('/\&(disable|enable)=true/i', '', $_SERVER['REQUEST_URI']));
 		outputHandler::setLoadInfoVar('fullModuleList', self::$moduleList);
 	}
+	
+	/**
+	 * Gets all installed modules from database
+	 */
 	function updateModuleList() {
 		self::$moduleList = classDB::getTable('modules', 'numeric_id', '*', '', '');
 	}
 
+	/**
+	 * Checks for valid post data to process
+	 * @return boolean
+	 */
 	function checkPostData() {
 		switch (self::$post['action']) {
 			case 'edit':
@@ -124,6 +145,10 @@ class module_admin_admin_modules {
 		}
 	}
 	
+	/**
+	 * Checks for valid url parameters
+	 * @return boolean
+	 */
 	function checkUrlParams() {
 		if (self::$get['edit'] != '' && in_array(self::$get['edit'], array_keys(self::$moduleList)) ) {
 			self::$urlMode = 'edit';
@@ -139,19 +164,28 @@ class module_admin_admin_modules {
 		}
 	}
 	
+	/**
+	 * Gets all modules that exist in the filesystem and aren't installed
+	 * @return array
+	 */
 	function getInstallableModules() {
 		$moduleTemp = array();
 		//Need to get all modules (enabled or disabled), except sorted by name this time
 		$moduleNames = classDB::getSimpleTable('modules', 'id', '', '');
 		$module_dir = dir(ROOT_PATH . 'modules/');
 		while (false !== ($dir = $module_dir->read())) {
-			if($dir != '.' && $dir != '..' && is_dir(ROOT_PATH . 'modules/' . $dir) && !in_array($dir, $moduleNames)) {
+			if ($dir != '.' && $dir != '..' && is_dir(ROOT_PATH . 'modules/' . $dir) && !in_array($dir, $moduleNames)) {
 				$moduleTemp[] = $dir;
 			}
 		}
 		return $moduleTemp;
 	}
 	
+	/**
+	 * Checks whether the module has admin/frontend handlers, template directory, and xml info file
+	 * @param string $moduleName
+	 * @return boolean
+	 */
 	function validateModuleForInstall($moduleName) {
 		$modulePath = ROOT_PATH . 'modules/' . $moduleName;
 		if (		is_dir($modulePath) &&
@@ -165,16 +199,16 @@ class module_admin_admin_modules {
 		}
 	}
 	
+	/**
+	 * Gets the XML info file for the specified module
+	 * @param string $moduleName
+	 * @return SimpleXMLElement|boolean
+	 */
 	function getInstallXml($moduleName) {
 		if ( $xml = simplexml_load_file(ROOT_PATH . 'modules/' . $moduleName . '/admin/install.xml') ) {
-//			print_r($xml);
 			return $xml;
 		} else {
 			return false;
 		}
-/*		foreach($xml->section as $id => $content) {
-			echo "<br/><br/><br/><br/>";
-			print_r($content);
-		}*/
 	}
 }

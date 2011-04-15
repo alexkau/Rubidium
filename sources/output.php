@@ -1,5 +1,14 @@
 <?php
-echo (PRINT_FILENAMES) ? __FILE__ . "<br />" : '';
+/**
+ * Output handler file
+ * @package rubidium 
+ */
+
+/**
+ * Output handler - General controller for output generation
+ * @author alex
+ * @package rubidium
+ */
 class outputHandler {
 	static public $toLoad			= array();
 	static public $loadInfo			= array();
@@ -10,23 +19,31 @@ class outputHandler {
 	static public $loadedModules		= array();
 	static public $defaults			= array();
 	
+	/**
+	 * Gets the necessary info for the default mode from the database and loads it to self::$defaults
+	 */
 	function setDefaults() {
 		self::$defaults['mode']		= rubidium::$settings['default_mode']['value'];
 		self::$defaults['action']	= rubidium::$modules[rubidium::$settings['default_mode']['value']]['default_action'];
 		self::$defaults['value']	= rubidium::$modules[rubidium::$settings['default_mode']['value']]['default_action_value'];
 	}
 	
-	//What mode are we in?
+	/**
+	 * Decides what mode to load, then gets page info from the appropriate mode's output handler 
+	 */
 	function determineMode() {
 		self::setDefaults();
 		self::$mode = rubidium::$request['GET']['mode'];
-		require (ROOT_PATH . "sources/module_default.php");
+		//If the mode is specified and is installed+enabled
 		if (self::$mode != "" && in_array(self::$mode, array_keys(rubidium::$modules))) {
+			//and its frontent handler exists
 			if (file_exists (ROOT_PATH . "modules/" . self::$mode . "/frontend/handler.php")) {
+				//Load it if we haven't already
 				if(!in_array(self::$mode, self::$loadedModules)) {
 					require (ROOT_PATH . "modules/" . self::$mode . "/frontend/handler.php");
 					self::$loadedModules[] = self::$mode;
 				}
+				//Set the working module, validate load criteria, get it to return the page 
 				self::$workingModuleName = "module_" . self::$mode;
 				$workingModule = new self::$workingModuleName();
 				if ($workingModule->validateLoad()) {
@@ -39,6 +56,7 @@ class outputHandler {
 				self::load404();
 			}
 		} else {
+			//...time for the defaults.
 			if(!in_array(rubidium::$settings['default_mode']['value'], self::$loadedModules)) {
 				require (ROOT_PATH . "modules/" . rubidium::$settings['default_mode']['value'] . "/frontend/handler.php");
 				self::$loadedModules[] = rubidium::$settings['default_mode']['value'];
@@ -50,11 +68,18 @@ class outputHandler {
 		}
 	}
 	
+	/**
+	 * Sets a variable that will be passed to Smarty (to be used in the template)
+	 * @param string $key
+	 * @param string $var
+	 */
 	function setLoadInfoVar($key, $var) {
 		self::$loadInfoTemp[$key] = $var;
 	}
 	
-	//At this point, generic 404s are always handled by the page module
+	/**
+	 * Loads the page module and has it load the 404 error page
+	 */
 	static public function load404() {
 		if (!in_array('page', self::$loadedModules)) {
 			require (ROOT_PATH . "modules/page/frontend/handler.php");
@@ -70,9 +95,15 @@ class outputHandler {
 		debug::addMessage("Page not found, loading 404 error");
 		self::$loadInfo = $workingModule->returnPage(self::$toLoad);
 	}
+	
+	/**
+	 * Passes variables to Smarty for use in templates
+	 * @param object $smarty
+	 * @param array $loadInfo
+	 * @param array $toLoad
+	 */
 	static public function setTemplateVars($smarty, $loadInfo, $toLoad) {
 		$smarty->assign('toLoad',	$toLoad);
-
 		foreach(self::$loadInfoTemp as $key => $var) {
 			$loadInfo[$key] = $var;
 		}
@@ -84,8 +115,11 @@ class outputHandler {
 		$smarty->assign('navbar',	rubidium::$navbar);
 		$smarty->assign('inlineHelp',	rubidium::$settings['useInlineHelp']['value']);
 	}
+	
+	/**
+	 * Loads Smarty, sets it up, builds and outputs the page
+	 */
 	static public function buildPage() {
-		//Load the Smarty template engine
 		require(SMARTY_DIR . 'Smarty.class.php');
 		$smarty = new Smarty();
 		$smarty->setTemplateDir	(ROOT_PATH . 'templates');

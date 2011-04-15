@@ -1,4 +1,9 @@
 <?php
+/**
+ * AJAX handler
+ * @package rubidium 
+ */
+
 switch ($_GET['method']) {
 	case 'sortable_admin':
 		session_start();
@@ -9,7 +14,7 @@ switch ($_GET['method']) {
 		require ( ROOT_PATH . "/modules/admin/frontend/handler.php");
 		if (module_admin::checkAuthorization()) {
 			foreach ($_GET['list'] as $position => $id) {
-				classDB::store1('navbar', array('position' => $position), "`id` = $id");
+				classDB::update('navbar', array('position' => $position), "`id` = $id");
 			}
 		} else {
 			echo 'Access denied. Please ensure you are correctly logged in.';
