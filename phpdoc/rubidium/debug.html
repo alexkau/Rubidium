@@ -27,7 +27,7 @@
 				<li><span class="field">author:</span> alex</li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_sources---debug.php.html">/sources/debug.php</a> (line <span class="field"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a11">11</a></span>)
+			Located in <a class="field" href="_sources---debug.php.html">/sources/debug.php</a> (line <span class="field"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a16">16</a></span>)
 		</p>
 		
 				
@@ -78,10 +78,10 @@
 												<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#addMessage" title="details" class="method-name">addMessage</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$message</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$code</span> = <span class="var-default">null</span>])
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$code</span> = <span class="var-default">null</span>])
 									</div>
 																<div class="method-definition">
-											<span class="method-result">void</span>
+											<span class="method-result">string</span>
 										<a href="#compileOutput" title="details" class="method-name">compileOutput</a>
 										()
 									</div>
@@ -109,7 +109,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$messages</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a12">12</a></span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a17">17</a></span>)
 		</span>
 	</div>
 
@@ -130,7 +130,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$output</span>
-			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a13">13</a></span>)
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a18">18</a></span>)
 		</span>
 	</div>
 
@@ -164,25 +164,27 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">addMessage</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a16">16</a></span>)
+		<span class="method-title">addMessage</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a26">26</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds the specified message to the debug output</p>
+<p class="description"><p>Debug codes are not currently in use but could be utilized easily</p></p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
 		<span class="method-name">
 			addMessage
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$message</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$code</span> = <span class="var-default">null</span>])
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$code</span> = <span class="var-default">null</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"></span>
+				<span class="var-type">string</span>
 				<span class="var-name">$message</span>			</li>
 					<li>
-				<span class="var-type"></span>
+				<span class="var-type">integer</span>
 				<span class="var-name">$code</span>			</li>
 				</ul>
 		
@@ -192,13 +194,14 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">compileOutput</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a22">22</a></span>)
+		<span class="method-title">compileOutput</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__sourcesdebug.php.html#a37">37</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Compiles the debug messages into a block of html to be appended to the end of the page  It's not pretty and it'll break html validation, so don't use it on a live site.</p>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">string</span>
 		<span class="method-name">
 			compileOutput
 		</span>
@@ -214,7 +217,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 15 Apr 2011 13:05:24 -0700 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sun, 24 Apr 2011 18:48:36 -0700 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

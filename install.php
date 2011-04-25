@@ -3,7 +3,8 @@
  * Installer
  * @package rubidium 
  */
-
+ 
+define('IN_RUBIDIUM', 1);
 rubidiumInstall::execute();
 
 /**
@@ -118,7 +119,7 @@ class rubidiumInstall {
 	 * Writes config file, creates and populates database
 	 */
 	function doInstall() {		
-$configfile = 
+		$configfile = 
 "<?php
 \$baseconfig['sql_user']		= '" . self::$post['sql_user'] . "';
 \$baseconfig['sql_password']	= '" . self::$post['sql_password'] . "';
@@ -132,7 +133,7 @@ $configfile =
  * 1 = Display debug messages (only for development/testing)
  */
 define('DEBUG',0);";
-file_put_contents(ROOT_PATH . 'config.php', $configfile);
+		file_put_contents(ROOT_PATH . 'config.php', $configfile);
 
 		rubidium::loadConfig();
 		classDB::connect();
@@ -213,7 +214,7 @@ file_put_contents(ROOT_PATH . 'config.php', $configfile);
 		$sitePath = preg_replace('/\/install.php?(.*)/i', '', substr($_SERVER['REQUEST_URI'], 1));
 		classDB::$database->query("
 		INSERT INTO `navbar` (`id`, `position`, `url`, `title`, `regex`) VALUES
-			(1, 0, '" . self::$siteUrl . "', 'Index', '/(" . $sitePath . "\/\(?!index))|(mode=page&id=1)|(index.php(?!.))/i');");
+			(1, 0, '" . self::$siteUrl . "', 'Index', '/(" . $sitePath . "\\\/(?!index))|(mode=page&id=1)|(index.php(?!.))/i');");
 		
 		classDB::$database->query("
 		CREATE TABLE `settings` (

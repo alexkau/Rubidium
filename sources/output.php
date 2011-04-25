@@ -4,6 +4,10 @@
  * @package rubidium 
  */
 
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
+
 /**
  * Output handler - General controller for output generation
  * @author alex
@@ -29,21 +33,18 @@ class outputHandler {
 	}
 	
 	/**
-	 * Decides what mode to load, then gets page info from the appropriate mode's output handler 
+	 * Decides what mode to load, then gets page info from the appropriate mode's output handler
+	 * Loads the defaults or throws a 404 if necessary
 	 */
 	function determineMode() {
 		self::setDefaults();
 		self::$mode = rubidium::$request['GET']['mode'];
-		//If the mode is specified and is installed+enabled
 		if (self::$mode != "" && in_array(self::$mode, array_keys(rubidium::$modules))) {
-			//and its frontent handler exists
 			if (file_exists (ROOT_PATH . "modules/" . self::$mode . "/frontend/handler.php")) {
-				//Load it if we haven't already
 				if(!in_array(self::$mode, self::$loadedModules)) {
 					require (ROOT_PATH . "modules/" . self::$mode . "/frontend/handler.php");
 					self::$loadedModules[] = self::$mode;
 				}
-				//Set the working module, validate load criteria, get it to return the page 
 				self::$workingModuleName = "module_" . self::$mode;
 				$workingModule = new self::$workingModuleName();
 				if ($workingModule->validateLoad()) {
@@ -56,7 +57,6 @@ class outputHandler {
 				self::load404();
 			}
 		} else {
-			//...time for the defaults.
 			if(!in_array(rubidium::$settings['default_mode']['value'], self::$loadedModules)) {
 				require (ROOT_PATH . "modules/" . rubidium::$settings['default_mode']['value'] . "/frontend/handler.php");
 				self::$loadedModules[] = rubidium::$settings['default_mode']['value'];
@@ -78,7 +78,7 @@ class outputHandler {
 	}
 	
 	/**
-	 * Loads the page module and has it load the 404 error page
+	 * Loads the page module and the 404 error page
 	 */
 	static public function load404() {
 		if (!in_array('page', self::$loadedModules)) {

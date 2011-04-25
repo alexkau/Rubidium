@@ -3,6 +3,11 @@
  * Debug handler file
  * @package rubidium 
  */
+ 
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
+
 /**
  * Stores and outputs debug messages
  * @author alex
@@ -11,14 +16,24 @@
 class debug {
 	static public $messages = array();
 	static public $output = array();
-	//Add requested debug message to array
-	//Debug codes are not currently in use but can be utilized easily
-	function addMessage($message,$code = null) {
+		
+	/**
+	 * Adds the specified message to the debug output
+	 * Debug codes are not currently in use but could be utilized easily
+	 * @param string $message
+	 * @param integer $code
+	 */
+	function addMessage($message, $code = null) {
 		self::$messages[] = array(
 				"code" => $code,
 				"message" => $message );
 	}
-	//Set up debug output
+	
+	/**
+	 * Compiles the debug messages into a block of html to be appended to the end of the page
+	 * It's not pretty and it'll break html validation, so don't use it on a live site.
+	 * @return string
+	 */
 	function compileOutput() {
 		$string = '<hr />----- DEBUG MESSAGES -----<br />';
 		foreach(self::$messages as $message) {

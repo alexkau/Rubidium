@@ -4,6 +4,10 @@
  * @package rubidium 
  */
 
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
+
 /**
  * Module management handler
  * @author alex

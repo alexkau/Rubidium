@@ -6,6 +6,11 @@ people with little or no previous website management experience.
 
 Release notes:
 
+-1.0.0
+	-Numerous bug fixes and feature enhancements.
+	-Minor tweaks to the graphics+templates.
+	-phpDocs for developers are now included.
+
 -1.0.0 Beta 2:
 	-The visual style is mostly complete.
 	-Modules can now be added, edited and removed.

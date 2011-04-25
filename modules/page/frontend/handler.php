@@ -3,6 +3,10 @@
  * Output handler for page module
  * @package rubidium 
  */
+ 
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
 
 /**
  * Output handler for page module
@@ -21,7 +25,6 @@ class module_page {
 	function validateLoad() {
 		if (rubidium::$request['GET']['id'] != '') {
 			self::$pageContent = self::loadPage(rubidium::$request['GET']['ID']);
-			//if (classDB::select('module_page_pages', '*', 'id = "' . rubidium::$request['GET']['id'] . '"')) {
 			if (is_array(self::$pageContent)) {
 				self::$pageContentLoaded = true;
 				return true;
@@ -39,7 +42,7 @@ class module_page {
 	 * @param integer $idToLoad
 	 * @return string|boolean
 	 */
-	function loadPage($idToLoad = null) {
+	function loadPage($idToLoad) {
 		//If ID isn't set (normal page load), then assign value from GET
 		if ($idToLoad == null) {
 			$idToLoad = rubidium::$request['GET']['id'];
@@ -56,20 +59,13 @@ class module_page {
 		}
 	}
 	
-	/* returnPage
-	 * $loadInfo['id'] = ID of page to load
-	 * If page content is already loaded, don't waste another database query on it...
+	/**
+	 * If we're telling it to load a specific page, then do it (overriding any previously loaded page).
+	 * Otherwise, if we haven't already loaded a page, then load the default.
+	 * @param integer $toLoad
+	 * @return array
 	 */
-	function returnPage($toLoad = null) {
-		//If we're being told to load a different ID from what we loaded earlier...
-		/*if (self::$pageContent['id'] != $loadInfo['id']) {
-			self::$pageContent = self::loadPage($loadInfo['id']);
-		}*/
-		//And if we didn't load anything earlier and aren't being told to load anything...
-		/*if ($loadInfo['id'] == '') {
-			self::$pageContent = self::loadPage(rubidium::$modules['page']['default_action_value']);
-			debug::addMessage("Loading default page");
-		}*/
+	function returnPage($toLoad) {
 		if ($toLoad) {
 			self::$pageContent = self::loadPage($toLoad['value']);
 			self::$pageContentLoaded = true;

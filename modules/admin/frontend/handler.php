@@ -4,6 +4,10 @@
  * @package rubidium 
  */
 
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
+
 /**
  * Output handler for admin CP
  * @author alex
@@ -20,7 +24,7 @@ class module_admin {
 	static public $onLoginPage		= false;
 	
 	/**
-	 * If they haven't logged in, make them
+	 * If they haven't logged in, make them log in
 	 */
 	function __construct() {
 		session_start();
@@ -86,8 +90,8 @@ class module_admin {
 	 * This should never happen, but just in case...
 	 */
 	function load404() {
-		self::$pageContent['title']		= "404!!!";
-		self::$pageContent['content']		= "404!!!";
+		self::$pageContent['title']		= "Page Not Found";
+		self::$pageContent['content']		= "The specified page was not loadable. If you are seeing this, please report it as a bug.";
 		self::$pageContent['templateCategory']	= 'modules/admin';
 		self::$pageContent['templateToLoad']	= 'generic';
 		self::$pageContentLoaded		= true;

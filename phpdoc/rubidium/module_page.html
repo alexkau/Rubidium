@@ -27,7 +27,7 @@
 				<li><span class="field">author:</span> alex</li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_modules---page---frontend---handler.php.html">/modules/page/frontend/handler.php</a> (line <span class="field"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a12">12</a></span>)
+			Located in <a class="field" href="_modules---page---frontend---handler.php.html">/modules/page/frontend/handler.php</a> (line <span class="field"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a16">16</a></span>)
 		</p>
 		
 				
@@ -82,12 +82,12 @@
 												<div class="method-definition">
 											<span class="method-result">string|boolean</span>
 										<a href="#loadPage" title="details" class="method-name">loadPage</a>
-											([<span class="var-type">integer</span>&nbsp;<span class="var-name">$idToLoad</span> = <span class="var-default">null</span>])
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$idToLoad</span>)
 									</div>
 																<div class="method-definition">
-											<span class="method-result">void</span>
+											<span class="method-result">array</span>
 										<a href="#returnPage" title="details" class="method-name">returnPage</a>
-											([<span class="var-type"></span>&nbsp;<span class="var-name">$toLoad</span> = <span class="var-default">null</span>])
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$toLoad</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
@@ -118,7 +118,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$idToLoad</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a13">13</a></span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a17">17</a></span>)
 		</span>
 	</div>
 
@@ -139,7 +139,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$pageContent</span>
-			 = <span class="var-default"> null</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a14">14</a></span>)
+			 = <span class="var-default"> null</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a18">18</a></span>)
 		</span>
 	</div>
 
@@ -160,7 +160,7 @@
 		<span class="var-title">
 			static <span class="var-type">mixed</span>
 			<span class="var-name">$pageContentLoaded</span>
-			 = <span class="var-default"> false</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a15">15</a></span>)
+			 = <span class="var-default"> false</span>			(line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a19">19</a></span>)
 		</span>
 	</div>
 
@@ -194,7 +194,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">loadPage</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a42">42</a></span>)
+		<span class="method-title">loadPage</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a45">45</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -206,7 +206,7 @@
 		<span class="method-name">
 			loadPage
 		</span>
-					([<span class="var-type">integer</span>&nbsp;<span class="var-name">$idToLoad</span> = <span class="var-default">null</span>])
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$idToLoad</span>)
 			</div>
 	
 			<ul class="parameters">
@@ -221,22 +221,24 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">returnPage</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a63">63</a></span>)
+		<span class="method-title">returnPage</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a68">68</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">If we're telling it to load a specific page, then do it (overriding any previously loaded page).</p>
+<p class="description"><p>Otherwise, if we haven't already loaded a page, then load the default.</p></p>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">array</span>
 		<span class="method-name">
 			returnPage
 		</span>
-					([<span class="var-type"></span>&nbsp;<span class="var-name">$toLoad</span> = <span class="var-default">null</span>])
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$toLoad</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"></span>
+				<span class="var-type">integer</span>
 				<span class="var-name">$toLoad</span>			</li>
 				</ul>
 		
@@ -246,7 +248,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">validateLoad</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a21">21</a></span>)
+		<span class="method-title">validateLoad</span> (line <span class="line-number"><a href="../__filesource/fsource_rubidium__modulespagefrontendhandler.php.html#a25">25</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -269,7 +271,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 15 Apr 2011 13:05:24 -0700 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+		Documentation generated on Sun, 24 Apr 2011 18:48:36 -0700 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
 	</p>
 	</div></body>
 </html>

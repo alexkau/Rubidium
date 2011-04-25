@@ -1,4 +1,9 @@
 <?php
+
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
+
 /**
  * AJAX handler
  * @package rubidium 

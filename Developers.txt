@@ -1,0 +1,45 @@
+---Rubidium Developer Documentation---
+
+Creating an addon module:
+
+The module must include these files:
+modules/<name>/admin/handler.php
+modules/<name>/frontend/handler.php
+templates/<name>
+
+The installer will create the module_<name>_sections table in the database.
+
+You must specify the module's information in an XML file. The installer will read this file and add the information to the database.
+/modules/<name>/admin/install.xml:
+
+<?xml version="1.0"?>
+<data>
+	<sections>
+		<section>
+			<name>settings</name>
+			<public_name>Settings</public_name>
+			<pageInfo>title=Settings&amp;templateCategory=modules%2Fcontact%2Fadmin&amp;templateToLoad=settings</pageInfo>
+		</section>
+	</sections>
+	<moduleInfo>
+		<module_id>contact</module_id>
+		<module_name>Contact</module_name>
+		<default_action>showForm</default_action>
+		<default_action_value>true</default_action_value>
+	</moduleInfo>
+</data>
+
+Repeat <section> once for each section panel in the admin CP.
+pageInfo is encoded as a url string. Necessary info: title, templateCategory, templateToLoad. The latter two refer to the location of the template (based off /templates) and the name of the template to load for this section.
+
+Module ID: Used by the software. Should be the same as <name> in the directory structure.
+Module name: Name that is displayed by the software.
+Default action and default action value: The default action and value (for example, id=10) that will be passed to the module if no input values are specified.
+
+It is recommended to use the included contact form module as a base for a new module.
+
+
+Editing templates:
+The templates are located in /templates. Rubidium uses the Smarty template system - Documentation for Smarty can be found here: http://www.smarty.net/documentation
+CSS is located in /css.
+At present, there ins built-in template editor. This will be added in a future release.

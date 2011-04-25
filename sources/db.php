@@ -4,16 +4,16 @@
  * @package rubidium 
  */
 
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
+
 /**
  * Handles all database management - data insertion/deletion/modification.
  * @author alex
  * @package rubidium
  */
 class classDB {
-	/**
-	 * Database MySQLi object
-	 * @var object
-	 */
 	static public $database = null;
 	
 	/**
@@ -220,7 +220,7 @@ class classDB {
 		$query .= ')';
 		debug::addMessage("Running MySQL query: " . $query);
 		self::$database->query($query);
-		//echo $query;
+		//echo $query . "<br />";
 	}
 	
 	/**
@@ -245,7 +245,7 @@ class classDB {
 				`pageInfo` mediumtext NOT NULL
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 		self::$database->query($query);
-		//echo $query;
+		//echo $query . "<br />";
 	}
 	
 	/**

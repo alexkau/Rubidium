@@ -4,6 +4,10 @@
  * @package rubidium 
  */
 
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
+
 /**
  * Admin CP login handler
  * @author alex
@@ -23,14 +27,9 @@ class module_admin_admin_login {
 		if (rubidium::$request['POST']['password'] != '') {
 			if (rubidium::checkPassword(rubidium::$request['POST']['password'])) {
 				module_admin_admin::$pageContent['loginsuccessful'] = true;
-				//Generate login key
 				self::$loginKey = rubidium::generateLoginKey();
-				//Store login key and timeout time in the DB
-				//After half an hour, login key will be invalid
-				//Timeout will be refreshed on every page load
 				classDB::update('admin_info', array('value' => self::$loginKey), "`name` = 'login_key'");
 				classDB::update('admin_info', array('value' => time() + 1800), "`name` = 'timeout_time'");
-				//Set login key in cookie
 				$_SESSION['loginkey'] = self::$loginKey;
 				header('Location: index.php?mode=admin&module=admin&section=index');
 				die();

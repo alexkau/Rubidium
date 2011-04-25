@@ -4,6 +4,10 @@
  * @package rubidium 
  */
 
+if (IN_RUBIDIUM != 1) {
+	die('This file cannot be accessed directly.');
+}
+
 /**
  * General i/o handler + procedures
  * @author alex
@@ -50,7 +54,7 @@ class rubidium {
 		
 		//Finalize debug output
 		debug::addMessage("Page rendered successfully in ". self::endTimer() ." seconds");
-		echo (DEBUG == 1 || DEBUG == 2) ? debug::compileOutput() : '';
+		echo (DEBUG == 1) ? debug::compileOutput() : '';
 	}
 	
 	/**
@@ -214,7 +218,6 @@ class rubidium {
 		require_once(ROOT_PATH . 'sources/db.php');
 		$salt = self::generateSalt();
 		$hash = hash("sha512", $password.$salt);
-		//echo "Password: {$password} - Salt: {$salt} - Hash: {$hash}";
 		classDB::update('admin_info', array('value' => $salt), "`name` = 'password_salt'");
 		classDB::update('admin_info', array('value' => $hash), "`name` = 'password_hash'");
 	}
