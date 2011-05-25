@@ -1,13 +1,11 @@
 <?php
 
-if (IN_RUBIDIUM != 1) {
-	die('This file cannot be accessed directly.');
-}
-
 /**
  * AJAX handler
  * @package rubidium 
  */
+
+define(IN_RUBIDIUM, 1);
 
 switch ($_GET['method']) {
 	case 'sortable_admin':
