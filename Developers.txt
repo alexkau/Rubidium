@@ -42,4 +42,4 @@ It is recommended to use the included contact form module as a base for a new mo
 Editing templates:
 The templates are located in /templates. Rubidium uses the Smarty template system - Documentation for Smarty can be found here: http://www.smarty.net/documentation
 CSS is located in /css.
-At present, there ins built-in template editor. This will be added in a future release.
+At present, there is no built-in template editor. This will be added in a future release.
